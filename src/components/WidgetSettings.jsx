@@ -56,6 +56,7 @@ const WidgetSettings = () => {
       if (response.ok) {
         const data = await response.json()
         setConfig(prev => ({ ...prev, ...data }))
+        setTimeout(() => generateEmbedCode(), 100)
       }
     } catch (error) {
       console.error('Error al cargar configuración del widget:', error)
@@ -99,11 +100,13 @@ const WidgetSettings = () => {
   }
 
   const generateEmbedCode = () => {
+    if (!client) return
+    
     const code = `<!-- NNIA Widget -->
-<script src="https://widget.nnia.com/nnia-widget.umd.js"></script>
+<script src="https://widget-nnia.vercel.app/nnia-widget.umd.js"></script>
 <script>
   window.initNNIAWidget({
-    businessId: '${client?.id}',
+    businessId: '${client.id}',
     apiUrl: '${import.meta.env.VITE_API_URL}',
     position: '${config.position}',
     theme: {
