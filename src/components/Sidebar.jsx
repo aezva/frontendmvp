@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation, Link } from 'react-router-dom';
-import { LayoutDashboard, MessageSquare, Ticket, Briefcase, Bot, CreditCard, Settings, LogOut, ChevronRight, Calendar, Clock } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Ticket, Briefcase, Bot, CreditCard, Settings, LogOut, ChevronRight, Calendar, Clock, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -37,6 +37,10 @@ const navItems = [{
   href: '/assistant',
   label: 'Asistente IA',
   icon: Bot
+}, {
+  href: '/widget',
+  label: 'Widget',
+  icon: Globe
 }, {
   href: '/subscription',
   label: 'Suscripción',
