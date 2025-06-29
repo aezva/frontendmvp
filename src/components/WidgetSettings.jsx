@@ -51,7 +51,7 @@ const WidgetSettings = () => {
     
     try {
       setIsLoading(true)
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/widget/config/${client.id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/nnia/widget/config/${client.id}`)
       
       if (response.ok) {
         const data = await response.json()
@@ -69,7 +69,7 @@ const WidgetSettings = () => {
     
     try {
       setIsLoading(true)
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/widget/config/${client.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/nnia/widget/config/${client.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
