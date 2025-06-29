@@ -408,18 +408,22 @@ export default function Reservations() {
     try {
       setLoading(true);
       const [reservationsData, typesData, availabilityData] = await Promise.all([
-        getReservations(clientId),
-        getReservationTypes(clientId),
-        getReservationAvailability(clientId)
+        getReservations(clientId).catch(() => []),
+        getReservationTypes(clientId).catch(() => []),
+        getReservationAvailability(clientId).catch(() => ({ days: [], hours: '', advance_booking_days: 30 }))
       ]);
       
-      setReservations(reservationsData);
-      setTypes(typesData);
-      setAvailability(availabilityData);
+      setReservations(Array.isArray(reservationsData) ? reservationsData : []);
+      setTypes(Array.isArray(typesData) ? typesData : []);
+      setAvailability(availabilityData || { days: [], hours: '', advance_booking_days: 30 });
     } catch (error) {
+      console.error('Error loading data:', error);
+      setReservations([]);
+      setTypes([]);
+      setAvailability({ days: [], hours: '', advance_booking_days: 30 });
       toast({
-        title: "Error",
-        description: "No se pudieron cargar los datos de reservas.",
+        title: "Error de conexión",
+        description: "No se pudieron cargar los datos. Verifica que el backend esté funcionando.",
         variant: "destructive",
       });
     } finally {

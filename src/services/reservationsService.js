@@ -1,9 +1,11 @@
 import { supabase } from '../lib/supabaseClient';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 // Obtener reservas del cliente
 export async function getReservations(clientId) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservations?clientId=${clientId}`);
+    const response = await fetch(`${API_URL}/nnia/reservations?clientId=${clientId}`);
     const data = await response.json();
     if (data.success) {
       return data.reservations;
@@ -19,7 +21,7 @@ export async function getReservations(clientId) {
 // Crear una nueva reserva
 export async function createReservation(reservationData) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservations`, {
+    const response = await fetch(`${API_URL}/nnia/reservations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ export async function createReservation(reservationData) {
 // Actualizar una reserva
 export async function updateReservation(id, updates) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservations/${id}`, {
+    const response = await fetch(`${API_URL}/nnia/reservations/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +65,7 @@ export async function updateReservation(id, updates) {
 // Eliminar una reserva
 export async function deleteReservation(id) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservations/${id}`, {
+    const response = await fetch(`${API_URL}/nnia/reservations/${id}`, {
       method: 'DELETE',
     });
     const data = await response.json();
@@ -81,7 +83,7 @@ export async function deleteReservation(id) {
 // Obtener tipos de reserva
 export async function getReservationTypes(clientId) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservation-types?clientId=${clientId}`);
+    const response = await fetch(`${API_URL}/nnia/reservation-types?clientId=${clientId}`);
     const data = await response.json();
     if (data.success) {
       return data.types;
@@ -97,7 +99,7 @@ export async function getReservationTypes(clientId) {
 // Crear tipo de reserva
 export async function createReservationType(typeData) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservation-types`, {
+    const response = await fetch(`${API_URL}/nnia/reservation-types`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +121,7 @@ export async function createReservationType(typeData) {
 // Actualizar tipo de reserva
 export async function updateReservationType(id, updates) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservation-types/${id}`, {
+    const response = await fetch(`${API_URL}/nnia/reservation-types/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -141,7 +143,7 @@ export async function updateReservationType(id, updates) {
 // Eliminar tipo de reserva
 export async function deleteReservationType(id) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservation-types/${id}`, {
+    const response = await fetch(`${API_URL}/nnia/reservation-types/${id}`, {
       method: 'DELETE',
     });
     const data = await response.json();
@@ -159,7 +161,7 @@ export async function deleteReservationType(id) {
 // Obtener disponibilidad de reservas
 export async function getReservationAvailability(clientId) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservation-availability?clientId=${clientId}`);
+    const response = await fetch(`${API_URL}/nnia/reservation-availability?clientId=${clientId}`);
     const data = await response.json();
     if (data.success) {
       return data.availability;
@@ -175,7 +177,7 @@ export async function getReservationAvailability(clientId) {
 // Guardar disponibilidad de reservas
 export async function setReservationAvailability(clientId, availability) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/nnia/reservation-availability`, {
+    const response = await fetch(`${API_URL}/nnia/reservation-availability`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
