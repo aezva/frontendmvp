@@ -392,7 +392,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
 
 // Componente principal
 export default function Reservations() {
-  const { user } = useAuth();
+  const { user, client } = useAuth();
   const [reservations, setReservations] = useState([]);
   const [types, setTypes] = useState([]);
   const [availability, setAvailability] = useState(null);
@@ -400,7 +400,7 @@ export default function Reservations() {
   const [editingReservation, setEditingReservation] = useState(null);
   const { toast } = useToast();
 
-  const clientId = user?.id;
+  const clientId = client?.id;
 
   const loadData = async () => {
     if (!clientId) return;
