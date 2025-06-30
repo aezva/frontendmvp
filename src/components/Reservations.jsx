@@ -276,6 +276,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
     hours: '',
     advance_booking_days: 30
   });
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   const daysOfWeek = [
@@ -288,22 +289,42 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
     { value: 'sunday', label: 'Domingo' }
   ];
 
+  // Solo actualiza el estado local si la disponibilidad realmente cambia
   useEffect(() => {
-    if (availability) {
-      setConfig({
+    if (!availability) return;
+    setConfig(prev => {
+      // Compara si hay cambios reales
+      const daysEqual = Array.isArray(availability.days) && Array.isArray(prev.days) &&
+        availability.days.length === prev.days.length &&
+        availability.days.every((d, i) => d === prev.days[i]);
+      if (
+        daysEqual &&
+        availability.hours === prev.hours &&
+        availability.advance_booking_days === prev.advance_booking_days
+      ) {
+        return prev;
+      }
+      return {
         days: availability.days || [],
         hours: availability.hours || '',
         advance_booking_days: availability.advance_booking_days || 30
-      });
-    }
+      };
+    });
   }, [availability]);
 
   const handleSave = async () => {
+    setIsSaving(true);
     try {
-      await setReservationAvailability(clientId, {
+      const saved = await setReservationAvailability(clientId, {
         days: config.days.join(','),
         hours: config.hours,
         advance_booking_days: config.advance_booking_days
+      });
+      // Actualiza el estado local con lo que devuelve el backend
+      setConfig({
+        days: saved.days || [],
+        hours: saved.hours || '',
+        advance_booking_days: saved.advance_booking_days || 30
       });
       onRefresh();
       toast({
@@ -316,6 +337,8 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
         description: error.message,
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -345,6 +368,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
                   checked={config.days.includes(day.value)}
                   onChange={() => toggleDay(day.value)}
                   className="rounded"
+                  disabled={isSaving}
                 />
                 <span>{day.label}</span>
               </label>
@@ -360,6 +384,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
             onChange={(e) => setConfig({ ...config, hours: e.target.value })}
             placeholder="Ej: 12:00-15:00, 19:00-23:00"
             className="w-full border rounded-md p-2 h-20"
+            disabled={isSaving}
           />
           <p className="text-sm text-gray-500 mt-1">
             Formato: HH:MM-HH:MM, HH:MM-HH:MM (separar múltiples horarios con comas)
@@ -376,14 +401,15 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
             className="border rounded-md p-2 w-32"
             min="1"
             max="365"
+            disabled={isSaving}
           />
           <p className="text-sm text-gray-500 mt-1">
             Número de días con anticipación que se pueden hacer reservas
           </p>
         </div>
 
-        <Button onClick={handleSave} className="w-full">
-          Guardar Configuración
+        <Button onClick={handleSave} className="w-full" disabled={isSaving}>
+          {isSaving ? 'Guardando...' : 'Guardar Configuración'}
         </Button>
       </CardContent>
     </Card>

@@ -102,24 +102,7 @@ const WidgetSettings = () => {
   const generateEmbedCode = () => {
     if (!client) return
     
-    const code = `<!-- NNIA Widget -->
-<script src="https://widget-nnia.vercel.app/nnia-widget.umd.js"></script>
-<script>
-  window.initNNIAWidget({
-    businessId: '${client.id}',
-    apiUrl: '${import.meta.env.VITE_API_URL}',
-    position: '${config.position}',
-    theme: {
-      primaryColor: '${config.primaryColor}',
-      backgroundColor: '${config.backgroundColor}',
-      textColor: '${config.textColor}'
-    },
-    welcomeMessage: '${config.welcomeMessage}',
-    autoOpen: ${config.autoOpen},
-    showTimestamp: ${config.showTimestamp},
-    maxMessages: ${config.maxMessages}
-  })
-</script>`
+    const code = `<!-- NNIA Widget -->\n<script src=\"https://widget-nnia.vercel.app/nnia-widget.umd.js\"\n  data-business-id=\"${client.id}\"\n  data-api-url=\"${import.meta.env.VITE_API_URL}\"\n  data-position=\"${config.position}\"\n  data-primary-color=\"${config.primaryColor}\"\n  data-background-color=\"${config.backgroundColor}\"\n  data-text-color=\"${config.textColor}\"\n  data-welcome-message=\"${config.welcomeMessage.replace(/"/g, '&quot;')}\"\n  data-auto-open=\"${config.autoOpen}\"\n  data-show-timestamp=\"${config.showTimestamp}\"\n  data-max-messages=\"${config.maxMessages}\">\n</script>`
     
     setEmbedCode(code)
   }
