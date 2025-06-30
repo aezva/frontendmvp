@@ -17,6 +17,7 @@ import WelcomeMessage from '@/components/WelcomeMessage';
 import CitasPage from '@/pages/Citas';
 import Topbar from './Topbar';
 import WidgetSettings from '@/components/WidgetSettings';
+import Reservations from '@/components/Reservations';
 
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -75,6 +76,7 @@ const ClientPanel = () => {
                 <Route path="/settings" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Settings /></motion.div>} />
                 <Route path="/citas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><CitasPage /></motion.div>} />
                 <Route path="/widget" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><WidgetSettings /></motion.div>} />
+                <Route path="/reservas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Reservations /></motion.div>} />
               </Routes>
             </AnimatePresence>
           </div>

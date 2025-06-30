@@ -26,6 +26,10 @@ const navItems = [{
   label: 'Citas',
   icon: Calendar
 }, {
+  href: '/reservas',
+  label: 'Reservas',
+  icon: Calendar
+}, {
   href: '/my-business',
   label: 'Mi Negocio',
   icon: Briefcase
