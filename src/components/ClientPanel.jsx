@@ -9,8 +9,6 @@ import MyBusiness from '@/components/MyBusiness';
 import AIAssistant from '@/components/AIAssistant';
 import Subscription from '@/components/Subscription';
 import Settings from '@/components/Settings';
-import Reservations from '@/components/Reservations';
-import WidgetSettings from '@/components/WidgetSettings';
 import { Menu, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -72,11 +70,9 @@ const ClientPanel = () => {
                 <Route path="/tickets" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Tickets /></motion.div>} />
                 <Route path="/my-business" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><MyBusiness /></motion.div>} />
                 <Route path="/assistant" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><AIAssistant /></motion.div>} />
-                <Route path="/widget" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><WidgetSettings /></motion.div>} />
                 <Route path="/subscription" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Subscription /></motion.div>} />
                 <Route path="/settings" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Settings /></motion.div>} />
                 <Route path="/citas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><CitasPage /></motion.div>} />
-                <Route path="/reservations" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Reservations /></motion.div>} />
               </Routes>
             </AnimatePresence>
           </div>
