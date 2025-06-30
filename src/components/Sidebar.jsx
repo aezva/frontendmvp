@@ -34,6 +34,10 @@ const navItems = [{
   label: 'Asistente IA',
   icon: Bot
 }, {
+  href: '/widget',
+  label: 'Widget',
+  icon: MessageSquare
+}, {
   href: '/subscription',
   label: 'Suscripción',
   icon: CreditCard

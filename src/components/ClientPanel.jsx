@@ -16,6 +16,7 @@ import AppTutorial from '@/components/AppTutorial';
 import WelcomeMessage from '@/components/WelcomeMessage';
 import CitasPage from '@/pages/Citas';
 import Topbar from './Topbar';
+import WidgetSettings from '@/components/WidgetSettings';
 
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -73,6 +74,7 @@ const ClientPanel = () => {
                 <Route path="/subscription" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Subscription /></motion.div>} />
                 <Route path="/settings" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Settings /></motion.div>} />
                 <Route path="/citas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><CitasPage /></motion.div>} />
+                <Route path="/widget" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><WidgetSettings /></motion.div>} />
               </Routes>
             </AnimatePresence>
           </div>
