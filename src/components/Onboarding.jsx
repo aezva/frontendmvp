@@ -126,7 +126,7 @@ const Onboarding = () => {
 
   // Generar código cuando se carga el paso del widget
   React.useEffect(() => {
-    if (currentStep === 3) {
+    if (currentStep === 3 && client) {
       generateEmbedCode();
     }
   }, [currentStep, client]);
@@ -194,6 +194,7 @@ const Onboarding = () => {
   };
 
   const renderStepContent = () => {
+    console.log('Current step:', currentStep);
     switch (currentStep) {
       case 0:
         return <Step1 formData={formData} handleInputChange={handleInputChange} />;
@@ -202,6 +203,7 @@ const Onboarding = () => {
       case 2:
         return <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />;
       case 3:
+        console.log('Rendering Step4 (Widget)');
         return <Step4 
           widgetConfig={widgetConfig} 
           handleWidgetLogoChange={handleWidgetLogoChange}
