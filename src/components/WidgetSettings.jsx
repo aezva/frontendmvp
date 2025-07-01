@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 import { Slider } from './ui/slider'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from './ui/use-toast'
+import imageCompression from 'browser-image-compression';
+import { supabase } from '../lib/supabaseClient';
 
 const WidgetSettings = () => {
   const { client } = useAuth()
@@ -37,10 +39,12 @@ const WidgetSettings = () => {
       saturday: { start: '10:00', end: '16:00', enabled: false },
       sunday: { start: '10:00', end: '16:00', enabled: false }
     },
-    offlineMessage: 'Estamos fuera de horario. Te responderemos pronto.'
+    offlineMessage: 'Estamos fuera de horario. Te responderemos pronto.',
+    widgetLogoUrl: null
   })
 
   const [embedCode, setEmbedCode] = useState('')
+  const [uploadingWidgetLogo, setUploadingWidgetLogo] = useState(false)
 
   useEffect(() => {
     loadWidgetConfig()
@@ -134,6 +138,35 @@ const WidgetSettings = () => {
     { key: 'sunday', label: 'Domingo' }
   ]
 
+  const handleWidgetLogoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Archivo inválido', description: 'Solo se permiten imágenes.' });
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast({ title: 'Archivo muy grande', description: 'El archivo debe pesar menos de 2MB.' });
+      return;
+    }
+    setUploadingWidgetLogo(true);
+    try {
+      const options = { maxWidthOrHeight: 720, maxSizeMB: 0.5, useWebWorker: true };
+      const compressedFile = await imageCompression(file, options);
+      const filePath = `${client.id}/widget-logo.jpg`;
+      const { error: uploadError } = await supabase.storage.from('public-assets').upload(filePath, compressedFile, { upsert: true, contentType: compressedFile.type });
+      if (uploadError) throw uploadError;
+      const { data } = await supabase.storage.from('public-assets').createSignedUrl(filePath, 60 * 60 * 24 * 365);
+      if (!data?.signedUrl) throw new Error('No se pudo obtener la URL del logo del widget.');
+      setConfig(prev => ({ ...prev, widgetLogoUrl: data.signedUrl }));
+      toast({ title: 'Logo del widget actualizado', description: 'La imagen del widget se actualizó correctamente.' });
+    } catch (err) {
+      toast({ title: 'Error al subir imagen', description: err.message || 'Intenta con otra imagen.' });
+    } finally {
+      setUploadingWidgetLogo(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -226,6 +259,23 @@ const WidgetSettings = () => {
                       placeholder="#1f2937"
                     />
                   </div>
+                </div>
+              </div>
+
+              {/* Logo del Widget */}
+              <div className="space-y-2">
+                <Label>Logo del Widget</Label>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="widget-logo-upload">
+                    <Button type="button" variant="outline" asChild disabled={uploadingWidgetLogo}>
+                      <span>{uploadingWidgetLogo ? 'Subiendo...' : 'Subir Imagen'}</span>
+                    </Button>
+                  </label>
+                  <input id="widget-logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleWidgetLogoChange} />
+                  <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
+                  {config.widgetLogoUrl && (
+                    <img src={config.widgetLogoUrl} alt="Logo del widget" className="h-16 mt-2 rounded" />
+                  )}
                 </div>
               </div>
             </CardContent>

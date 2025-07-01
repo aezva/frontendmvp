@@ -27,6 +27,7 @@ import { Helmet } from 'react-helmet';
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
+import imageCompression from 'browser-image-compression';
 
 const MyBusiness = () => {
   const { client } = useAuth();
@@ -59,6 +60,7 @@ const MyBusiness = () => {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -223,6 +225,35 @@ const MyBusiness = () => {
       });
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleLogoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Archivo inválido', description: 'Solo se permiten imágenes.' });
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast({ title: 'Archivo muy grande', description: 'El archivo debe pesar menos de 2MB.' });
+      return;
+    }
+    setUploadingLogo(true);
+    try {
+      const options = { maxWidthOrHeight: 720, maxSizeMB: 0.5, useWebWorker: true };
+      const compressedFile = await imageCompression(file, options);
+      const filePath = `${client.id}/logo.jpg`;
+      const { error: uploadError } = await supabase.storage.from('public-assets').upload(filePath, compressedFile, { upsert: true, contentType: compressedFile.type });
+      if (uploadError) throw uploadError;
+      const { data } = await supabase.storage.from('public-assets').createSignedUrl(filePath, 60 * 60 * 24 * 365);
+      if (!data?.signedUrl) throw new Error('No se pudo obtener la URL del logo.');
+      setBusinessInfo(prev => ({ ...prev, business_logo_url: data.signedUrl }));
+      toast({ title: 'Logo actualizado', description: 'El logo del negocio se actualizó correctamente.' });
+    } catch (err) {
+      toast({ title: 'Error al subir logo', description: err.message || 'Intenta con otra imagen.' });
+    } finally {
+      setUploadingLogo(false);
     }
   };
 
@@ -605,6 +636,18 @@ const MyBusiness = () => {
                         onChange={(e) => handleInputChange('business_logo_url', e.target.value)}
                         placeholder="https://ejemplo.com/logo.png"
                       />
+                      <div className="flex flex-col gap-2 mt-2">
+                        <label htmlFor="logo-upload">
+                          <Button type="button" variant="outline" asChild disabled={uploadingLogo}>
+                            <span>{uploadingLogo ? 'Subiendo...' : 'Subir Logo'}</span>
+                          </Button>
+                        </label>
+                        <input id="logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleLogoChange} />
+                        <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
+                        {businessInfo.business_logo_url && (
+                          <img src={businessInfo.business_logo_url} alt="Logo del negocio" className="h-16 mt-2 rounded" />
+                        )}
+                      </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="business_banner_url">URL del Banner</Label>

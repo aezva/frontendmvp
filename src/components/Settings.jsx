@@ -9,12 +9,15 @@ import { Helmet } from 'react-helmet';
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
+import { supabase } from '@/lib/supabaseClient';
 
 const Settings = () => {
   const { user, client, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +44,43 @@ const Settings = () => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   }
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    // Validar tipo
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Archivo inválido', description: 'Solo se permiten imágenes.' });
+      return;
+    }
+    // Validar tamaño (máx 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast({ title: 'Archivo muy grande', description: 'El archivo debe pesar menos de 2MB.' });
+      return;
+    }
+    setUploading(true);
+    try {
+      // Redimensionar a 720x720 px máx
+      const options = { maxWidthOrHeight: 720, maxSizeMB: 0.5, useWebWorker: true };
+      const compressedFile = await imageCompression(file, options);
+      // Subir a Supabase Storage
+      const filePath = `${client.id}/profile.jpg`;
+      const { error: uploadError } = await supabase.storage.from('public-assets').upload(filePath, compressedFile, { upsert: true, contentType: compressedFile.type });
+      if (uploadError) throw uploadError;
+      // Obtener URL firmada (válida por 1 año)
+      const { data } = await supabase.storage.from('public-assets').createSignedUrl(filePath, 60 * 60 * 24 * 365);
+      if (!data?.signedUrl) throw new Error('No se pudo obtener la URL de la imagen.');
+      // Actualizar perfil
+      const { error: updateError } = await supabase.from('clients').update({ profile_image_url: data.signedUrl }).eq('id', client.id);
+      if (updateError) throw updateError;
+      toast({ title: 'Imagen actualizada', description: 'Tu foto de perfil se actualizó correctamente.' });
+      window.location.reload();
+    } catch (err) {
+      toast({ title: 'Error al subir imagen', description: err.message || 'Intenta con otra imagen.' });
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -63,7 +103,15 @@ const Settings = () => {
                   <AvatarImage src={client?.profile_image_url} />
                   <AvatarFallback>{getInitials(client?.name)}</AvatarFallback>
                 </Avatar>
-                <Button type="button" variant="outline" onClick={() => toast({ title: "🚧 Próximamente..." })}>Cambiar Foto</Button>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="profile-image-upload">
+                    <Button type="button" variant="outline" asChild disabled={uploading}>
+                      <span>{uploading ? 'Subiendo...' : 'Cambiar Foto'}</span>
+                    </Button>
+                  </label>
+                  <input id="profile-image-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
+                  <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="name">Nombre</Label>
