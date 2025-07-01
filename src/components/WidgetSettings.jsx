@@ -274,7 +274,13 @@ const WidgetSettings = () => {
                   <input id="widget-logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleWidgetLogoChange} />
                   <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
                   {config.widgetLogoUrl && (
-                    <img src={config.widgetLogoUrl} alt="Logo del widget" className="h-16 mt-2 rounded" />
+                    <div className="mt-2">
+                      <img 
+                        src={config.widgetLogoUrl} 
+                        alt="Logo del widget" 
+                        className="max-w-32 max-h-32 w-auto h-auto rounded-lg object-contain border border-gray-200" 
+                      />
+                    </div>
                   )}
                 </div>
               </div>

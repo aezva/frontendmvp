@@ -645,7 +645,13 @@ const MyBusiness = () => {
                         <input id="logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleLogoChange} />
                         <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
                         {businessInfo.business_logo_url && (
-                          <img src={businessInfo.business_logo_url} alt="Logo del negocio" className="h-16 mt-2 rounded" />
+                          <div className="mt-2">
+                            <img 
+                              src={businessInfo.business_logo_url} 
+                              alt="Logo del negocio" 
+                              className="max-w-32 max-h-32 w-auto h-auto rounded-lg object-contain border border-gray-200" 
+                            />
+                          </div>
                         )}
                       </div>
                     </div>
