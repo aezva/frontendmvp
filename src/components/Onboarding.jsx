@@ -5,19 +5,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { Camera, Building, PartyPopper } from 'lucide-react';
+import { Camera, Building, PartyPopper, Globe, Upload } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from "@/components/ui/use-toast";
 import AppointmentPreferencesForm from './AppointmentPreferencesForm';
+import imageCompression from 'browser-image-compression';
 
 const steps = [
   { id: 1, name: 'Perfil de Usuario', fields: ['name', 'businessName'] },
   { id: 2, name: 'Datos del Negocio', fields: ['website', 'services', 'opening_hours'] },
   { id: 3, name: 'Preferencias de Citas' },
-  { id: 4, name: 'Finalizar' },
+  { id: 4, name: 'Widget de Chat' },
+  { id: 5, name: 'Finalizar' },
 ];
 
 const Onboarding = () => {
@@ -36,6 +38,34 @@ const Onboarding = () => {
     hours: '',
     types: ['phone', 'office', 'video'],
   });
+  
+  // Configuración del widget para el onboarding
+  const [widgetConfig, setWidgetConfig] = useState({
+    position: 'bottom-right',
+    primaryColor: '#ffffff',
+    backgroundColor: '#ffffff',
+    textColor: '#000000',
+    welcomeMessage: '¡Hola! Soy NNIA, tu asistente virtual. ¿En qué puedo ayudarte?',
+    autoOpen: false,
+    showTimestamp: true,
+    maxMessages: 50,
+    scheduleEnabled: false,
+    timezone: 'America/Mexico_City',
+    hours: {
+      monday: { start: '09:00', end: '18:00', enabled: true },
+      tuesday: { start: '09:00', end: '18:00', enabled: true },
+      wednesday: { start: '09:00', end: '18:00', enabled: true },
+      thursday: { start: '09:00', end: '18:00', enabled: true },
+      friday: { start: '09:00', end: '18:00', enabled: true },
+      saturday: { start: '10:00', end: '16:00', enabled: false },
+      sunday: { start: '10:00', end: '16:00', enabled: false }
+    },
+    offlineMessage: 'Estamos fuera de horario. Te responderemos pronto.',
+    widgetLogoUrl: null
+  });
+  
+  const [embedCode, setEmbedCode] = useState('');
+  const [uploadingWidgetLogo, setUploadingWidgetLogo] = useState(false);
 
   const next = () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
   const prev = () => setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
@@ -44,6 +74,62 @@ const Onboarding = () => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
+
+  // Función para subir logo del widget (reutilizada de WidgetSettings)
+  const handleWidgetLogoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast({ title: 'Archivo inválido', description: 'Solo se permiten imágenes.' });
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast({ title: 'Archivo muy grande', description: 'El archivo debe pesar menos de 2MB.' });
+      return;
+    }
+    setUploadingWidgetLogo(true);
+    try {
+      const options = { maxWidthOrHeight: 720, maxSizeMB: 0.5, useWebWorker: true };
+      const compressedFile = await imageCompression(file, options);
+      const filePath = `${client.id}/widget-logo.jpg`;
+      const { error: uploadError } = await supabase.storage.from('public-assets').upload(filePath, compressedFile, { upsert: true, contentType: compressedFile.type });
+      if (uploadError) throw uploadError;
+      const { data } = await supabase.storage.from('public-assets').createSignedUrl(filePath, 60 * 60 * 24 * 365);
+      if (!data?.signedUrl) throw new Error('No se pudo obtener la URL del logo del widget.');
+      setWidgetConfig(prev => ({ ...prev, widgetLogoUrl: data.signedUrl }));
+      toast({ title: 'Logo del widget actualizado', description: 'La imagen del widget se actualizó correctamente.' });
+      generateEmbedCode();
+    } catch (err) {
+      toast({ title: 'Error al subir imagen', description: err.message || 'Intenta con otra imagen.' });
+    } finally {
+      setUploadingWidgetLogo(false);
+    }
+  };
+
+  // Generar código HTML del widget
+  const generateEmbedCode = () => {
+    if (!client) return;
+    
+    const code = `<!-- NNIA Widget -->\n<script src="https://widget.iamnnia.com/nnia-widget.umd.js"\n  data-business-id="${client.id}"\n  data-api-url="${import.meta.env.VITE_API_URL}"\n  data-position="${widgetConfig.position}"\n  data-primary-color="${widgetConfig.primaryColor}"\n  data-background-color="${widgetConfig.backgroundColor}"\n  data-text-color="${widgetConfig.textColor}"\n  data-welcome-message="${widgetConfig.welcomeMessage.replace(/"/g, '&quot;')}"\n  data-auto-open="${widgetConfig.autoOpen}"\n  data-show-timestamp="${widgetConfig.showTimestamp}"\n  data-max-messages="${widgetConfig.maxMessages}">\n</script>`;
+    
+    setEmbedCode(code);
+  };
+
+  // Copiar código al portapapeles
+  const copyEmbedCode = () => {
+    navigator.clipboard.writeText(embedCode);
+    toast({
+      title: "Código copiado",
+      description: "El código de integración se ha copiado al portapapeles.",
+    });
+  };
+
+  // Generar código cuando se carga el paso del widget
+  React.useEffect(() => {
+    if (currentStep === 3) {
+      generateEmbedCode();
+    }
+  }, [currentStep, client]);
 
   const handleComplete = async () => {
     try {
@@ -81,6 +167,15 @@ const Onboarding = () => {
         .from('subscriptions')
         .insert({ client_id: client.id, plan: 'free', status: 'active' });
        if (subError) throw subError;
+
+      // 5. Save widget configuration
+      const { error: widgetError } = await supabase
+        .from('widget_configs')
+        .upsert({ 
+          business_id: client.id, 
+          config: widgetConfig 
+        });
+      if (widgetError) throw widgetError;
       
       toast({
         title: "🎉 ¡Bienvenido a Bordo!",
@@ -107,7 +202,15 @@ const Onboarding = () => {
       case 2:
         return <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />;
       case 3:
-        return <Step3 />;
+        return <Step4 
+          widgetConfig={widgetConfig} 
+          handleWidgetLogoChange={handleWidgetLogoChange}
+          uploadingWidgetLogo={uploadingWidgetLogo}
+          embedCode={embedCode}
+          copyEmbedCode={copyEmbedCode}
+        />;
+      case 4:
+        return <Step5 />;
       default:
         return null;
     }
@@ -219,12 +322,121 @@ const Step2 = ({ formData, handleInputChange }) => (
   </div>
 );
 
-const Step3 = () => (
+const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embedCode, copyEmbedCode }) => (
+  <div className="space-y-6">
+    <div className="flex items-center space-x-4">
+      <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
+        <Globe className="w-8 h-8 text-muted-foreground" />
+      </div>
+      <div>
+        <h2 className="text-2xl font-semibold">Widget de Chat</h2>
+        <p className="text-muted-foreground">Configura tu widget de chat para integrarlo en tu sitio web.</p>
+      </div>
+    </div>
+    
+    <div className="space-y-6">
+      {/* Logo del Widget */}
+      <div className="space-y-4">
+        <div>
+          <Label className="text-lg font-medium">Logo del Widget</Label>
+          <p className="text-sm text-muted-foreground">Sube una imagen para personalizar tu widget (opcional)</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="widget-logo-upload">
+            <Button type="button" variant="outline" asChild disabled={uploadingWidgetLogo}>
+              <span className="flex items-center gap-2">
+                <Upload className="w-4 h-4" />
+                {uploadingWidgetLogo ? 'Subiendo...' : 'Subir Imagen'}
+              </span>
+            </Button>
+          </label>
+          <input id="widget-logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleWidgetLogoChange} />
+          <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
+          {widgetConfig.widgetLogoUrl && (
+            <div className="mt-2">
+              <img 
+                src={widgetConfig.widgetLogoUrl} 
+                alt="Logo del widget" 
+                className="max-w-32 max-h-32 w-auto h-auto rounded-lg object-contain border border-gray-200" 
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Vista previa del widget */}
+      <div className="space-y-4">
+        <div>
+          <Label className="text-lg font-medium">Vista Previa</Label>
+          <p className="text-sm text-muted-foreground">Así se verá tu widget en tu sitio web</p>
+        </div>
+        <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+          <div className="flex items-center space-x-3 mb-3">
+            <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center">
+              {widgetConfig.widgetLogoUrl ? (
+                <img src={widgetConfig.widgetLogoUrl} alt="Logo" className="w-6 h-6 rounded-full object-cover" />
+              ) : (
+                <span className="text-sm font-semibold text-gray-600">NNIA</span>
+              )}
+            </div>
+            <div>
+              <div className="font-medium text-black">NNIA</div>
+              <div className="text-xs text-gray-500">Asistente virtual</div>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-3 border border-gray-200">
+            <p className="text-sm text-black">{widgetConfig.welcomeMessage}</p>
+          </div>
+          <div className="mt-3 flex justify-end">
+            <div className="bg-pink-400 text-black px-3 py-1 rounded-full text-sm font-medium">
+              Enviar
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Código HTML */}
+      <div className="space-y-4">
+        <div>
+          <Label className="text-lg font-medium">Código de Integración</Label>
+          <p className="text-sm text-muted-foreground">Copia este código y pégalo en tu sitio web</p>
+        </div>
+        <div className="relative">
+          <textarea
+            value={embedCode}
+            readOnly
+            className="w-full h-32 p-3 bg-gray-100 border border-gray-300 rounded-md text-sm font-mono resize-none"
+          />
+          <Button 
+            onClick={copyEmbedCode}
+            className="absolute top-2 right-2"
+            size="sm"
+          >
+            Copiar
+          </Button>
+        </div>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h4 className="font-medium text-blue-900 mb-2">¿Cómo integrar el widget?</h4>
+          <ol className="text-sm text-blue-800 space-y-1">
+            <li>1. Copia el código HTML de arriba</li>
+            <li>2. Pégalo en tu sitio web, justo antes del cierre de la etiqueta &lt;/body&gt;</li>
+            <li>3. ¡Listo! El widget aparecerá en tu sitio web</li>
+          </ol>
+          <p className="text-sm text-blue-700 mt-3">
+            <strong>Nota:</strong> Puedes personalizar los colores, posición y mensajes de tu widget en la sección "Configuración del Widget" del panel de cliente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const Step5 = () => (
   <div className="text-center py-8">
     <PartyPopper className="w-24 h-24 text-primary mx-auto mb-6 animate-bounce" />
     <h2 className="text-3xl font-bold">¡Todo listo!</h2>
     <p className="text-muted-foreground mt-2 max-w-md mx-auto">
-      Has completado la configuración inicial. Tu asistente de IA está casi listo para empezar a trabajar.
+      Has completado la configuración inicial. Tu asistente de IA está listo para empezar a trabajar.
     </p>
   </div>
 );
