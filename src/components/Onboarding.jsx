@@ -67,8 +67,14 @@ const Onboarding = () => {
   const [embedCode, setEmbedCode] = useState('');
   const [uploadingWidgetLogo, setUploadingWidgetLogo] = useState(false);
 
-  const next = () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
-  const prev = () => setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
+  const next = () => {
+    console.log('Next button clicked, current step:', currentStep, 'steps length:', steps.length);
+    setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+  };
+  const prev = () => {
+    console.log('Prev button clicked, current step:', currentStep);
+    setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
+  };
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -126,7 +132,9 @@ const Onboarding = () => {
 
   // Generar código cuando se carga el paso del widget
   React.useEffect(() => {
+    console.log('Step changed to:', currentStep);
     if (currentStep === 3 && client) {
+      console.log('Generating embed code for step 3');
       generateEmbedCode();
     }
   }, [currentStep, client]);
