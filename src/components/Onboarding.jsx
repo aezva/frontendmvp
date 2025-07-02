@@ -67,14 +67,8 @@ const Onboarding = () => {
   const [embedCode, setEmbedCode] = useState('');
   const [uploadingWidgetLogo, setUploadingWidgetLogo] = useState(false);
 
-  const next = () => {
-    console.log('Next button clicked, current step:', currentStep, 'steps length:', steps.length);
-    setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
-  };
-  const prev = () => {
-    console.log('Prev button clicked, current step:', currentStep);
-    setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
-  };
+  const next = () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+  const prev = () => setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -132,9 +126,7 @@ const Onboarding = () => {
 
   // Generar código cuando se carga el paso del widget
   React.useEffect(() => {
-    console.log('Step changed to:', currentStep);
     if (currentStep === 3 && client) {
-      console.log('Generating embed code for step 3');
       generateEmbedCode();
     }
   }, [currentStep, client]);
@@ -202,7 +194,6 @@ const Onboarding = () => {
   };
 
   const renderStepContent = () => {
-    console.log('Current step:', currentStep);
     switch (currentStep) {
       case 0:
         return <Step1 formData={formData} handleInputChange={handleInputChange} />;
@@ -211,7 +202,6 @@ const Onboarding = () => {
       case 2:
         return <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />;
       case 3:
-        console.log('Rendering Step4 (Widget)');
         return <Step4 
           widgetConfig={widgetConfig} 
           handleWidgetLogoChange={handleWidgetLogoChange}
