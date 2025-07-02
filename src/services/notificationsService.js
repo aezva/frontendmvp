@@ -14,4 +14,24 @@ export async function createNotification(notification) {
 export async function markNotificationRead(id) {
   const res = await axios.post(`${API_URL}/nnia/notifications/${id}/read`);
   return res.data.notification;
+}
+
+export async function fetchTickets(clientId) {
+  const { data, error } = await window.supabase
+    .from('tickets')
+    .select('*')
+    .eq('client_id', clientId)
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+export async function fetchLeads(clientId) {
+  const { data, error } = await window.supabase
+    .from('leads')
+    .select('*')
+    .eq('client_id', clientId)
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data;
 } 
