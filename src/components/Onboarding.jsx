@@ -108,9 +108,9 @@ const Onboarding = () => {
 
   // Generar código HTML del widget
   const generateEmbedCode = () => {
-    if (!client) return;
+    const businessId = client?.id || 'temp-id';
     
-    const code = `<!-- NNIA Widget -->\n<script src="https://widget.iamnnia.com/nnia-widget.umd.js"\n  data-business-id="${client.id}"\n  data-api-url="${import.meta.env.VITE_API_URL}"\n  data-position="${widgetConfig.position}"\n  data-primary-color="${widgetConfig.primaryColor}"\n  data-background-color="${widgetConfig.backgroundColor}"\n  data-text-color="${widgetConfig.textColor}"\n  data-welcome-message="${widgetConfig.welcomeMessage.replace(/"/g, '&quot;')}"\n  data-auto-open="${widgetConfig.autoOpen}"\n  data-show-timestamp="${widgetConfig.showTimestamp}"\n  data-max-messages="${widgetConfig.maxMessages}">\n</script>`;
+    const code = `<!-- NNIA Widget -->\n<script src="https://widget.iamnnia.com/nnia-widget.umd.js"\n  data-business-id="${businessId}"\n  data-api-url="${import.meta.env.VITE_API_URL}"\n  data-position="${widgetConfig.position}"\n  data-primary-color="${widgetConfig.primaryColor}"\n  data-background-color="${widgetConfig.backgroundColor}"\n  data-text-color="${widgetConfig.textColor}"\n  data-welcome-message="${widgetConfig.welcomeMessage.replace(/"/g, '&quot;')}"\n  data-auto-open="${widgetConfig.autoOpen}"\n  data-show-timestamp="${widgetConfig.showTimestamp}"\n  data-max-messages="${widgetConfig.maxMessages}">\n</script>`;
     
     setEmbedCode(code);
   };
@@ -126,10 +126,10 @@ const Onboarding = () => {
 
   // Generar código cuando se carga el paso del widget
   React.useEffect(() => {
-    if (currentStep === 3 && client) {
+    if (currentStep === 3) {
       generateEmbedCode();
     }
-  }, [currentStep, client]);
+  }, [currentStep]);
 
   const handleComplete = async () => {
     try {
