@@ -35,6 +35,10 @@ const Messages = () => {
   const [ticketReply, setTicketReply] = useState('');
   const [replyLoading, setReplyLoading] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
+  const [conversations, setConversations] = useState([]);
+  const [selectedConversation, setSelectedConversation] = useState(null);
+  const [conversationMessages, setConversationMessages] = useState([]);
+  const [convLoading, setConvLoading] = useState(false);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -130,50 +134,68 @@ const Messages = () => {
     };
   }, [client, toast]);
 
+  useEffect(() => {
+    if (!client) return;
+    const fetchConversations = async () => {
+      setConvLoading(true);
+      try {
+        const res = await fetch(`/api/nnia/conversations?clientId=${client.id}`);
+        const data = await res.json();
+        if (data.success) setConversations(data.conversations);
+        else setConversations([]);
+      } catch {
+        setConversations([]);
+      }
+      setConvLoading(false);
+    };
+    if (activeTab === 'messages') fetchConversations();
+  }, [client, activeTab]);
+
+  useEffect(() => {
+    if (!client || !selectedConversation) return;
+    const fetchConvMessages = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/nnia/messages?clientId=${client.id}&visitorId=${selectedConversation.visitor_id}`);
+        const data = await res.json();
+        if (data.success) setConversationMessages(data.messages);
+        else setConversationMessages([]);
+      } catch {
+        setConversationMessages([]);
+      }
+      setLoading(false);
+    };
+    fetchConvMessages();
+  }, [client, selectedConversation]);
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (newMessage.trim() === '') return;
-
-    // 1. Guardar mensaje del usuario en Supabase
-    const { error: userError } = await supabase
-      .from('messages')
-      .insert({
-        client_id: client.id,
-        sender: 'user',
-        text: newMessage,
-        source: 'web',
-      });
-    
-    if (userError) {
-      toast({ title: 'Error', description: userError.message, variant: 'destructive' });
-      return;
-    }
-
-    // 2. Enviar mensaje al backend para obtener respuesta de NNIA
+    if (newMessage.trim() === '' || !selectedConversation) return;
+    setLoading(true);
     try {
+      // Enviar mensaje al backend (se guardará usuario y NNIA)
       const response = await fetch('/api/nnia/respond', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           clientId: client.id,
           message: newMessage,
-          source: 'web',
+          source: 'panel',
+          visitorId: selectedConversation.visitor_id
         }),
       });
       const data = await response.json();
-      if (data.nnia) {
-        // 3. Guardar respuesta de NNIA en Supabase
-        await supabase.from('messages').insert({
-          client_id: client.id,
-          sender: 'assistant',
-          text: data.nnia,
-          source: 'nnia',
-        });
+      // Refrescar mensajes tras enviar
+      if (data.success) {
+        const res = await fetch(`/api/nnia/messages?clientId=${client.id}&visitorId=${selectedConversation.visitor_id}`);
+        const msgData = await res.json();
+        setConversationMessages(msgData.messages || []);
       }
     } catch (err) {
-      toast({ title: 'Error', description: 'Error al obtener respuesta de NNIA', variant: 'destructive' });
+      toast({ title: 'Error', description: 'Error al enviar mensaje', variant: 'destructive' });
     }
     setNewMessage('');
+    setLoading(false);
   };
 
   async function archiveTicket(id) {
@@ -245,178 +267,70 @@ const Messages = () => {
           ))}
         </div>
         <Card className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 h-[calc(100vh-12rem)] bg-card/50">
-          <div className="col-span-1 border-r border-border flex flex-col">
-            <div className="p-4 border-b border-border">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Buscar..." className="pl-9" />
-              </div>
-            </div>
-            <div className="flex-1 overflow-y-auto p-2 text-center text-muted-foreground text-sm">
-              {activeTab === 'messages' && <p>Lista de conversaciones (próximamente)</p>}
-              {activeTab === 'tickets' && (
-                <>
-                  <Button className="mb-2" size="sm" onClick={() => exportToCSV(tickets.map(t => ({
-                    Visitante: t.visitor_name || t.visitor_id,
-                    Estado: t.status,
-                    Mensaje: t.message,
-                    Fecha: new Date(t.created_at).toLocaleString()
-                  })), 'tickets.csv')}>Exportar a CSV</Button>
-                  {tickets.length === 0 ? <p>No hay tickets.</p> : tickets.map(ticket => (
-                    <div key={ticket.id} className="mb-2 p-2 border rounded text-left cursor-pointer hover:bg-muted/30" onClick={() => setSelectedTicket(ticket)}>
-                      <div><b>Visitante:</b> {ticket.visitor_name || ticket.visitor_id}</div>
-                      <div><b>Estado:</b> {ticket.status}</div>
-                      <div><b>Mensaje:</b> {ticket.message}</div>
-                      <div><b>Fecha:</b> {new Date(ticket.created_at).toLocaleString()}</div>
-                      <button className="mt-2 text-xs text-blue-600 hover:underline" onClick={e => { e.stopPropagation(); archiveTicket(ticket.id); }}>Archivar</button>
+          {activeTab === 'messages' && (
+            <div className="col-span-1 border-r border-border flex flex-col overflow-y-auto">
+              <div className="p-4 border-b border-border font-semibold">Conversaciones</div>
+              {convLoading ? (
+                <div className="flex-1 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin" /></div>
+              ) : conversations.length === 0 ? (
+                <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin conversaciones</div>
+              ) : (
+                conversations.map(conv => (
+                  <div
+                    key={conv.visitor_id}
+                    className={`flex items-center gap-3 p-4 cursor-pointer hover:bg-muted/50 ${selectedConversation && selectedConversation.visitor_id === conv.visitor_id ? 'bg-muted' : ''}`}
+                    onClick={() => setSelectedConversation(conv)}
+                  >
+                    <Avatar>
+                      <AvatarFallback>{conv.visitor_id?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium truncate">{conv.visitor_id?.slice(0, 8)}</div>
+                      <div className="text-xs text-muted-foreground truncate">{conv.last_message}</div>
                     </div>
-                  ))}
-                  <Dialog open={!!selectedTicket} onOpenChange={open => !open && setSelectedTicket(null)}>
-                    <DialogContent>
-                      <DialogTitle>Detalle del Ticket</DialogTitle>
-                      {selectedTicket && (
-                        <>
-                          <DialogDescription>
-                            <div><b>Visitante:</b> {selectedTicket.visitor_name || selectedTicket.visitor_id}</div>
-                            <div><b>Estado:</b> {selectedTicket.status}</div>
-                            <div><b>Mensaje inicial:</b> {selectedTicket.message}</div>
-                            <div><b>Fecha:</b> {new Date(selectedTicket.created_at).toLocaleString()}</div>
-                          </DialogDescription>
-                          <div className="my-4">
-                            <div className="font-semibold mb-2">Historial de mensajes</div>
-                            <div className="max-h-48 overflow-y-auto space-y-2">
-                              {ticketMessages.length === 0 ? <div className="text-muted-foreground">Sin mensajes</div> : ticketMessages.map((msg, idx) => (
-                                <div key={idx} className={`text-sm p-2 rounded ${msg.sender === 'responsible' ? 'bg-primary/10 text-primary' : 'bg-muted'}`}>
-                                  <b>{msg.sender === 'responsible' ? 'Tú' : msg.sender}:</b> {msg.text}
-                                  <div className="text-xs text-muted-foreground">{new Date(msg.timestamp).toLocaleString()}</div>
-                                </div>
-                              ))}
-                            </div>
+                    <div className="text-xs text-muted-foreground">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleString() : ''}</div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+          <div className={`col-span-1 md:col-span-2 lg:col-span-3 flex flex-col ${activeTab === 'messages' ? '' : 'items-center justify-center'}`}>
+            {activeTab === 'messages' ? (
+              selectedConversation ? (
+                <>
+                  <div className="flex-1 p-6 overflow-y-auto space-y-4">
+                    {loading ? (
+                      <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin" /></div>
+                    ) : (
+                      conversationMessages.map((msg) => (
+                        <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`${msg.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'} p-3 rounded-lg max-w-xs`}>
+                            {msg.text}
                           </div>
-                          {selectedTicket.status === 'open' && (
-                            <DialogFooter>
-                              <Input
-                                placeholder="Escribe una respuesta..."
-                                value={ticketReply}
-                                onChange={e => setTicketReply(e.target.value)}
-                                disabled={replyLoading}
-                              />
-                              <Button onClick={handleTicketReply} disabled={replyLoading || !ticketReply.trim()}>
-                                {replyLoading ? 'Enviando...' : 'Responder'}
-                              </Button>
-                            </DialogFooter>
-                          )}
-                        </>
-                      )}
-                    </DialogContent>
-                  </Dialog>
-                </>
-              )}
-              {activeTab === 'leads' && (
-                <>
-                  <Button className="mb-2" size="sm" onClick={() => exportToCSV(leads.map(l => ({
-                    Visitante: l.visitor_name || l.visitor_id,
-                    Email: l.visitor_email || '-',
-                    Teléfono: l.visitor_phone || '-',
-                    Mensaje: l.message,
-                    Fecha: new Date(l.created_at).toLocaleString()
-                  })), 'leads.csv')}>Exportar a CSV</Button>
-                  {leads.length === 0 ? <p>No hay leads.</p> : leads.map(lead => (
-                    <div key={lead.id} className="mb-2 p-2 border rounded text-left cursor-pointer hover:bg-muted/30" onClick={() => setSelectedLead(lead)}>
-                      <div><b>Visitante:</b> {lead.visitor_name || lead.visitor_id}</div>
-                      <div><b>Email:</b> {lead.visitor_email || '-'}</div>
-                      <div><b>Teléfono:</b> {lead.visitor_phone || '-'}</div>
-                      <div><b>Mensaje:</b> {lead.message}</div>
-                      <div><b>Fecha:</b> {new Date(lead.created_at).toLocaleString()}</div>
-                      <button className="mt-2 text-xs text-blue-600 hover:underline" onClick={e => { e.stopPropagation(); archiveLead(lead.id); }}>Archivar</button>
-                    </div>
-                  ))}
-                  <Dialog open={!!selectedLead} onOpenChange={open => !open && setSelectedLead(null)}>
-                    <DialogContent>
-                      <DialogTitle>Detalle del Lead</DialogTitle>
-                      {selectedLead && (
-                        <>
-                          <DialogDescription>
-                            <div><b>Visitante:</b> {selectedLead.visitor_name || selectedLead.visitor_id}</div>
-                            <div><b>Email:</b> <span style={{cursor:'pointer',color:'#2563eb'}} onClick={() => navigator.clipboard.writeText(selectedLead.visitor_email || '')}>{selectedLead.visitor_email || '-'}</span></div>
-                            <div><b>Teléfono:</b> <span style={{cursor:'pointer',color:'#2563eb'}} onClick={() => navigator.clipboard.writeText(selectedLead.visitor_phone || '')}>{selectedLead.visitor_phone || '-'}</span></div>
-                            <div><b>Mensaje:</b> {selectedLead.message}</div>
-                            <div><b>Fecha:</b> {new Date(selectedLead.created_at).toLocaleString()}</div>
-                          </DialogDescription>
-                        </>
-                      )}
-                    </DialogContent>
-                  </Dialog>
-                </>
-              )}
-              {activeTab === 'archived' && (
-                <>
-                  <div className="mb-2 font-semibold">Tickets Archivados</div>
-                  {archivedTickets.length === 0 ? <p>No hay tickets archivados.</p> : archivedTickets.map(ticket => (
-                    <div key={ticket.id} className="mb-2 p-2 border rounded text-left bg-muted/50">
-                      <div><b>Visitante:</b> {ticket.visitor_name || ticket.visitor_id}</div>
-                      <div><b>Estado:</b> {ticket.status}</div>
-                      <div><b>Mensaje:</b> {ticket.message}</div>
-                      <div><b>Fecha:</b> {new Date(ticket.created_at).toLocaleString()}</div>
-                    </div>
-                  ))}
-                  <div className="mb-2 font-semibold mt-4">Leads Archivados</div>
-                  {archivedLeads.length === 0 ? <p>No hay leads archivados.</p> : archivedLeads.map(lead => (
-                    <div key={lead.id} className="mb-2 p-2 border rounded text-left bg-muted/50">
-                      <div><b>Visitante:</b> {lead.visitor_name || lead.visitor_id}</div>
-                      <div><b>Email:</b> {lead.visitor_email || '-'}</div>
-                      <div><b>Teléfono:</b> {lead.visitor_phone || '-'}</div>
-                      <div><b>Mensaje:</b> {lead.message}</div>
-                      <div><b>Fecha:</b> {new Date(lead.created_at).toLocaleString()}</div>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
-          <div className="col-span-1 md:col-span-2 lg:col-span-3 flex flex-col">
-            {activeTab === 'messages' && (
-              <>
-                <div className="p-4 border-b border-border flex items-center space-x-4">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src="https://i.pravatar.cc/150?u=visitor" />
-                    <AvatarFallback>V</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold">Visitante Web</p>
-                    <p className="text-sm text-green-400">En línea</p>
-                  </div>
-                </div>
-                <div className="flex-1 p-6 overflow-y-auto space-y-4">
-                  {loading ? (
-                    <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin" /></div>
-                  ) : (
-                    messages.map((msg) => (
-                      <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`${msg.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'} p-3 rounded-lg max-w-xs`}>
-                          {msg.text}
                         </div>
-                      </div>
-                    ))
-                  )}
-                  <div ref={messagesEndRef} />
-                </div>
-                <form onSubmit={handleSendMessage} className="p-4 border-t border-border mt-auto">
-                  <div className="relative">
-                    <Input
-                      placeholder="Escribe un mensaje..."
-                      className="pr-12"
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                    />
-                    <Button type="submit" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8">
-                      <Send className="h-4 w-4" />
-                    </Button>
+                      ))
+                    )}
+                    <div ref={messagesEndRef} />
                   </div>
-                </form>
-              </>
-            )}
-            {activeTab !== 'messages' && (
+                  <form onSubmit={handleSendMessage} className="p-4 border-t border-border mt-auto">
+                    <div className="relative">
+                      <Input
+                        placeholder="Escribe un mensaje..."
+                        className="pr-12"
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        disabled={loading}
+                      />
+                      <Button type="submit" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8" disabled={loading}>
+                        <Send className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </form>
+                </>
+              ) : (
+                <div className="flex-1 flex items-center justify-center text-muted-foreground">Selecciona una conversación para ver los mensajes.</div>
+              )
+            ) : (
               <div className="flex-1 flex items-center justify-center text-muted-foreground">
                 <span>Selecciona un ticket o lead para ver más detalles (próximamente).</span>
               </div>
