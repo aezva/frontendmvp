@@ -139,7 +139,7 @@ const Messages = () => {
     const fetchConversations = async () => {
       setConvLoading(true);
       try {
-        const res = await fetch(`/api/nnia/conversations?clientId=${client.id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/conversations?clientId=${client.id}`);
         const data = await res.json();
         if (data.success) setConversations(data.conversations);
         else setConversations([]);
@@ -156,7 +156,7 @@ const Messages = () => {
     const fetchConvMessages = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/nnia/messages?clientId=${client.id}&visitorId=${selectedConversation.visitor_id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/messages?clientId=${client.id}&visitorId=${selectedConversation.visitor_id}`);
         const data = await res.json();
         if (data.success) setConversationMessages(data.messages);
         else setConversationMessages([]);
@@ -174,7 +174,7 @@ const Messages = () => {
     setLoading(true);
     try {
       // Enviar mensaje al backend (se guardará usuario y NNIA)
-      const response = await fetch('/api/nnia/respond', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/nnia/respond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -187,7 +187,7 @@ const Messages = () => {
       const data = await response.json();
       // Refrescar mensajes tras enviar
       if (data.success) {
-        const res = await fetch(`/api/nnia/messages?clientId=${client.id}&visitorId=${selectedConversation.visitor_id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/messages?clientId=${client.id}&visitorId=${selectedConversation.visitor_id}`);
         const msgData = await res.json();
         setConversationMessages(msgData.messages || []);
       }
