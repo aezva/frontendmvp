@@ -18,6 +18,40 @@ const TABS = [
   { key: 'archived', label: 'Archivados' },
 ];
 
+// Nuevo: Componente de tarjeta para Lead/Ticket
+function LeadTicketCard({ item, type, onViewConversation }) {
+  return (
+    <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 p-4 mb-4 flex flex-col gap-2">
+      <div className="flex items-center gap-2 mb-1">
+        <span className="inline-block px-2 py-0.5 text-xs rounded-full font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200">
+          {type === 'lead' ? 'Lead' : 'Ticket'}
+        </span>
+        <span className="text-xs text-zinc-400 ml-auto">{new Date(item.created_at).toLocaleString()}</span>
+      </div>
+      {type === 'lead' && (
+        <>
+          <div className="text-sm font-medium text-zinc-800 dark:text-zinc-100">{item.visitor_name || 'Visitante'}</div>
+          {item.visitor_email && <div className="text-xs text-zinc-500">📧 {item.visitor_email}</div>}
+          {item.visitor_phone && <div className="text-xs text-zinc-500">📱 {item.visitor_phone}</div>}
+        </>
+      )}
+      {type === 'ticket' && (
+        <>
+          <div className="text-sm font-medium text-zinc-800 dark:text-zinc-100">{item.visitor_name || 'Visitante'}</div>
+          <div className="text-xs text-zinc-500">{item.message}</div>
+          <div className="text-xs text-zinc-500">Estado: <span className="font-semibold">{item.status}</span></div>
+        </>
+      )}
+      <button
+        className="mt-2 px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition"
+        onClick={() => onViewConversation(item.visitor_id)}
+      >
+        Ver conversación
+      </button>
+    </div>
+  );
+}
+
 const Messages = () => {
   const { client } = useAuth();
   const { toast } = useToast();
@@ -290,6 +324,38 @@ const Messages = () => {
                     </div>
                     <div className="text-xs text-muted-foreground">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleString() : ''}</div>
                   </div>
+                ))
+              )}
+            </div>
+          )}
+          {activeTab === 'leads' && (
+            <div className="col-span-1 border-r border-border flex flex-col overflow-y-auto p-4">
+              <div className="font-semibold mb-2">Leads</div>
+              {leads.length === 0 ? (
+                <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin leads</div>
+              ) : (
+                leads.map(lead => (
+                  <LeadTicketCard key={lead.id} item={lead} type="lead" onViewConversation={(visitorId) => {
+                    setActiveTab('messages');
+                    const conv = conversations.find(c => c.visitor_id === visitorId) || { visitor_id: visitorId };
+                    setSelectedConversation(conv);
+                  }} />
+                ))
+              )}
+            </div>
+          )}
+          {activeTab === 'tickets' && (
+            <div className="col-span-1 border-r border-border flex flex-col overflow-y-auto p-4">
+              <div className="font-semibold mb-2">Tickets</div>
+              {tickets.length === 0 ? (
+                <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin tickets</div>
+              ) : (
+                tickets.map(ticket => (
+                  <LeadTicketCard key={ticket.id} item={ticket} type="ticket" onViewConversation={(visitorId) => {
+                    setActiveTab('messages');
+                    const conv = conversations.find(c => c.visitor_id === visitorId) || { visitor_id: visitorId };
+                    setSelectedConversation(conv);
+                  }} />
                 ))
               )}
             </div>
