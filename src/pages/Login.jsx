@@ -96,7 +96,7 @@ const Login = () => {
             </div>
             {/* Columna derecha: imagen */}
             <div className="flex w-full md:w-1/2 bg-muted items-center justify-center p-0">
-              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-contain" />
+              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

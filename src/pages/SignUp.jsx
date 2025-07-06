@@ -95,8 +95,7 @@ const SignUp = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      <p className="text-xs text-muted-foreground">La contraseña debe tener al menos 6 caracteres.</p>
-                      <p className="text-sm text-muted-foreground mt-1">La contraseña debe tener un número, mayúscula y minúscula, y mínimo 8 caracteres.</p>
+                      <p className="text-xs text-muted-foreground">La contraseña debe tener un número, mayúscula y minúscula, y mínimo 8 caracteres.</p>
                     </div>
                     <Button type="submit" className="w-full" disabled={loading}>
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Crear Cuenta'}
@@ -113,7 +112,7 @@ const SignUp = () => {
             </div>
             {/* Columna derecha: imagen */}
             <div className="flex w-full md:w-1/2 bg-muted items-center justify-center p-0">
-              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="w-full h-full object-contain" />
+              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
