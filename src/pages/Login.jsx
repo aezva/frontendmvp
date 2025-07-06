@@ -50,7 +50,7 @@ const Login = () => {
         <div className="flex-1 w-full flex items-center justify-center p-0 md:p-4">
           <div className="w-full max-w-4xl bg-card rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden animate-fade-in">
             {/* Columna izquierda: formulario */}
-            <div className="w-full md:w-1/2 flex items-center justify-center py-0 md:py-0 px-6 md:px-10 border-b-0 md:border-r md:border-input">
+            <div className="w-[80%] md:w-1/2 flex items-center justify-center py-0 md:py-0 px-6 md:px-10 border-b-0 md:border-r md:border-input">
               <Card className="w-full max-w-md mx-auto shadow-none border-none">
                 <CardHeader className="text-center px-6 md:px-10 py-0 mb-6">
                   <Bot className="mx-auto h-12 w-12 text-primary" />
@@ -95,7 +95,7 @@ const Login = () => {
               </Card>
             </div>
             {/* Columna derecha: imagen */}
-            <div className="flex w-full md:w-1/2 bg-muted items-center justify-center p-0">
+            <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-0">
               <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-cover" />
             </div>
           </div>
