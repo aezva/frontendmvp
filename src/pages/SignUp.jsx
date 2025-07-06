@@ -105,8 +105,8 @@ const SignUp = () => {
             </Card>
           </div>
           {/* Columna derecha: imagen */}
-          <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-6 md:p-10">
-            <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="max-w-xs w-full h-auto object-contain rounded-lg shadow" />
+          <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-0">
+            <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>
