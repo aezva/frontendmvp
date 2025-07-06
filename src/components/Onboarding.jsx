@@ -229,14 +229,14 @@ const Onboarding = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
             <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
           </div>
 
           <div className="mb-8">
-            <Progress value={progress} className="w-full h-2 rounded-full" style={{ '--tw-bg-primary': '#ff9c9c', '--tw-bg-muted': '#ff9c9c' }} />
+            <Progress value={progress} className="w-full h-2 rounded-full bg-white" style={{ '--tw-bg-primary': '#ff9c9c' }} />
             <div className="flex justify-between mt-2 text-sm text-muted-foreground">
               <span>{steps[currentStep].name}</span>
               <span>Paso {currentStep + 1} de {steps.length}</span>
@@ -244,7 +244,7 @@ const Onboarding = () => {
           </div>
 
           <Card className="bg-card border-border/40 shadow-lg">
-            <CardContent className="p-8">
+            <CardContent className="p-10">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStep}
@@ -257,7 +257,7 @@ const Onboarding = () => {
                 </motion.div>
               </AnimatePresence>
             </CardContent>
-            <CardFooter className="flex justify-between p-8 pt-0">
+            <CardFooter className="flex justify-between p-10 pt-0">
               <Button variant="outline" onClick={prev} disabled={currentStep === 0}>
                 Anterior
               </Button>
@@ -275,8 +275,8 @@ const Onboarding = () => {
 };
 
 const Step1 = ({ formData, handleInputChange }) => (
-  <div className="space-y-6">
-    <div className="flex items-center space-x-4">
+  <div className="space-y-8">
+    <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors">
         <Camera className="w-8 h-8 text-muted-foreground" />
       </div>
@@ -285,7 +285,7 @@ const Step1 = ({ formData, handleInputChange }) => (
         <p className="text-muted-foreground">Información básica sobre ti y tu negocio.</p>
       </div>
     </div>
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div>
         <Label htmlFor="name">Nombre completo</Label>
         <Input id="name" placeholder="Ej: Juan Pérez" value={formData.name} onChange={handleInputChange} />
@@ -299,8 +299,8 @@ const Step1 = ({ formData, handleInputChange }) => (
 );
 
 const Step2 = ({ formData, handleInputChange }) => (
-  <div className="space-y-6">
-    <div className="flex items-center space-x-4">
+  <div className="space-y-8">
+    <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
         <Building className="w-8 h-8 text-muted-foreground" />
       </div>
@@ -309,7 +309,7 @@ const Step2 = ({ formData, handleInputChange }) => (
         <p className="text-muted-foreground">Cuéntanos sobre la empresa que representas.</p>
       </div>
     </div>
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-6">
       <div>
         <Label htmlFor="website">Sitio web</Label>
         <Input id="website" placeholder="https://www.techsolutions.com" value={formData.website} onChange={handleInputChange} />
@@ -327,8 +327,8 @@ const Step2 = ({ formData, handleInputChange }) => (
 );
 
 const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embedCode, copyEmbedCode }) => (
-  <div className="space-y-6">
-    <div className="flex items-center space-x-4">
+  <div className="space-y-8">
+    <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
         <Globe className="w-8 h-8 text-muted-foreground" />
       </div>
@@ -377,9 +377,9 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
 
 const Step5 = () => (
   <div className="text-center py-8">
-    <PartyPopper className="w-24 h-24 text-primary mx-auto mb-6 animate-bounce" />
+    <PartyPopper className="w-24 h-24 text-primary mx-auto mb-8 animate-bounce" />
     <h2 className="text-3xl font-bold">¡Todo listo!</h2>
-    <p className="text-muted-foreground mt-2 max-w-md mx-auto">
+    <p className="text-muted-foreground mt-4 max-w-md mx-auto">
       Has completado la configuración inicial. Tu asistente de IA está listo para empezar a trabajar.
     </p>
   </div>
