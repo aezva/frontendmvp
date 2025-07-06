@@ -101,13 +101,11 @@ const SignUp = () => {
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Crear Cuenta'}
                     </Button>
                   </form>
-                  <div className="mt-4 flex justify-center">
-                    <span className="text-sm text-center">
-                      ¿Ya tienes una cuenta?{' '}
-                      <Link to="/login" className="underline text-primary font-medium focus:outline-none focus:ring-2 focus:ring-primary/50" style={{ padding: 0 }}>
-                        Inicia Sesión
-                      </Link>
-                    </span>
+                  <div className="w-full text-center mt-4 text-sm">
+                    ¿Ya tienes una cuenta?{' '}
+                    <Link to="/login" className="underline text-primary font-medium">
+                      Inicia Sesión
+                    </Link>
                   </div>
                 </CardContent>
               </Card>

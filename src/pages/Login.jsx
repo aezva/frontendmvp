@@ -85,13 +85,11 @@ const Login = () => {
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Iniciar Sesión'}
                     </Button>
                   </form>
-                  <div className="mt-4 flex justify-center">
-                    <span className="text-sm text-center">
-                      ¿No tienes una cuenta?{' '}
-                      <Link to="/signup" className="underline text-primary font-medium focus:outline-none focus:ring-2 focus:ring-primary/50" style={{ padding: 0 }}>
-                        Regístrate
-                      </Link>
-                    </span>
+                  <div className="w-full text-center mt-4 text-sm">
+                    ¿No tienes una cuenta?{' '}
+                    <Link to="/signup" className="underline text-primary font-medium">
+                      Regístrate
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
