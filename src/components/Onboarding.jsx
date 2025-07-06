@@ -233,7 +233,7 @@ const Onboarding = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="w-full max-w-4xl mx-auto h-[600px] flex flex-col">
+        <div className="w-full max-w-4xl mx-auto h-[700px] flex flex-col">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
             <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
@@ -280,7 +280,7 @@ const Onboarding = () => {
 };
 
 const Step1 = ({ formData, handleInputChange }) => (
-  <div className="flex-1 flex flex-col justify-center space-y-8">
+  <div className="flex-1 flex flex-col justify-center space-y-12">
     <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors">
         <Camera className="w-8 h-8 text-muted-foreground" />
@@ -290,7 +290,7 @@ const Step1 = ({ formData, handleInputChange }) => (
         <p className="text-muted-foreground">Información básica sobre ti y tu negocio.</p>
       </div>
     </div>
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
         <Label htmlFor="name">Nombre completo</Label>
         <Input id="name" placeholder="Ej: Juan Pérez" value={formData.name} onChange={handleInputChange} />
@@ -304,7 +304,7 @@ const Step1 = ({ formData, handleInputChange }) => (
 );
 
 const Step2 = ({ formData, handleInputChange }) => (
-  <div className="flex-1 flex flex-col justify-center space-y-8">
+  <div className="flex-1 flex flex-col justify-center space-y-12">
     <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
         <Building className="w-8 h-8 text-muted-foreground" />
@@ -314,7 +314,7 @@ const Step2 = ({ formData, handleInputChange }) => (
         <p className="text-muted-foreground">Cuéntanos sobre la empresa que representas.</p>
       </div>
     </div>
-    <div className="grid grid-cols-1 gap-6">
+    <div className="grid grid-cols-1 gap-8">
       <div>
         <Label htmlFor="website">Sitio web</Label>
         <Input id="website" placeholder="https://www.techsolutions.com" value={formData.website} onChange={handleInputChange} />
@@ -332,7 +332,7 @@ const Step2 = ({ formData, handleInputChange }) => (
 );
 
 const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embedCode, copyEmbedCode }) => (
-  <div className="flex-1 flex flex-col justify-center space-y-8">
+  <div className="flex-1 flex flex-col justify-center space-y-12">
     <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
         <Globe className="w-8 h-8 text-muted-foreground" />
@@ -343,9 +343,9 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
       </div>
     </div>
     {/* Solo código de integración e instrucciones, sin logo ni vista previa */}
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Código HTML */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div>
           <Label className="text-lg font-medium">Código de Integración</Label>
           <p className="text-sm text-muted-foreground">Copia este código y pégalo en tu sitio web</p>
@@ -381,12 +381,14 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
 );
 
 const Step5 = () => (
-  <div className="flex-1 flex flex-col justify-center items-center text-center">
-    <PartyPopper className="w-24 h-24 text-primary mx-auto mb-8 animate-bounce" />
-    <h2 className="text-3xl font-bold">¡Todo listo!</h2>
-    <p className="text-muted-foreground mt-4 max-w-md mx-auto">
-      Has completado la configuración inicial. Tu asistente de IA está listo para empezar a trabajar.
-    </p>
+  <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8">
+    <PartyPopper className="w-24 h-24 text-primary mx-auto animate-bounce" />
+    <div className="space-y-4">
+      <h2 className="text-3xl font-bold">¡Todo listo!</h2>
+      <p className="text-muted-foreground max-w-md mx-auto">
+        Has completado la configuración inicial. Tu asistente de IA está listo para empezar a trabajar.
+      </p>
+    </div>
   </div>
 );
 
