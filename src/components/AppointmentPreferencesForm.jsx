@@ -2,12 +2,12 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, Phone, MapPin, Video, CheckCircle2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const APPOINTMENT_TYPES = [
-  { value: 'phone', label: 'Llamada Telefónica', icon: <Phone className="h-4 w-4 inline" /> },
-  { value: 'office', label: 'Visita en Oficina', icon: <MapPin className="h-4 w-4 inline" /> },
-  { value: 'video', label: 'Videollamada', icon: <Video className="h-4 w-4 inline" /> },
+  { value: 'phone', label: 'Llamada Telefónica' },
+  { value: 'office', label: 'Visita en Oficina' },
+  { value: 'video', label: 'Videollamada' },
 ];
 
 const WEEKDAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
@@ -44,11 +44,10 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
             <Button
               key={day}
               type="button"
-              variant={availability.days.includes(day) ? 'default' : 'outline'}
-              className={availability.days.includes(day) ? 'ring-2 ring-primary font-bold' : ''}
+              variant="outline"
+              className={availability.days.includes(day) ? 'bg-muted text-foreground' : ''}
               onClick={() => handleToggleDay(day)}
             >
-              {availability.days.includes(day) && <CheckCircle2 className="inline mr-1 text-primary" size={18} />}
               {day}
             </Button>
           ))}
@@ -71,12 +70,11 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
             <Button
               key={type.value}
               type="button"
-              variant={availability.types.includes(type.value) ? 'default' : 'outline'}
-              className={availability.types.includes(type.value) ? 'ring-2 ring-primary font-bold' : ''}
+              variant="outline"
+              className={availability.types.includes(type.value) ? 'bg-muted text-foreground' : ''}
               onClick={() => handleToggleType(type.value)}
             >
-              {availability.types.includes(type.value) && <CheckCircle2 className="inline mr-1 text-primary" size={18} />}
-              {type.icon} {type.label}
+              {type.label}
             </Button>
           ))}
         </div>
