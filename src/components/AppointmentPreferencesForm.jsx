@@ -37,9 +37,9 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="space-y-2">
         <Label>Días disponibles</Label>
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="flex flex-wrap gap-2">
           {WEEKDAYS.map(day => (
             <Button
               key={day}
@@ -54,7 +54,7 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
           ))}
         </div>
       </div>
-      <div>
+      <div className="space-y-2">
         <Label>Horarios disponibles</Label>
         <Input
           type="text"
@@ -62,11 +62,11 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
           value={availability.hours}
           onChange={e => handleAvailabilityChange('hours', e.target.value)}
         />
-        <div className="text-xs text-muted-foreground mt-1">Puedes poner varios rangos separados por coma.</div>
+        <div className="text-xs text-muted-foreground">Puedes poner varios rangos separados por coma.</div>
       </div>
-      <div>
+      <div className="space-y-2">
         <Label>Tipos de cita disponibles</Label>
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="flex flex-wrap gap-2">
           {APPOINTMENT_TYPES.map(type => (
             <Button
               key={type.value}

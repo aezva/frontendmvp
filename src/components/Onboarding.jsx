@@ -251,7 +251,15 @@ const Onboarding = () => {
           </div>
 
           <div className="mb-8">
-            <Progress value={progress} className="w-full h-2 rounded-full bg-white" style={{ '--tw-bg-primary': '#ff9c9c' }} />
+            <div className="relative h-2 w-full overflow-hidden rounded-full bg-white">
+              <div 
+                className="h-full bg-pink-400 transition-all duration-300 ease-out"
+                style={{ 
+                  width: `${progress}%`,
+                  backgroundColor: '#ff9c9c'
+                }}
+              />
+            </div>
             <div className="flex justify-between mt-2 text-sm text-muted-foreground">
               <span>{steps[currentStep].name}</span>
               <span>Paso {currentStep + 1} de {steps.length}</span>
@@ -302,11 +310,11 @@ const Step1 = ({ formData, handleInputChange }) => (
       </div>
     </div>
     <div className="space-y-8">
-      <div>
+      <div className="space-y-2">
         <Label htmlFor="name">Nombre completo</Label>
         <Input id="name" placeholder="Ej: Juan Pérez" value={formData.name} onChange={handleInputChange} />
       </div>
-      <div>
+      <div className="space-y-2">
         <Label htmlFor="businessName">Nombre de tu negocio</Label>
         <Input id="businessName" placeholder="Ej: Tech Solutions S.A." value={formData.businessName} onChange={handleInputChange} />
       </div>
@@ -326,15 +334,15 @@ const Step2 = ({ formData, handleInputChange }) => (
       </div>
     </div>
     <div className="grid grid-cols-1 gap-8">
-      <div>
+      <div className="space-y-2">
         <Label htmlFor="website">Sitio web</Label>
         <Input id="website" placeholder="https://www.techsolutions.com" value={formData.website} onChange={handleInputChange} />
       </div>
-      <div>
+      <div className="space-y-2">
         <Label htmlFor="services">Servicios ofrecidos</Label>
         <Textarea id="services" placeholder="Describe brevemente los servicios que ofreces..." value={formData.services} onChange={handleInputChange} />
       </div>
-      <div>
+      <div className="space-y-2">
         <Label htmlFor="opening_hours">Horarios de atención</Label>
         <Input id="opening_hours" placeholder="Ej: Lunes a Viernes de 9:00 a 18:00" value={formData.opening_hours} onChange={handleInputChange} />
       </div>
@@ -357,7 +365,7 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
     <div className="space-y-8">
       {/* Código HTML */}
       <div className="space-y-6">
-        <div>
+        <div className="space-y-2">
           <Label className="text-lg font-medium">Código de Integración</Label>
           <p className="text-sm text-muted-foreground">Copia este código y pégalo en tu sitio web</p>
         </div>
