@@ -17,7 +17,7 @@ import imageCompression from 'browser-image-compression';
 const steps = [
   { id: 1, name: 'Perfil de Usuario', fields: ['name', 'businessName'] },
   { id: 2, name: 'Datos del Negocio', fields: ['website', 'services', 'opening_hours'] },
-  { id: 3, name: 'Preferencias de Citas' },
+  { id: 3, name: 'Gestión de Servicios' },
   { id: 4, name: 'Widget de Chat' },
   { id: 5, name: 'Finalizar' },
 ];
@@ -33,10 +33,11 @@ const Onboarding = () => {
     services: '',
     opening_hours: '',
   });
+  const [serviceType, setServiceType] = useState(''); // 'appointments' o 'reservations'
   const [availability, setAvailability] = useState({
     days: [],
     hours: '',
-    types: ['phone', 'office', 'video'],
+    types: [],
   });
   
   // Configuración del widget para el onboarding
@@ -150,9 +151,11 @@ const Onboarding = () => {
         website: formData.website,
         services: formData.services,
         opening_hours: formData.opening_hours,
+        service_type: serviceType,
         appointment_days: availability.days.join(','),
         appointment_hours: availability.hours,
         appointment_types: availability.types.join(','),
+        max_capacity: availability.maxCapacity || null,
       });
       if (businessInfoError) throw businessInfoError;
 
@@ -207,12 +210,17 @@ const Onboarding = () => {
                 <Calendar className="w-5 h-5" style={{ color: '#ff9c9c' }} />
               </div>
               <div>
-                <h2 className="text-xl font-inter font-semibold text-black">Preferencias de Citas</h2>
-                <p className="text-muted-foreground">Configura tu disponibilidad para recibir citas.</p>
+                <h2 className="text-xl font-inter font-semibold text-black">Gestión de Servicios</h2>
+                <p className="text-muted-foreground">Configura qué tipo de servicios gestionas y tu disponibilidad.</p>
               </div>
             </div>
             <div>
-              <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />
+              <ServiceManagementForm 
+                serviceType={serviceType}
+                setServiceType={setServiceType}
+                availability={availability}
+                setAvailability={setAvailability}
+              />
             </div>
           </div>
         );
@@ -398,6 +406,150 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
     </div>
   </div>
 );
+
+const ServiceManagementForm = ({ serviceType, setServiceType, availability, setAvailability }) => {
+  const handleServiceTypeChange = (type) => {
+    setServiceType(type);
+    // Resetear disponibilidad cuando cambia el tipo de servicio
+    setAvailability({
+      days: [],
+      hours: '',
+      types: [],
+    });
+  };
+
+  const handleAvailabilityChange = (field, value) => {
+    setAvailability(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleToggleDay = (day) => {
+    setAvailability(prev => ({
+      ...prev,
+      days: prev.days.includes(day)
+        ? prev.days.filter(d => d !== day)
+        : [...prev.days, day]
+    }));
+  };
+
+  const handleToggleType = (type) => {
+    setAvailability(prev => ({
+      ...prev,
+      types: prev.types.includes(type)
+        ? prev.types.filter(t => t !== type)
+        : [...prev.types, type]
+    }));
+  };
+
+  const WEEKDAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  
+  const APPOINTMENT_TYPES = [
+    { value: 'phone', label: 'Llamada Telefónica' },
+    { value: 'office', label: 'Visita en Oficina' },
+    { value: 'video', label: 'Videollamada' },
+  ];
+
+  const RESERVATION_TYPES = [
+    { value: 'table', label: 'Mesa' },
+    { value: 'room', label: 'Habitación' },
+    { value: 'service', label: 'Servicio' },
+  ];
+
+  return (
+    <div className="space-y-8">
+      {/* Selector de tipo de servicio */}
+      <div className="space-y-4">
+        <Label className="text-lg font-medium">¿Qué tipo de servicio gestionas?</Label>
+        <div className="flex flex-wrap gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            className={serviceType === 'appointments' ? 'bg-muted text-foreground' : ''}
+            onClick={() => handleServiceTypeChange('appointments')}
+          >
+            Citas (consultas, asesorías, bufetes)
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className={serviceType === 'reservations' ? 'bg-muted text-foreground' : ''}
+            onClick={() => handleServiceTypeChange('reservations')}
+          >
+            Reservas (restaurantes, hoteles, salones)
+          </Button>
+        </div>
+      </div>
+
+      {/* Configuración específica según el tipo seleccionado */}
+      {serviceType && (
+        <div className="space-y-6">
+          {/* Días disponibles */}
+          <div className="space-y-2">
+            <Label>Días disponibles</Label>
+            <div className="flex flex-wrap gap-2">
+              {WEEKDAYS.map(day => (
+                <Button
+                  key={day}
+                  type="button"
+                  variant="outline"
+                  className={availability.days.includes(day) ? 'bg-muted text-foreground' : ''}
+                  onClick={() => handleToggleDay(day)}
+                >
+                  {day}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Horarios disponibles */}
+          <div className="space-y-2">
+            <Label>Horarios disponibles</Label>
+            <Input
+              type="text"
+              placeholder="Ej: 09:00-13:00, 15:00-18:00"
+              value={availability.hours}
+              onChange={e => handleAvailabilityChange('hours', e.target.value)}
+            />
+            <div className="text-xs text-muted-foreground">Puedes poner varios rangos separados por coma.</div>
+          </div>
+
+          {/* Tipos específicos según el servicio */}
+          <div className="space-y-2">
+            <Label>
+              {serviceType === 'appointments' ? 'Tipos de cita disponibles' : 'Tipos de reserva disponibles'}
+            </Label>
+            <div className="flex flex-wrap gap-2">
+              {(serviceType === 'appointments' ? APPOINTMENT_TYPES : RESERVATION_TYPES).map(type => (
+                <Button
+                  key={type.value}
+                  type="button"
+                  variant="outline"
+                  className={availability.types.includes(type.value) ? 'bg-muted text-foreground' : ''}
+                  onClick={() => handleToggleType(type.value)}
+                >
+                  {type.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Campo adicional para reservas */}
+          {serviceType === 'reservations' && (
+            <div className="space-y-2">
+              <Label>Capacidad máxima por reserva</Label>
+              <Input
+                type="number"
+                placeholder="Ej: 10 personas"
+                value={availability.maxCapacity || ''}
+                onChange={e => handleAvailabilityChange('maxCapacity', e.target.value)}
+              />
+              <div className="text-xs text-muted-foreground">Número máximo de personas por reserva.</div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Step5 = () => (
   <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8">
