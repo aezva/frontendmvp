@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { Camera, Building, PartyPopper, Globe, Upload, Calendar } from 'lucide-react';
+import { User, Building2, Calendar, MessageCircle, CheckCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
@@ -203,8 +203,8 @@ const Onboarding = () => {
         return (
           <div className="flex-1 flex flex-col justify-center space-y-12">
             <div className="flex items-center space-x-6">
-              <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
-                <Calendar className="w-8 h-8 text-muted-foreground" />
+              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                <Calendar className="w-5 h-5" style={{ color: '#ff9c9c' }} />
               </div>
               <div>
                 <h2 className="text-xl font-inter font-semibold text-black">Preferencias de Citas</h2>
@@ -293,8 +293,8 @@ const Onboarding = () => {
 const Step1 = ({ formData, handleInputChange }) => (
   <div className="flex-1 flex flex-col justify-center space-y-12">
     <div className="flex items-center space-x-6">
-      <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors">
-        <Camera className="w-8 h-8 text-muted-foreground" />
+      <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+        <User className="w-5 h-5" style={{ color: '#ff9c9c' }} />
       </div>
       <div>
         <h2 className="text-xl font-inter font-semibold text-black">Tu Perfil</h2>
@@ -317,8 +317,8 @@ const Step1 = ({ formData, handleInputChange }) => (
 const Step2 = ({ formData, handleInputChange }) => (
   <div className="flex-1 flex flex-col justify-center space-y-12">
     <div className="flex items-center space-x-6">
-      <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
-        <Building className="w-8 h-8 text-muted-foreground" />
+      <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+        <Building2 className="w-5 h-5" style={{ color: '#ff9c9c' }} />
       </div>
       <div>
         <h2 className="text-xl font-inter font-semibold text-black">Tu Negocio</h2>
@@ -345,8 +345,8 @@ const Step2 = ({ formData, handleInputChange }) => (
 const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embedCode, copyEmbedCode }) => (
   <div className="flex-1 flex flex-col justify-center space-y-12">
     <div className="flex items-center space-x-6">
-      <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
-        <Globe className="w-8 h-8 text-muted-foreground" />
+      <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+        <MessageCircle className="w-5 h-5" style={{ color: '#ff9c9c' }} />
       </div>
       <div>
         <h2 className="text-xl font-inter font-semibold text-black">Widget de Chat</h2>
@@ -393,7 +393,9 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
 
 const Step5 = () => (
   <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8">
-    <PartyPopper className="w-24 h-24 text-primary mx-auto animate-bounce" />
+    <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+      <CheckCircle className="w-5 h-5" style={{ color: '#ff9c9c' }} />
+    </div>
     <div className="space-y-4">
       <h2 className="text-xl font-inter font-semibold text-black">¡Todo listo!</h2>
       <p className="text-muted-foreground max-w-md mx-auto">
