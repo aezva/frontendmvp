@@ -225,14 +225,18 @@ const Onboarding = () => {
         <meta name="description" content="Completa los pasos para configurar tu asistente de IA personalizado." />
       </Helmet>
       <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans" style={{ background: '#F4F4F5' }}>
+        {/* Logo NNIA */}
+        <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
+          <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
+        </div>
         <div className="w-full max-w-2xl mx-auto">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
-            <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para que ella este mejor preparada.</p>
+            <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
           </div>
 
           <div className="mb-8">
-            <Progress value={progress} className="w-full h-2 rounded-full" style={{ '--tw-bg-primary': '#ff9c9c' }} />
+            <Progress value={progress} className="w-full h-2 rounded-full" style={{ '--tw-bg-primary': '#ff9c9c', '--tw-bg-muted': '#ff9c9c' }} />
             <div className="flex justify-between mt-2 text-sm text-muted-foreground">
               <span>{steps[currentStep].name}</span>
               <span>Paso {currentStep + 1} de {steps.length}</span>
@@ -333,68 +337,8 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
         <p className="text-muted-foreground">Configura tu widget de chat para integrarlo en tu sitio web.</p>
       </div>
     </div>
-    
+    {/* Solo código de integración e instrucciones, sin logo ni vista previa */}
     <div className="space-y-6">
-      {/* Logo del Widget */}
-      <div className="space-y-4">
-        <div>
-          <Label className="text-lg font-medium">Logo del Widget</Label>
-          <p className="text-sm text-muted-foreground">Sube una imagen para personalizar tu widget (opcional)</p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="widget-logo-upload">
-            <Button type="button" variant="outline" asChild disabled={uploadingWidgetLogo}>
-              <span className="flex items-center gap-2">
-                <Upload className="w-4 h-4" />
-                {uploadingWidgetLogo ? 'Subiendo...' : 'Subir Imagen'}
-              </span>
-            </Button>
-          </label>
-          <input id="widget-logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleWidgetLogoChange} />
-          <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
-          {widgetConfig.widgetLogoUrl && (
-            <div className="mt-2">
-              <img 
-                src={widgetConfig.widgetLogoUrl} 
-                alt="Logo del widget" 
-                className="max-w-32 max-h-32 w-auto h-auto rounded-lg object-contain border border-gray-200" 
-              />
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Vista previa del widget */}
-      <div className="space-y-4">
-        <div>
-          <Label className="text-lg font-medium">Vista Previa</Label>
-          <p className="text-sm text-muted-foreground">Así se verá tu widget en tu sitio web</p>
-        </div>
-        <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
-          <div className="flex items-center space-x-3 mb-3">
-            <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center">
-              {widgetConfig.widgetLogoUrl ? (
-                <img src={widgetConfig.widgetLogoUrl} alt="Logo" className="w-6 h-6 rounded-full object-cover" />
-              ) : (
-                <span className="text-sm font-semibold text-gray-600">NNIA</span>
-              )}
-            </div>
-            <div>
-              <div className="font-medium text-black">NNIA</div>
-              <div className="text-xs text-gray-500">Asistente virtual</div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-3 border border-gray-200">
-            <p className="text-sm text-black">{widgetConfig.welcomeMessage}</p>
-          </div>
-          <div className="mt-3 flex justify-end">
-            <div className="bg-pink-400 text-black px-3 py-1 rounded-full text-sm font-medium">
-              Enviar
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Código HTML */}
       <div className="space-y-4">
         <div>
