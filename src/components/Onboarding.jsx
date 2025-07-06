@@ -224,15 +224,15 @@ const Onboarding = () => {
         <title>Onboarding - Configura tu Asistente IA</title>
         <meta name="description" content="Completa los pasos para configurar tu asistente de IA personalizado." />
       </Helmet>
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 font-sans">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans" style={{ background: '#F4F4F5' }}>
         <div className="w-full max-w-2xl mx-auto">
           <div className="mb-8 text-center">
-            <h1 className="text-4xl font-bold text-primary">Configura tu Asistente IA</h1>
-            <p className="text-muted-foreground mt-2">Sigue los pasos para personalizar tu experiencia.</p>
+            <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
+            <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para que ella este mejor preparada.</p>
           </div>
 
           <div className="mb-8">
-            <Progress value={progress} className="w-full" />
+            <Progress value={progress} className="w-full h-2 rounded-full" style={{ '--tw-bg-primary': '#ff9c9c' }} />
             <div className="flex justify-between mt-2 text-sm text-muted-foreground">
               <span>{steps[currentStep].name}</span>
               <span>Paso {currentStep + 1} de {steps.length}</span>
