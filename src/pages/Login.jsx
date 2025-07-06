@@ -50,12 +50,12 @@ const Login = () => {
         <div className="flex-1 w-full flex items-center justify-center p-0 md:p-4">
           <div className="w-full max-w-4xl bg-card rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden animate-fade-in">
             {/* Columna izquierda: formulario */}
-            <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
+            <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10 border-b-0 md:border-r md:border-input">
               <Card className="w-full max-w-md mx-auto shadow-none border-none">
                 <CardHeader className="text-center">
                   <Bot className="mx-auto h-12 w-12 text-primary" />
-                  <CardTitle className="mt-4">¡Bienvenido de Nuevo!</CardTitle>
-                  <CardDescription>Ingresa a tu cuenta para gestionar tu asistente de IA.</CardDescription>
+                  <CardTitle className="mt-4 text-xl font-inter font-semibold">Bienvenido de Nuevo</CardTitle>
+                  <CardDescription className="font-inter">Ingresa a tu cuenta para trabajar con NNIA.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleLogin} className="space-y-4">
@@ -65,6 +65,7 @@ const Login = () => {
                         id="email"
                         type="email"
                         placeholder="tu@email.com"
+                        className="placeholder-[#ff9c9c]"
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -84,11 +85,13 @@ const Login = () => {
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Iniciar Sesión'}
                     </Button>
                   </form>
-                  <div className="mt-4 text-center text-sm">
-                    ¿No tienes una cuenta?{' '}
-                    <Link to="/signup" className="underline text-primary">
-                      Regístrate
-                    </Link>
+                  <div className="mt-4 flex justify-center">
+                    <span className="text-sm text-center">
+                      ¿No tienes una cuenta?{' '}
+                      <Link to="/signup" className="inline-block underline text-primary font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 px-1">
+                        Regístrate
+                      </Link>
+                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -101,8 +104,10 @@ const Login = () => {
         </div>
         {/* Aviso legal */}
         <div className="w-full flex justify-center mt-6 mb-4">
-          <p className="text-xs text-muted-foreground text-center max-w-md">
-            Al hacer clic en continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.
+          <p className="text-xs text-muted-foreground text-center w-[95%] max-w-2xl md:w-[70%] md:max-w-3xl">
+            Al hacer clic en continuar, aceptas nuestros 
+            <span className="font-medium" style={{ color: '#ff9c9c' }}>Términos de Servicio</span> y 
+            <span className="font-medium" style={{ color: '#ff9c9c' }}>Política de Privacidad</span>.
           </p>
         </div>
       </div>

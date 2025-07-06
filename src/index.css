@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -98,4 +98,8 @@ body {
 
 .font-alata {
   font-family: 'Alata', Arial, sans-serif;
+}
+
+.font-inter {
+  font-family: 'Inter', Arial, sans-serif;
 }
