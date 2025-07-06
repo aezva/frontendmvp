@@ -295,7 +295,7 @@ const Onboarding = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="w-full max-w-4xl mx-auto h-[800px] flex flex-col">
+        <div className="w-full max-w-4xl mx-auto h-[750px] flex flex-col">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
             <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
@@ -595,39 +595,54 @@ const ServiceManagementForm = ({ serviceType, setServiceType, appointmentsConfig
             <div className="text-xs text-muted-foreground">Puedes poner varios rangos separados por coma.</div>
           </div>
 
-          {/* Tipos específicos según el servicio */}
-          <div className="space-y-2">
-            <Label>
-              {serviceType === 'appointments' ? 'Tipos de cita disponibles' : 'Tipos de reserva disponibles'}
-            </Label>
-            <div className="flex flex-wrap gap-2">
-              {(serviceType === 'appointments' ? APPOINTMENT_TYPES : RESERVATION_TYPES).map(type => (
-                <Button
-                  key={type.value}
-                  type="button"
-                  variant="outline"
-                  className={(serviceType === 'appointments' ? appointmentsConfig.types : reservationsConfig.types).includes(type.value) ? 'bg-muted text-foreground' : ''}
-                  onClick={() => handleToggleType(type.value)}
-                >
-                  {type.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Campo adicional para reservas */}
-          {serviceType === 'reservations' && (
+          {/* Tipos específicos según el servicio y días de anticipación juntos para reservas */}
+          {serviceType === 'appointments' ? (
             <div className="space-y-2">
-              <Label>Días de anticipación para reservas</Label>
-              <Input
-                type="number"
-                placeholder="Ej: 30"
-                value={reservationsConfig.advance_booking_days || ''}
-                onChange={e => handleAvailabilityChange('advance_booking_days', parseInt(e.target.value) || 30)}
-                min="1"
-                max="365"
-              />
-              <div className="text-xs text-muted-foreground">Número de días con anticipación que se pueden hacer reservas (1-365 días).</div>
+              <Label>Tipos de cita disponibles</Label>
+              <div className="flex flex-wrap gap-2">
+                {APPOINTMENT_TYPES.map(type => (
+                  <Button
+                    key={type.value}
+                    type="button"
+                    variant="outline"
+                    className={appointmentsConfig.types.includes(type.value) ? 'bg-muted text-foreground' : ''}
+                    onClick={() => handleToggleType(type.value)}
+                  >
+                    {type.label}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+              <div className="space-y-2">
+                <Label>Tipos de reserva disponibles</Label>
+                <div className="flex flex-wrap gap-2">
+                  {RESERVATION_TYPES.map(type => (
+                    <Button
+                      key={type.value}
+                      type="button"
+                      variant="outline"
+                      className={reservationsConfig.types.includes(type.value) ? 'bg-muted text-foreground' : ''}
+                      onClick={() => handleToggleType(type.value)}
+                    >
+                      {type.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label>Días de anticipación para reservas</Label>
+                <Input
+                  type="number"
+                  placeholder="Ej: 30"
+                  value={reservationsConfig.advance_booking_days || ''}
+                  onChange={e => handleAvailabilityChange('advance_booking_days', parseInt(e.target.value) || 30)}
+                  min="1"
+                  max="365"
+                />
+                <div className="text-xs text-muted-foreground">Días de anticipación (1-365)</div>
+              </div>
             </div>
           )}
         </div>
