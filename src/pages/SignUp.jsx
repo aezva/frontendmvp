@@ -95,7 +95,7 @@ const SignUp = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      <p className="text-xs text-muted-foreground">La contraseña debe tener un número, mayúscula y minúscula, y mínimo 8 caracteres.</p>
+                      <p className="text-xs text-muted-foreground text-center">Mínimo 8 caracteres, con número, mayúscula y minúscula.</p>
                     </div>
                     <Button type="submit" className="w-full" disabled={loading}>
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Crear Cuenta'}
