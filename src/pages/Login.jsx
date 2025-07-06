@@ -85,16 +85,10 @@ const Login = () => {
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Iniciar Sesión'}
                     </Button>
                   </form>
-                  <div className="w-full text-center mt-4 text-sm">
-                    ¿No tienes una cuenta?{' '}
-                    <Link to="/signup" className="underline text-primary font-medium">
-                      Regístrate
-                    </Link>
-                  </div>
                   {/* Nuevo botón de registro bien hecho */}
                   <div className="w-full flex justify-center mt-2">
-                    <Link to="/signup" className="text-sm font-medium underline transition-colors" style={{ color: '#ff9c9c', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
-                      Regístrate
+                    <Link to="/signup" className="text-sm font-medium transition-colors" style={{ color: '#ff9c9c', textDecoration: 'none', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
+                      ¿No tienes una cuenta? Suscríbete.
                     </Link>
                   </div>
                 </CardContent>
