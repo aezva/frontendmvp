@@ -97,7 +97,7 @@ const Login = () => {
               </Card>
             </div>
             {/* Columna derecha: imagen */}
-            <div className="flex w-full md:w-1/2 bg-muted items-center justify-center py-0 md:py-0 px-6 md:px-10">
+            <div className="flex w-full md:w-1/2 bg-muted items-center justify-center p-0">
               <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-cover" />
             </div>
           </div>
