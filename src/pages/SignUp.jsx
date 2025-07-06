@@ -109,8 +109,8 @@ const SignUp = () => {
                   </div>
                   {/* Nuevo botón de login bien hecho */}
                   <div className="w-full flex justify-center mt-2">
-                    <Link to="/login" className="text-lg font-semibold underline transition-colors" style={{ color: '#ff9c9c', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
-                      Iniciar sesión
+                    <Link to="/login" className="text-sm font-medium underline transition-colors" style={{ color: '#ff9c9c', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
+                      Inicia Sesión
                     </Link>
                   </div>
                 </CardContent>
