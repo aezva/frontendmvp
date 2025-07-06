@@ -290,9 +290,9 @@ const Onboarding = () => {
         <title>Onboarding - Configura tu Asistente IA</title>
         <meta name="description" content="Completa los pasos para configurar tu asistente de IA personalizado." />
       </Helmet>
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 font-sans" style={{ background: '#F4F4F5' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 pb-8 md:pb-4 font-sans" style={{ background: '#F4F4F5' }}>
         {/* Logo NNIA */}
-        <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
+        <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 pb-6 md:pb-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
         <div className="w-full max-w-4xl mx-auto h-[850px] flex flex-col">
