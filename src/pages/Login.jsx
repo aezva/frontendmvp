@@ -9,7 +9,6 @@ import { useToast } from '@/components/ui/use-toast';
 import { Loader2, Bot } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import logoAssistant from '/public/logo-assistant.png';
-import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
