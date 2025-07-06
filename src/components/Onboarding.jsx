@@ -295,7 +295,7 @@ const Onboarding = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="w-full max-w-4xl mx-auto flex flex-col">
+        <div className="w-full max-w-4xl mx-auto h-[850px] flex flex-col">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
             <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
@@ -326,7 +326,7 @@ const Onboarding = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.3 }}
-                  className="flex-1 flex flex-col overflow-y-auto"
+                  className="flex-1 flex flex-col h-[700px] overflow-y-auto"
                 >
                   {renderStepContent()}
                 </motion.div>
