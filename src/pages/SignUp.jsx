@@ -102,7 +102,7 @@ const SignUp = () => {
                     </Button>
                   </form>
                   {/* Nuevo botón de login bien hecho */}
-                  <div className="w-full flex justify-center mt-2">
+                  <div className="w-full flex justify-center mt-2 pt-[15px]">
                     <Link to="/login" className="text-sm font-medium transition-colors" style={{ color: '#ff9c9c', textDecoration: 'none', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
                       ¿Ya tienes una cuenta? Inicia sesión.
                     </Link>
@@ -119,7 +119,7 @@ const SignUp = () => {
         {/* Aviso legal */}
         <div className="w-full flex justify-center mt-6 mb-4">
           <p className="text-xs text-muted-foreground text-center w-[95%] max-w-2xl md:w-[70%] md:max-w-3xl">
-            Al hacer clic en <span className="font-semibold">Crear Cuenta</span>, aceptas nuestros 
+            Al hacer clic en <span className="font-semibold">Crear Cuenta</span>, aceptas nuestros{' '}
             <span className="font-medium" style={{ color: '#ff9c9c' }}>Términos de Servicio</span> y{' '}
             <span className="font-medium" style={{ color: '#ff9c9c' }}>Política de Privacidad</span>.
           </p>
