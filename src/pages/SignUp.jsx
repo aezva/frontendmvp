@@ -54,7 +54,7 @@ const SignUp = () => {
         <div className="flex-1 w-full flex items-center justify-center p-0 md:p-4">
           <div className="w-full max-w-4xl bg-card rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden animate-fade-in">
             {/* Columna izquierda: formulario */}
-            <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10 border-b-0 md:border-r md:border-input">
+            <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10 border-b-0 md:border-r md:border-input h-full">
               <Card className="w-full max-w-md mx-auto shadow-none border-none">
                 <CardHeader className="text-center">
                   <Bot className="mx-auto h-12 w-12 text-primary" />
@@ -104,7 +104,7 @@ const SignUp = () => {
                   <div className="mt-4 flex justify-center">
                     <span className="text-sm text-center">
                       ¿Ya tienes una cuenta?{' '}
-                      <Link to="/login" className="inline-block underline text-primary font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 px-1">
+                      <Link to="/login" className="underline text-primary font-medium focus:outline-none focus:ring-2 focus:ring-primary/50" style={{ padding: 0 }}>
                         Inicia Sesión
                       </Link>
                     </span>
@@ -113,7 +113,7 @@ const SignUp = () => {
               </Card>
             </div>
             {/* Columna derecha: imagen */}
-            <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-0">
+            <div className="flex w-full md:w-1/2 bg-muted items-center justify-center p-6 md:p-10 h-full">
               <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -121,8 +121,8 @@ const SignUp = () => {
         {/* Aviso legal */}
         <div className="w-full flex justify-center mt-6 mb-4">
           <p className="text-xs text-muted-foreground text-center w-[95%] max-w-2xl md:w-[70%] md:max-w-3xl">
-            Al hacer clic en continuar, aceptas nuestros 
-            <span className="font-medium" style={{ color: '#ff9c9c' }}>Términos de Servicio</span> y 
+            Al hacer clic en <span className="font-semibold">Crear Cuenta</span>, aceptas nuestros 
+            <span className="font-medium" style={{ color: '#ff9c9c' }}>Términos de Servicio</span> y{' '}
             <span className="font-medium" style={{ color: '#ff9c9c' }}>Política de Privacidad</span>.
           </p>
         </div>
