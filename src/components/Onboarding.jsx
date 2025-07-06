@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { Camera, Building, PartyPopper, Globe, Upload } from 'lucide-react';
+import { Camera, Building, PartyPopper, Globe, Upload, Calendar } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
@@ -201,8 +201,19 @@ const Onboarding = () => {
         return <Step2 formData={formData} handleInputChange={handleInputChange} />;
       case 2:
         return (
-          <div className="flex-1 flex flex-col justify-center">
-            <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />
+          <div className="flex-1 flex flex-col justify-center space-y-12">
+            <div className="flex items-center space-x-6">
+              <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
+                <Calendar className="w-8 h-8 text-muted-foreground" />
+              </div>
+              <div>
+                <h2 className="text-xl font-inter font-semibold text-black">Preferencias de Citas</h2>
+                <p className="text-muted-foreground">Configura tu disponibilidad para recibir citas.</p>
+              </div>
+            </div>
+            <div>
+              <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />
+            </div>
           </div>
         );
       case 3:
@@ -286,7 +297,7 @@ const Step1 = ({ formData, handleInputChange }) => (
         <Camera className="w-8 h-8 text-muted-foreground" />
       </div>
       <div>
-        <h2 className="text-2xl font-semibold">Tu Perfil</h2>
+        <h2 className="text-xl font-inter font-semibold text-black">Tu Perfil</h2>
         <p className="text-muted-foreground">Información básica sobre ti y tu negocio.</p>
       </div>
     </div>
@@ -310,7 +321,7 @@ const Step2 = ({ formData, handleInputChange }) => (
         <Building className="w-8 h-8 text-muted-foreground" />
       </div>
       <div>
-        <h2 className="text-2xl font-semibold">Tu Negocio</h2>
+        <h2 className="text-xl font-inter font-semibold text-black">Tu Negocio</h2>
         <p className="text-muted-foreground">Cuéntanos sobre la empresa que representas.</p>
       </div>
     </div>
@@ -338,7 +349,7 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
         <Globe className="w-8 h-8 text-muted-foreground" />
       </div>
       <div>
-        <h2 className="text-2xl font-semibold">Widget de Chat</h2>
+        <h2 className="text-xl font-inter font-semibold text-black">Widget de Chat</h2>
         <p className="text-muted-foreground">Configura tu widget de chat para integrarlo en tu sitio web.</p>
       </div>
     </div>
@@ -384,7 +395,7 @@ const Step5 = () => (
   <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8">
     <PartyPopper className="w-24 h-24 text-primary mx-auto animate-bounce" />
     <div className="space-y-4">
-      <h2 className="text-3xl font-bold">¡Todo listo!</h2>
+      <h2 className="text-xl font-inter font-semibold text-black">¡Todo listo!</h2>
       <p className="text-muted-foreground max-w-md mx-auto">
         Has completado la configuración inicial. Tu asistente de IA está listo para empezar a trabajar.
       </p>
