@@ -597,11 +597,13 @@ const ServiceManagementForm = ({ serviceType, setServiceType, appointmentsConfig
               <Label>Días de anticipación para reservas</Label>
               <Input
                 type="number"
-                placeholder="Ej: 30 días"
+                placeholder="Ej: 30"
                 value={reservationsConfig.advance_booking_days || ''}
-                onChange={e => handleAvailabilityChange('advance_booking_days', e.target.value)}
+                onChange={e => handleAvailabilityChange('advance_booking_days', parseInt(e.target.value) || 30)}
+                min="1"
+                max="365"
               />
-              <div className="text-xs text-muted-foreground">Con cuántos días de anticipación se pueden hacer reservas.</div>
+              <div className="text-xs text-muted-foreground">Número de días con anticipación que se pueden hacer reservas (1-365 días).</div>
             </div>
           )}
         </div>
