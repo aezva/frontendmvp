@@ -93,10 +93,8 @@ const Login = () => {
                   </div>
                   {/* Nuevo botón de registro bien hecho */}
                   <div className="w-full flex justify-center mt-2">
-                    <Link to="/signup" style={{ width: '100%', maxWidth: 240 }}>
-                      <Button type="button" variant="outline" className="w-full">
-                        Crear cuenta nueva
-                      </Button>
+                    <Link to="/signup" className="text-lg text-primary font-semibold underline hover:text-primary/80 transition-colors" style={{ padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
+                      Crear cuenta nueva
                     </Link>
                   </div>
                 </CardContent>
