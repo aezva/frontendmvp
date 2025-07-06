@@ -47,11 +47,7 @@ const Login = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="flex-1 w-full flex flex-col items-center justify-center p-5 md:p-4">
-          {/* Logo NNIA fuera de la columna */}
-          <div className="w-full flex justify-center mb-6 md:hidden">
-            <span className="font-alata text-2xl tracking-[0.19em] text-black select-none">NNIA</span>
-          </div>
+        <div className="flex-1 w-full flex items-center justify-center p-5 md:p-4">
           <div className="w-full max-w-4xl bg-card rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden animate-fade-in">
             {/* Columna izquierda: formulario */}
             <div className="w-full md:w-1/2 flex items-center justify-center py-6 md:py-0 px-6 md:px-10 border-b-0 md:border-r md:border-input">
@@ -99,7 +95,7 @@ const Login = () => {
               </Card>
             </div>
             {/* Columna derecha: imagen */}
-            <div className="flex w-full md:w-1/2 bg-muted items-start justify-center p-0 h-[25vh] md:h-full">
+            <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-0">
               <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-cover" />
             </div>
           </div>
