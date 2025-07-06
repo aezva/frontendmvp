@@ -96,6 +96,7 @@ const SignUp = () => {
                         onChange={(e) => setPassword(e.target.value)}
                       />
                       <p className="text-xs text-muted-foreground">La contraseña debe tener al menos 6 caracteres.</p>
+                      <p className="text-sm text-muted-foreground mt-1">La contraseña debe tener un número, mayúscula y minúscula, y mínimo 8 caracteres.</p>
                     </div>
                     <Button type="submit" className="w-full" disabled={loading}>
                       {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Crear Cuenta'}
@@ -103,7 +104,7 @@ const SignUp = () => {
                   </form>
                   {/* Nuevo botón de login bien hecho */}
                   <div className="w-full flex justify-center mt-2 pt-[15px]">
-                    <Link to="/login" className="text-sm font-medium transition-colors" style={{ color: '#ff9c9c', textDecoration: 'none', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
+                    <Link to="/login" className="text-sm font-normal transition-colors" style={{ color: '#ff9c9c', textDecoration: 'none', padding: 0, background: 'none', border: 'none', boxShadow: 'none' }}>
                       ¿Ya tienes una cuenta? Inicia sesión.
                     </Link>
                   </div>
