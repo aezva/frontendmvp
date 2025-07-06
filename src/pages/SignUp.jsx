@@ -56,7 +56,7 @@ const SignUp = () => {
             {/* Columna izquierda: formulario */}
             <div className="w-full md:w-1/2 flex items-center justify-center py-0 md:py-0 px-6 md:px-10 border-b-0 md:border-r md:border-input">
               <Card className="w-full max-w-md mx-auto shadow-none border-none">
-                <CardHeader className="text-center px-6 md:px-10 py-0">
+                <CardHeader className="text-center px-6 md:px-10 py-0 mb-6">
                   <Bot className="mx-auto h-12 w-12 text-primary" />
                   <CardTitle className="mt-4 text-xl font-inter font-semibold">Crea tu Cuenta</CardTitle>
                   <CardDescription className="font-inter">Comienza a impulsar tu negocio con NNIA.</CardDescription>
@@ -114,7 +114,7 @@ const SignUp = () => {
             </div>
             {/* Columna derecha: imagen */}
             <div className="flex w-full md:w-1/2 bg-muted items-center justify-center p-0">
-              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="w-full h-full object-cover" />
+              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Registro NNIA" className="w-full h-full object-contain" />
             </div>
           </div>
         </div>
