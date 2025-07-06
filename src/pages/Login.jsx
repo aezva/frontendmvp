@@ -9,6 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Loader2, Bot } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import logoAssistant from '/public/logo-assistant.png';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -42,56 +43,68 @@ const Login = () => {
       <Helmet>
         <title>Iniciar Sesión - Asistente IA</title>
       </Helmet>
-      <div className="min-h-screen flex items-center justify-center bg-background p-0 md:p-4">
-        <div className="w-full max-w-4xl bg-card rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden animate-fade-in">
-          {/* Columna izquierda: formulario */}
-          <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
-            <Card className="w-full max-w-md mx-auto shadow-none border-none">
-              <CardHeader className="text-center">
-                <Bot className="mx-auto h-12 w-12 text-primary" />
-                <CardTitle className="mt-4">¡Bienvenido de Nuevo!</CardTitle>
-                <CardDescription>Ingresa a tu cuenta para gestionar tu asistente de IA.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleLogin} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="tu@email.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
+      <div className="min-h-screen flex flex-col justify-center items-center" style={{ background: '#F4F4F5' }}>
+        {/* Logo NNIA */}
+        <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
+          <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
+        </div>
+        <div className="flex-1 w-full flex items-center justify-center p-0 md:p-4">
+          <div className="w-full max-w-4xl bg-card rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden animate-fade-in">
+            {/* Columna izquierda: formulario */}
+            <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
+              <Card className="w-full max-w-md mx-auto shadow-none border-none">
+                <CardHeader className="text-center">
+                  <Bot className="mx-auto h-12 w-12 text-primary" />
+                  <CardTitle className="mt-4">¡Bienvenido de Nuevo!</CardTitle>
+                  <CardDescription>Ingresa a tu cuenta para gestionar tu asistente de IA.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleLogin} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="tu@email.com"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="password">Contraseña</Label>
+                      <Input
+                        id="password"
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Iniciar Sesión'}
+                    </Button>
+                  </form>
+                  <div className="mt-4 text-center text-sm">
+                    ¿No tienes una cuenta?{' '}
+                    <Link to="/signup" className="underline text-primary">
+                      Regístrate
+                    </Link>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Contraseña</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Iniciar Sesión'}
-                  </Button>
-                </form>
-                <div className="mt-4 text-center text-sm">
-                  ¿No tienes una cuenta?{' '}
-                  <Link to="/signup" className="underline text-primary">
-                    Regístrate
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
+            {/* Columna derecha: imagen */}
+            <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-0">
+              <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-cover" />
+            </div>
           </div>
-          {/* Columna derecha: imagen */}
-          <div className="hidden md:flex w-1/2 bg-muted items-center justify-center p-0">
-            <img src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnialogin.jpg" alt="Imagen Login NNIA" className="w-full h-full object-cover" />
-          </div>
+        </div>
+        {/* Aviso legal */}
+        <div className="w-full flex justify-center mt-6 mb-4">
+          <p className="text-xs text-muted-foreground text-center max-w-md">
+            Al hacer clic en continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.
+          </p>
         </div>
       </div>
     </>
