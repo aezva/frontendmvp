@@ -200,7 +200,11 @@ const Onboarding = () => {
       case 1:
         return <Step2 formData={formData} handleInputChange={handleInputChange} />;
       case 2:
-        return <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />;
+        return (
+          <div className="flex-1 flex flex-col justify-center">
+            <AppointmentPreferencesForm availability={availability} setAvailability={setAvailability} saving={false} />
+          </div>
+        );
       case 3:
         return <Step4 
           widgetConfig={widgetConfig} 
@@ -229,7 +233,7 @@ const Onboarding = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="w-full max-w-4xl mx-auto">
+        <div className="w-full max-w-4xl mx-auto h-[600px] flex flex-col">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
             <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
@@ -243,8 +247,8 @@ const Onboarding = () => {
             </div>
           </div>
 
-          <Card className="bg-card border-border/40 shadow-lg">
-            <CardContent className="p-10">
+          <Card className="bg-card border-border/40 shadow-lg flex-1 flex flex-col">
+            <CardContent className="p-10 flex-1 flex flex-col">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStep}
@@ -252,6 +256,7 @@ const Onboarding = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.3 }}
+                  className="flex-1 flex flex-col"
                 >
                   {renderStepContent()}
                 </motion.div>
@@ -275,7 +280,7 @@ const Onboarding = () => {
 };
 
 const Step1 = ({ formData, handleInputChange }) => (
-  <div className="space-y-8">
+  <div className="flex-1 flex flex-col justify-center space-y-8">
     <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors">
         <Camera className="w-8 h-8 text-muted-foreground" />
@@ -299,7 +304,7 @@ const Step1 = ({ formData, handleInputChange }) => (
 );
 
 const Step2 = ({ formData, handleInputChange }) => (
-  <div className="space-y-8">
+  <div className="flex-1 flex flex-col justify-center space-y-8">
     <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
         <Building className="w-8 h-8 text-muted-foreground" />
@@ -327,7 +332,7 @@ const Step2 = ({ formData, handleInputChange }) => (
 );
 
 const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embedCode, copyEmbedCode }) => (
-  <div className="space-y-8">
+  <div className="flex-1 flex flex-col justify-center space-y-8">
     <div className="flex items-center space-x-6">
       <div className="w-24 h-24 rounded-full bg-muted flex items-center justify-center">
         <Globe className="w-8 h-8 text-muted-foreground" />
@@ -376,7 +381,7 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
 );
 
 const Step5 = () => (
-  <div className="text-center py-8">
+  <div className="flex-1 flex flex-col justify-center items-center text-center">
     <PartyPopper className="w-24 h-24 text-primary mx-auto mb-8 animate-bounce" />
     <h2 className="text-3xl font-bold">¡Todo listo!</h2>
     <p className="text-muted-foreground mt-4 max-w-md mx-auto">
