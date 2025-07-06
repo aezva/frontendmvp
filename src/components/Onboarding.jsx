@@ -34,10 +34,16 @@ const Onboarding = () => {
     opening_hours: '',
   });
   const [serviceType, setServiceType] = useState(''); // 'appointments' o 'reservations'
-  const [availability, setAvailability] = useState({
+  const [appointmentsConfig, setAppointmentsConfig] = useState({
     days: [],
     hours: '',
     types: [],
+  });
+  const [reservationsConfig, setReservationsConfig] = useState({
+    days: [],
+    hours: '',
+    types: [],
+    advance_booking_days: 30,
   });
   
   // Configuración del widget para el onboarding
@@ -151,11 +157,6 @@ const Onboarding = () => {
         website: formData.website,
         services: formData.services,
         opening_hours: formData.opening_hours,
-        service_type: serviceType,
-        appointment_days: availability.days.join(','),
-        appointment_hours: availability.hours,
-        appointment_types: availability.types.join(','),
-        max_capacity: availability.maxCapacity || null,
       });
       if (businessInfoError) throw businessInfoError;
 
@@ -179,6 +180,46 @@ const Onboarding = () => {
           config: widgetConfig 
         });
       if (widgetError) throw widgetError;
+
+      // 6. Save appointments configuration to business_info
+      if (appointmentsConfig.days.length > 0 || appointmentsConfig.hours || appointmentsConfig.types.length > 0) {
+        const { error: appointmentsError } = await supabase
+          .from('business_info')
+          .update({
+            appointment_days: appointmentsConfig.days.join(','),
+            appointment_hours: appointmentsConfig.hours,
+            appointment_types: appointmentsConfig.types.join(',')
+          })
+          .eq('client_id', client.id);
+        if (appointmentsError) throw appointmentsError;
+      }
+
+      // 7. Save reservations configuration to reservation_availability
+      if (reservationsConfig.days.length > 0 || reservationsConfig.hours || reservationsConfig.types.length > 0) {
+        const { error: reservationsError } = await supabase
+          .from('reservation_availability')
+          .upsert({
+            client_id: client.id,
+            days: reservationsConfig.days.join(','),
+            hours: reservationsConfig.hours,
+            advance_booking_days: reservationsConfig.advance_booking_days
+          });
+        if (reservationsError) throw reservationsError;
+      }
+
+      // 8. Save reservation types to reservation_types
+      if (reservationsConfig.types.length > 0) {
+        const reservationTypesToSave = reservationsConfig.types.map(type => ({
+          client_id: client.id,
+          name: type,
+          is_active: true
+        }));
+        
+        const { error: reservationTypesError } = await supabase
+          .from('reservation_types')
+          .upsert(reservationTypesToSave);
+        if (reservationTypesError) throw reservationTypesError;
+      }
       
       toast({
         title: "🎉 ¡Bienvenido a Bordo!",
@@ -218,8 +259,10 @@ const Onboarding = () => {
               <ServiceManagementForm 
                 serviceType={serviceType}
                 setServiceType={setServiceType}
-                availability={availability}
-                setAvailability={setAvailability}
+                appointmentsConfig={appointmentsConfig}
+                setAppointmentsConfig={setAppointmentsConfig}
+                reservationsConfig={reservationsConfig}
+                setReservationsConfig={setReservationsConfig}
               />
             </div>
           </div>
@@ -407,37 +450,53 @@ const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embe
   </div>
 );
 
-const ServiceManagementForm = ({ serviceType, setServiceType, availability, setAvailability }) => {
+const ServiceManagementForm = ({ serviceType, setServiceType, appointmentsConfig, setAppointmentsConfig, reservationsConfig, setReservationsConfig }) => {
   const handleServiceTypeChange = (type) => {
     setServiceType(type);
-    // Resetear disponibilidad cuando cambia el tipo de servicio
-    setAvailability({
-      days: [],
-      hours: '',
-      types: [],
-    });
   };
 
   const handleAvailabilityChange = (field, value) => {
-    setAvailability(prev => ({ ...prev, [field]: value }));
+    if (serviceType === 'appointments') {
+      setAppointmentsConfig(prev => ({ ...prev, [field]: value }));
+    } else if (serviceType === 'reservations') {
+      setReservationsConfig(prev => ({ ...prev, [field]: value }));
+    }
   };
 
   const handleToggleDay = (day) => {
-    setAvailability(prev => ({
-      ...prev,
-      days: prev.days.includes(day)
-        ? prev.days.filter(d => d !== day)
-        : [...prev.days, day]
-    }));
+    if (serviceType === 'appointments') {
+      setAppointmentsConfig(prev => ({
+        ...prev,
+        days: prev.days.includes(day)
+          ? prev.days.filter(d => d !== day)
+          : [...prev.days, day]
+      }));
+    } else if (serviceType === 'reservations') {
+      setReservationsConfig(prev => ({
+        ...prev,
+        days: prev.days.includes(day)
+          ? prev.days.filter(d => d !== day)
+          : [...prev.days, day]
+      }));
+    }
   };
 
   const handleToggleType = (type) => {
-    setAvailability(prev => ({
-      ...prev,
-      types: prev.types.includes(type)
-        ? prev.types.filter(t => t !== type)
-        : [...prev.types, type]
-    }));
+    if (serviceType === 'appointments') {
+      setAppointmentsConfig(prev => ({
+        ...prev,
+        types: prev.types.includes(type)
+          ? prev.types.filter(t => t !== type)
+          : [...prev.types, type]
+      }));
+    } else if (serviceType === 'reservations') {
+      setReservationsConfig(prev => ({
+        ...prev,
+        types: prev.types.includes(type)
+          ? prev.types.filter(t => t !== type)
+          : [...prev.types, type]
+      }));
+    }
   };
 
   const WEEKDAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
@@ -491,7 +550,7 @@ const ServiceManagementForm = ({ serviceType, setServiceType, availability, setA
                   key={day}
                   type="button"
                   variant="outline"
-                  className={availability.days.includes(day) ? 'bg-muted text-foreground' : ''}
+                  className={(serviceType === 'appointments' ? appointmentsConfig.days : reservationsConfig.days).includes(day) ? 'bg-muted text-foreground' : ''}
                   onClick={() => handleToggleDay(day)}
                 >
                   {day}
@@ -506,7 +565,7 @@ const ServiceManagementForm = ({ serviceType, setServiceType, availability, setA
             <Input
               type="text"
               placeholder="Ej: 09:00-13:00, 15:00-18:00"
-              value={availability.hours}
+              value={serviceType === 'appointments' ? appointmentsConfig.hours : reservationsConfig.hours}
               onChange={e => handleAvailabilityChange('hours', e.target.value)}
             />
             <div className="text-xs text-muted-foreground">Puedes poner varios rangos separados por coma.</div>
@@ -523,7 +582,7 @@ const ServiceManagementForm = ({ serviceType, setServiceType, availability, setA
                   key={type.value}
                   type="button"
                   variant="outline"
-                  className={availability.types.includes(type.value) ? 'bg-muted text-foreground' : ''}
+                  className={(serviceType === 'appointments' ? appointmentsConfig.types : reservationsConfig.types).includes(type.value) ? 'bg-muted text-foreground' : ''}
                   onClick={() => handleToggleType(type.value)}
                 >
                   {type.label}
@@ -535,14 +594,14 @@ const ServiceManagementForm = ({ serviceType, setServiceType, availability, setA
           {/* Campo adicional para reservas */}
           {serviceType === 'reservations' && (
             <div className="space-y-2">
-              <Label>Capacidad máxima por reserva</Label>
+              <Label>Días de anticipación para reservas</Label>
               <Input
                 type="number"
-                placeholder="Ej: 10 personas"
-                value={availability.maxCapacity || ''}
-                onChange={e => handleAvailabilityChange('maxCapacity', e.target.value)}
+                placeholder="Ej: 30 días"
+                value={reservationsConfig.advance_booking_days || ''}
+                onChange={e => handleAvailabilityChange('advance_booking_days', e.target.value)}
               />
-              <div className="text-xs text-muted-foreground">Número máximo de personas por reserva.</div>
+              <div className="text-xs text-muted-foreground">Con cuántos días de anticipación se pueden hacer reservas.</div>
             </div>
           )}
         </div>
