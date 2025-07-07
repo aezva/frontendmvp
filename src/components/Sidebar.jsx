@@ -30,10 +30,6 @@ const navItems = [{
   label: 'Mi Negocio',
   icon: Building2
 }, {
-  href: '/assistant',
-  label: 'Asistente IA',
-  icon: Bot
-}, {
   href: '/widget',
   label: 'Widget',
   icon: MessageCircle

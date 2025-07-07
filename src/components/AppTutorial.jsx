@@ -35,12 +35,6 @@ const AppTutorial = () => {
       position: 'sidebar'
     },
     {
-      title: 'Asistente IA',
-      text: 'Configura la personalidad, apariencia y comportamiento de tu asistente virtual',
-      route: '/assistant',
-      position: 'sidebar'
-    },
-    {
       title: 'Suscripción',
       text: 'Revisa tu plan actual y gestiona la facturación de tu cuenta',
       route: '/subscription',
