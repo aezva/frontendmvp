@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation, Link } from 'react-router-dom';
-import { LayoutDashboard, MessageSquare, Ticket, Briefcase, Bot, CreditCard, Settings, LogOut, ChevronRight, Calendar } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Ticket, Briefcase, Bot, CreditCard, Settings, LogOut, ChevronRight, Calendar, Building2, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -28,7 +28,7 @@ const navItems = [{
 }, {
   href: '/my-business',
   label: 'Mi Negocio',
-  icon: Briefcase
+  icon: Building2
 }, {
   href: '/assistant',
   label: 'Asistente IA',
@@ -36,7 +36,7 @@ const navItems = [{
 }, {
   href: '/widget',
   label: 'Widget',
-  icon: MessageSquare
+  icon: MessageCircle
 }, {
   href: '/subscription',
   label: 'Suscripción',
@@ -99,7 +99,7 @@ const Sidebar = ({
             <NavLink key={item.href} to={item.href} className={({
               isActive
             }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
-              <item.icon className="mr-3 h-5 w-5" />
+              <item.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
               <span>{item.label}</span>
               {location.pathname === item.href && (
                 <motion.div layoutId="active-indicator" className="ml-auto">
@@ -115,11 +115,11 @@ const Sidebar = ({
             <NavLink to="/settings" className={({
               isActive
             }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
-              <Settings className="mr-3 h-5 w-5" />
+              <Settings className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
               <span>Ajustes</span>
             </NavLink>
             <button onClick={handleLogout} className="w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-              <LogOut className="mr-3 h-5 w-5" />
+              <LogOut className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
               <span>Cerrar Sesión</span>
             </button>
           </div>
