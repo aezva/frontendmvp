@@ -245,7 +245,7 @@ const Onboarding = () => {
         return <Step2 formData={formData} handleInputChange={handleInputChange} />;
       case 2:
         return (
-          <div className="flex-1 flex flex-col justify-center space-y-12 min-h-full">
+          <div className="flex-1 flex flex-col justify-start space-y-12 min-h-full">
             <div className="flex items-center space-x-6">
               <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
                 <Calendar className="w-5 h-5" style={{ color: '#ff9c9c' }} />
@@ -350,7 +350,7 @@ const Onboarding = () => {
 };
 
 const Step1 = ({ formData, handleInputChange }) => (
-  <div className="flex-1 flex flex-col justify-center space-y-12 min-h-full">
+  <div className="flex-1 flex flex-col justify-start space-y-12 min-h-full">
     <div className="flex items-center space-x-6">
       <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
         <User className="w-5 h-5" style={{ color: '#ff9c9c' }} />
@@ -374,7 +374,7 @@ const Step1 = ({ formData, handleInputChange }) => (
 );
 
 const Step2 = ({ formData, handleInputChange }) => (
-  <div className="flex-1 flex flex-col justify-center space-y-12 min-h-full">
+  <div className="flex-1 flex flex-col justify-start space-y-12 min-h-full">
     <div className="flex items-center space-x-6">
       <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
         <Building2 className="w-5 h-5" style={{ color: '#ff9c9c' }} />
@@ -402,7 +402,7 @@ const Step2 = ({ formData, handleInputChange }) => (
 );
 
 const Step4 = ({ widgetConfig, handleWidgetLogoChange, uploadingWidgetLogo, embedCode, copyEmbedCode }) => (
-  <div className="flex-1 flex flex-col justify-center space-y-12 min-h-full">
+  <div className="flex-1 flex flex-col justify-start space-y-12 min-h-full">
     <div className="flex items-center space-x-6">
       <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
         <MessageCircle className="w-5 h-5" style={{ color: '#ff9c9c' }} />
@@ -651,7 +651,7 @@ const ServiceManagementForm = ({ serviceType, setServiceType, appointmentsConfig
 };
 
 const Step5 = () => (
-  <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8 min-h-full">
+  <div className="flex-1 flex flex-col justify-start items-center text-center space-y-8 min-h-full">
     <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
       <CheckCircle className="w-5 h-5" style={{ color: '#ff9c9c' }} />
     </div>
