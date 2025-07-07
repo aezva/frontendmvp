@@ -23,7 +23,7 @@ export default function Topbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow flex items-center justify-between px-6 h-16">
-      <div className="font-bold text-xl tracking-tight">Panel de Cliente</div>
+      <div className="font-alata text-2xl tracking-[0.19em] text-black select-none">NNIA</div>
       <div className="flex items-center gap-4">
         {/* Notificaciones */}
         <div className="relative" ref={notifRef}>

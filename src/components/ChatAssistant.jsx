@@ -88,10 +88,10 @@ const ChatAssistant = ({ userName }) => {
     <Card className="bg-card/50 backdrop-blur-sm">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
         <Avatar className="h-10 w-10">
-          <AvatarImage src="/logo-assistant.png" />
+          <AvatarImage src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnia-profile-picture.webp" />
           <AvatarFallback>AI</AvatarFallback>
         </Avatar>
-        <CardTitle className="text-xl font-semibold">Asistente IA</CardTitle>
+        <CardTitle className="text-xl font-alata tracking-[0.19em] text-black">NNIA</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col h-[350px] md:h-[400px]">
         <div className="flex-1 overflow-y-auto space-y-4 pr-2">
