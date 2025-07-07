@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from '@/components/Sidebar';
 import Dashboard from '@/components/Dashboard';
 import Messages from '@/components/Messages';
-import Tickets from '@/components/Tickets';
 import MyBusiness from '@/components/MyBusiness';
 import AIAssistant from '@/components/AIAssistant';
 import Subscription from '@/components/Subscription';
@@ -69,7 +68,6 @@ const ClientPanel = () => {
               <Routes>
                 <Route path="/" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Dashboard /></motion.div>} />
                 <Route path="/messages" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Messages /></motion.div>} />
-                <Route path="/tickets" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Tickets /></motion.div>} />
                 <Route path="/my-business" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><MyBusiness /></motion.div>} />
                 <Route path="/assistant" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><AIAssistant /></motion.div>} />
                 <Route path="/subscription" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Subscription /></motion.div>} />

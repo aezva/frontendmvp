@@ -25,7 +25,7 @@ const AppTutorial = () => {
     {
       title: 'Tickets',
       text: 'Organiza y gestiona las consultas de soporte de forma eficiente',
-      route: '/tickets',
+      route: '/messages',
       position: 'sidebar'
     },
     {

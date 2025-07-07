@@ -185,7 +185,7 @@ const Dashboard = () => {
                     className="mt-2 text-xs text-blue-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
                     onClick={() => {
                       if (stat.title.includes('Conversaciones')) navigate('/messages');
-                      else if (stat.title.includes('Tickets')) navigate('/tickets');
+                      else if (stat.title.includes('Tickets')) navigate('/messages');
                       else if (stat.title.includes('Clientes')) navigate('/my-business');
                     }}
                   >

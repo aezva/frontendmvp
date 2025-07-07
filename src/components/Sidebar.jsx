@@ -18,10 +18,6 @@ const navItems = [{
   label: 'Mensajes',
   icon: MessageSquare
 }, {
-  href: '/tickets',
-  label: 'Tickets',
-  icon: Ticket
-}, {
   href: '/citas',
   label: 'Citas',
   icon: Calendar
