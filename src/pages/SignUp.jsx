@@ -26,8 +26,9 @@ const SignUp = () => {
       const { error } = await signUp(email, password);
       if (error) throw error;
       toast({
-        title: '¡Cuenta creada! Confirma tu email para continuar',
-        description: 'Te hemos enviado un correo de verificación. Por favor, revisa tu bandeja de entrada (y la carpeta de spam) y haz clic en el enlace para activar tu cuenta. No podrás acceder al panel hasta que confirmes tu email.',
+        title: 'Cuenta creada exitosamente',
+        description: 'Revisa tu email y confirma tu cuenta para continuar. Verifica también tu carpeta de spam.',
+        duration: 5000,
       });
       navigate('/onboarding');
     } catch (error) {
