@@ -295,7 +295,7 @@ const Onboarding = () => {
         <div className="w-full flex justify-center md:justify-start items-center absolute top-0 left-0 p-4 pb-8 md:pb-4 z-10">
           <span className="font-alata text-2xl tracking-[0.19em] text-black select-none mx-auto md:mx-0">NNIA</span>
         </div>
-        <div className="w-full max-w-4xl mx-auto h-auto md:h-[850px] flex flex-col mt-20 md:mt-0">
+        <div className="w-full max-w-4xl mx-auto h-auto md:h-[850px] flex flex-col mt-16 md:mt-0">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-inter font-semibold text-black">Entrena a NNIA</h1>
             <p className="text-muted-foreground mt-2 font-inter">Llena todos los datos para obtener mejores resultados.</p>
