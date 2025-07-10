@@ -2,9 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Send } from 'lucide-react';
+import { Send, Upload } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabaseClient';
+import { useToast } from '@/components/ui/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
 const CHAT_SESSION_KEY = 'nnia_chat_messages';
 
@@ -22,6 +25,14 @@ const ChatAssistant = ({ userName }) => {
   const [loading, setLoading] = useState(false);
   const [threadId, setThreadId] = useState(null);
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef();
+  const [analyzing, setAnalyzing] = useState(false);
+  const [analysisPrompt, setAnalysisPrompt] = useState('Haz un resumen del documento.');
+  const [lastAnalysis, setLastAnalysis] = useState(null);
+  const { toast } = useToast();
+  const [showDocModal, setShowDocModal] = useState(false);
+  const [userDocs, setUserDocs] = useState([]);
+  const [selectedDocId, setSelectedDocId] = useState('');
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -72,6 +83,115 @@ const ChatAssistant = ({ userName }) => {
     }
   };
 
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!client) return;
+    setAnalyzing(true);
+    setLoading(true);
+    try {
+      // Subir archivo a Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${client.id}/${Date.now()}_${file.name}`;
+      const { data, error } = await supabase.storage.from('documents').upload(filePath, file);
+      if (error) throw error;
+      // Obtener URL pública
+      const { data: publicUrlData } = supabase.storage.from('documents').getPublicUrl(filePath);
+      const file_url = publicUrlData.publicUrl;
+      // Llamar al backend para análisis
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/analyze-document`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientId: client.id,
+          file_url,
+          file_type: fileExt,
+          prompt: analysisPrompt
+        })
+      });
+      const result = await res.json();
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now(), sender: 'assistant', text: result.result || 'No se pudo analizar el documento.', analysis: true }
+      ]);
+      setLastAnalysis({ file_url, file_type: fileExt, content: result.result });
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now(), sender: 'assistant', text: 'Ocurrió un error al analizar el documento.' }
+      ]);
+      setLastAnalysis(null);
+    } finally {
+      setAnalyzing(false);
+      setLoading(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleCreateDocument = async () => {
+    if (!client || !lastAnalysis) return;
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientId: client.id,
+          name: `Documento NNIA - ${new Date().toLocaleString()}`,
+          content: lastAnalysis.content,
+          file_url: lastAnalysis.file_url,
+          file_type: lastAnalysis.file_type
+        })
+      });
+      const doc = await res.json();
+      toast({ title: 'Documento creado', description: 'El análisis se guardó como documento.' });
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now(), sender: 'assistant', text: '✅ El análisis se guardó como documento y ya está disponible en la sección Documentos.' }
+      ]);
+      setLastAnalysis(null);
+    } catch (err) {
+      toast({ title: 'Error', description: 'No se pudo guardar el documento.' });
+    }
+  };
+
+  const handleOpenAddToExisting = async () => {
+    if (!client) return;
+    setShowDocModal(true);
+    // Cargar documentos del usuario
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents?clientId=${client.id}`);
+      const docs = await res.json();
+      setUserDocs(docs);
+    } catch (err) {
+      toast({ title: 'Error', description: 'No se pudieron cargar los documentos.' });
+    }
+  };
+
+  const handleAddToExisting = async () => {
+    if (!client || !lastAnalysis || !selectedDocId) return;
+    try {
+      // Obtener el documento actual
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents/${selectedDocId}?clientId=${client.id}`);
+      const doc = await res.json();
+      // Actualizar el contenido agregando el análisis
+      const updatedContent = doc.content + '\n\n---\n\n' + lastAnalysis.content;
+      await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents/${selectedDocId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId: client.id, name: doc.name, content: updatedContent })
+      });
+      toast({ title: 'Documento actualizado', description: 'El análisis se agregó al documento.' });
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now(), sender: 'assistant', text: '✅ El análisis se agregó al documento seleccionado.' }
+      ]);
+      setShowDocModal(false);
+      setLastAnalysis(null);
+    } catch (err) {
+      toast({ title: 'Error', description: 'No se pudo actualizar el documento.' });
+    }
+  };
+
   // Limpia el chat al cerrar sesión
   useEffect(() => {
     if (!client) {
@@ -114,6 +234,9 @@ const ChatAssistant = ({ userName }) => {
               </div>
             </div>
           )}
+          {analyzing && (
+            <div className="text-center py-4 text-primary font-semibold">Analizando documento... Por favor espera.</div>
+          )}
           <div ref={messagesEndRef} />
         </div>
         <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
@@ -123,12 +246,63 @@ const ChatAssistant = ({ userName }) => {
             onChange={(e) => setNewMessage(e.target.value)}
             className="flex-1"
             autoComplete="off"
+            disabled={analyzing}
           />
-          <Button type="submit" size="icon" className="h-10 w-10">
+          <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Subir documento para analizar" disabled={analyzing}>
+            <Upload className="h-5 w-5" />
+          </Button>
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+            disabled={analyzing}
+          />
+          <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing}>
             <Send className="h-5 w-5" />
           </Button>
         </form>
+        <div className="mt-2 flex gap-2 items-center">
+          <span className="text-xs text-muted-foreground">Prompt para análisis:</span>
+          <Input
+            value={analysisPrompt}
+            onChange={e => setAnalysisPrompt(e.target.value)}
+            className="text-xs py-1 px-2 w-64"
+            disabled={analyzing}
+          />
+        </div>
+        {/* Botones de acción tras análisis */}
+        {lastAnalysis && (
+          <div className="mt-4 flex gap-2 justify-end">
+            <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
+            <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
+          </div>
+        )}
       </CardContent>
+      <Dialog open={showDocModal} onOpenChange={setShowDocModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Agregar análisis a un documento existente</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            <select
+              className="w-full border rounded p-2"
+              value={selectedDocId}
+              onChange={e => setSelectedDocId(e.target.value)}
+            >
+              <option value="">Selecciona un documento</option>
+              {userDocs.map(doc => (
+                <option key={doc.id} value={doc.id}>{doc.name}</option>
+              ))}
+            </select>
+          </div>
+          <DialogFooter>
+            <Button variant="default" onClick={handleAddToExisting} disabled={!selectedDocId}>Agregar</Button>
+            <Button variant="outline" onClick={() => setShowDocModal(false)}>Cancelar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
