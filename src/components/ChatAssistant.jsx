@@ -33,6 +33,7 @@ const ChatAssistant = ({ userName }) => {
   const [showDocModal, setShowDocModal] = useState(false);
   const [userDocs, setUserDocs] = useState([]);
   const [selectedDocId, setSelectedDocId] = useState('');
+  const [attachedFile, setAttachedFile] = useState(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -44,88 +45,83 @@ const ChatAssistant = ({ userName }) => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (newMessage.trim() === '') return;
+    if (newMessage.trim() === '' && !attachedFile) return;
     const userMsg = { id: Date.now(), sender: 'user', text: newMessage };
     setMessages((prev) => [...prev, userMsg]);
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/respond`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: client?.id,
-          message: newMessage,
-          source: 'client-panel',
-          threadId,
-        }),
-      });
-      const data = await res.json();
-      if (data.nnia) {
+      if (attachedFile) {
+        // Subir archivo a Supabase Storage
+        const file = attachedFile;
+        const fileExt = file.name.split('.').pop();
+        const filePath = `${client.id}/${Date.now()}_${file.name}`;
+        const { data, error } = await supabase.storage.from('documents').upload(filePath, file);
+        if (error) throw error;
+        // Obtener URL pública
+        const { data: publicUrlData } = supabase.storage.from('documents').getPublicUrl(filePath);
+        const file_url = publicUrlData.publicUrl;
+        // Llamar al backend para análisis
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/analyze-document`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clientId: client.id,
+            file_url,
+            file_type: fileExt,
+            prompt: newMessage.trim() || 'Analiza el documento.'
+          })
+        });
+        const result = await res.json();
         setMessages((prev) => [
           ...prev,
-          { id: Date.now() + 1, sender: 'assistant', text: data.nnia },
+          { id: Date.now(), sender: 'assistant', text: result.result || 'No se pudo analizar el documento.', analysis: true }
         ]);
+        setLastAnalysis({ file_url, file_type: fileExt, content: result.result });
+        setAttachedFile(null);
       } else {
-        setMessages((prev) => [
-          ...prev,
-          { id: Date.now() + 1, sender: 'assistant', text: 'No se recibió respuesta de NNIA.' },
-        ]);
+        // Mensaje normal sin archivo
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/respond`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            clientId: client?.id,
+            message: newMessage,
+            source: 'client-panel',
+            threadId,
+          }),
+        });
+        const data = await res.json();
+        if (data.nnia) {
+          setMessages((prev) => [
+            ...prev,
+            { id: Date.now() + 1, sender: 'assistant', text: data.nnia },
+          ]);
+        } else {
+          setMessages((prev) => [
+            ...prev,
+            { id: Date.now() + 1, sender: 'assistant', text: 'No se recibió respuesta de NNIA.' },
+          ]);
+        }
+        if (data.threadId) setThreadId(data.threadId);
       }
-      if (data.threadId) setThreadId(data.threadId);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 2, sender: 'assistant', text: 'Ocurrió un error al conectar con NNIA.' },
+        { id: Date.now() + 2, sender: 'assistant', text: 'Ocurrió un error al procesar tu solicitud.' },
       ]);
+      setLastAnalysis(null);
+      setAttachedFile(null);
     } finally {
       setLoading(false);
       setNewMessage('');
     }
   };
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    if (!client) return;
-    setAnalyzing(true);
-    setLoading(true);
-    try {
-      // Subir archivo a Supabase Storage
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${client.id}/${Date.now()}_${file.name}`;
-      const { data, error } = await supabase.storage.from('documents').upload(filePath, file);
-      if (error) throw error;
-      // Obtener URL pública
-      const { data: publicUrlData } = supabase.storage.from('documents').getPublicUrl(filePath);
-      const file_url = publicUrlData.publicUrl;
-      // Llamar al backend para análisis
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/analyze-document`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId: client.id,
-          file_url,
-          file_type: fileExt,
-          prompt: analysisPrompt
-        })
-      });
-      const result = await res.json();
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now(), sender: 'assistant', text: result.result || 'No se pudo analizar el documento.', analysis: true }
-      ]);
-      setLastAnalysis({ file_url, file_type: fileExt, content: result.result });
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now(), sender: 'assistant', text: 'Ocurrió un error al analizar el documento.' }
-      ]);
-      setLastAnalysis(null);
-    } finally {
-      setAnalyzing(false);
-      setLoading(false);
-      e.target.value = '';
-    }
+    setAttachedFile(file);
+    e.target.value = '';
   };
 
   const handleCreateDocument = async () => {
@@ -246,9 +242,9 @@ const ChatAssistant = ({ userName }) => {
             onChange={(e) => setNewMessage(e.target.value)}
             className="flex-1"
             autoComplete="off"
-            disabled={analyzing}
+            disabled={analyzing || loading}
           />
-          <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Subir documento para analizar" disabled={analyzing}>
+          <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
             <Upload className="h-5 w-5" />
           </Button>
           <input
@@ -257,12 +253,18 @@ const ChatAssistant = ({ userName }) => {
             ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={handleFileChange}
-            disabled={analyzing}
+            disabled={analyzing || loading}
           />
-          <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing}>
+          <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
             <Send className="h-5 w-5" />
           </Button>
         </form>
+        {attachedFile && (
+          <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
+            <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
+            <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
+          </div>
+        )}
         <div className="mt-2 flex gap-2 items-center">
           <span className="text-xs text-muted-foreground">Prompt para análisis:</span>
           <Input

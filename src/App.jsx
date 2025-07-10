@@ -63,8 +63,6 @@ function AppContent() {
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />
                         <Route path="/onboarding" element={<Navigate to="/" replace />} />
-                        <Route path="/documents" element={<Documents />} />
-                        <Route path="/documents/:id" element={<DocumentView />} />
                     </>
                 ) : (
                     <Route path="*" element={<Navigate to="/login" replace />} />

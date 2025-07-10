@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
 const Documents = () => {
   const { client } = useAuth();
@@ -12,6 +13,10 @@ const Documents = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [showNewDoc, setShowNewDoc] = useState(false);
+  const [newDocName, setNewDocName] = useState('');
+  const [newDocContent, setNewDocContent] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!client) return;
@@ -27,13 +32,38 @@ const Documents = () => {
       });
   }, [client]);
 
+  const handleCreateNewDoc = async () => {
+    if (!client || !newDocName.trim() || !newDocContent.trim()) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/nnia/documents`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId: client.id, name: newDocName, content: newDocContent })
+      });
+      if (!res.ok) throw new Error('Error al crear documento');
+      setShowNewDoc(false);
+      setNewDocName('');
+      setNewDocContent('');
+      // Refrescar lista
+      fetch(`/nnia/documents?clientId=${client.id}`)
+        .then(res => res.json())
+        .then(data => setDocuments(data));
+      toast({ title: 'Documento creado', description: 'El documento se creó correctamente.' });
+    } catch {
+      toast({ title: 'Error', description: 'No se pudo crear el documento.' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="flex flex-col w-full max-w-5xl mx-auto py-8 px-4">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold flex items-center gap-2">
           <FileText className="h-6 w-6 text-primary" /> Documentos
         </h1>
-        <Button variant="default" className="flex items-center gap-2">
+        <Button variant="default" className="flex items-center gap-2" onClick={() => setShowNewDoc(true)}>
           <Plus className="h-4 w-4" /> Nuevo Documento
         </Button>
       </div>
@@ -72,6 +102,31 @@ const Documents = () => {
           </table>
         </CardContent>
       </Card>
+      <Dialog open={showNewDoc} onOpenChange={setShowNewDoc}>
+        <DialogContent>
+          <DialogTitle>Nuevo Documento</DialogTitle>
+          <div className="space-y-2">
+            <input
+              className="w-full border rounded p-2"
+              placeholder="Nombre del documento"
+              value={newDocName}
+              onChange={e => setNewDocName(e.target.value)}
+              disabled={saving}
+            />
+            <textarea
+              className="w-full border rounded p-2 min-h-[120px]"
+              placeholder="Contenido..."
+              value={newDocContent}
+              onChange={e => setNewDocContent(e.target.value)}
+              disabled={saving}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="default" onClick={handleCreateNewDoc} disabled={saving || !newDocName.trim() || !newDocContent.trim()}>Crear</Button>
+            <Button variant="outline" onClick={() => setShowNewDoc(false)} disabled={saving}>Cancelar</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
