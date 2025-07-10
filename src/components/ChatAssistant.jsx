@@ -34,6 +34,7 @@ const ChatAssistant = ({ userName }) => {
   const [userDocs, setUserDocs] = useState([]);
   const [selectedDocId, setSelectedDocId] = useState('');
   const [attachedFile, setAttachedFile] = useState(null);
+  const [lastGenerated, setLastGenerated] = useState(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -77,6 +78,7 @@ const ChatAssistant = ({ userName }) => {
           { id: Date.now(), sender: 'assistant', text: result.result || 'No se pudo analizar el documento.', analysis: true }
         ]);
         setLastAnalysis({ file_url, file_type: fileExt, content: result.result });
+        setLastGenerated({ content: result.result, file_url, file_type: fileExt });
         setAttachedFile(null);
       } else {
         // Mensaje normal sin archivo
@@ -96,11 +98,15 @@ const ChatAssistant = ({ userName }) => {
             ...prev,
             { id: Date.now() + 1, sender: 'assistant', text: data.nnia },
           ]);
+          setLastGenerated({ content: data.nnia });
+          setLastAnalysis(null);
         } else {
           setMessages((prev) => [
             ...prev,
             { id: Date.now() + 1, sender: 'assistant', text: 'No se recibió respuesta de NNIA.' },
           ]);
+          setLastGenerated(null);
+          setLastAnalysis(null);
         }
         if (data.threadId) setThreadId(data.threadId);
       }
@@ -110,6 +116,7 @@ const ChatAssistant = ({ userName }) => {
         { id: Date.now() + 2, sender: 'assistant', text: 'Ocurrió un error al procesar tu solicitud.' },
       ]);
       setLastAnalysis(null);
+      setLastGenerated(null);
       setAttachedFile(null);
     } finally {
       setLoading(false);
@@ -125,7 +132,7 @@ const ChatAssistant = ({ userName }) => {
   };
 
   const handleCreateDocument = async () => {
-    if (!client || !lastAnalysis) return;
+    if (!client || !lastGenerated) return;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents`, {
         method: 'POST',
@@ -133,17 +140,18 @@ const ChatAssistant = ({ userName }) => {
         body: JSON.stringify({
           clientId: client.id,
           name: `Documento NNIA - ${new Date().toLocaleString()}`,
-          content: lastAnalysis.content,
-          file_url: lastAnalysis.file_url,
-          file_type: lastAnalysis.file_type
+          content: lastGenerated.content,
+          file_url: lastGenerated.file_url,
+          file_type: lastGenerated.file_type
         })
       });
       const doc = await res.json();
-      toast({ title: 'Documento creado', description: 'El análisis se guardó como documento.' });
+      toast({ title: 'Documento creado', description: 'El contenido se guardó como documento.' });
       setMessages((prev) => [
         ...prev,
-        { id: Date.now(), sender: 'assistant', text: '✅ El análisis se guardó como documento y ya está disponible en la sección Documentos.' }
+        { id: Date.now(), sender: 'assistant', text: '✅ El contenido se guardó como documento y ya está disponible en la sección Documentos.' }
       ]);
+      setLastGenerated(null);
       setLastAnalysis(null);
     } catch (err) {
       toast({ title: 'Error', description: 'No se pudo guardar el documento.' });
@@ -164,24 +172,25 @@ const ChatAssistant = ({ userName }) => {
   };
 
   const handleAddToExisting = async () => {
-    if (!client || !lastAnalysis || !selectedDocId) return;
+    if (!client || !lastGenerated || !selectedDocId) return;
     try {
       // Obtener el documento actual
       const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents/${selectedDocId}?clientId=${client.id}`);
       const doc = await res.json();
-      // Actualizar el contenido agregando el análisis
-      const updatedContent = doc.content + '\n\n---\n\n' + lastAnalysis.content;
+      // Actualizar el contenido agregando el texto generado
+      const updatedContent = doc.content + '\n\n---\n\n' + lastGenerated.content;
       await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents/${selectedDocId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ clientId: client.id, name: doc.name, content: updatedContent })
       });
-      toast({ title: 'Documento actualizado', description: 'El análisis se agregó al documento.' });
+      toast({ title: 'Documento actualizado', description: 'El contenido se agregó al documento.' });
       setMessages((prev) => [
         ...prev,
-        { id: Date.now(), sender: 'assistant', text: '✅ El análisis se agregó al documento seleccionado.' }
+        { id: Date.now(), sender: 'assistant', text: '✅ El contenido se agregó al documento seleccionado.' }
       ]);
       setShowDocModal(false);
+      setLastGenerated(null);
       setLastAnalysis(null);
     } catch (err) {
       toast({ title: 'Error', description: 'No se pudo actualizar el documento.' });
@@ -211,7 +220,7 @@ const ChatAssistant = ({ userName }) => {
       </CardHeader>
       <CardContent className="flex flex-col h-[350px] md:h-[400px]">
         <div className="flex-1 overflow-y-auto space-y-4 pr-2">
-          {messages.map((msg) => (
+          {messages.map((msg, idx) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={
                 `rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] break-words shadow-sm ` +
@@ -220,6 +229,13 @@ const ChatAssistant = ({ userName }) => {
                   : 'bg-muted text-foreground rounded-bl-md')
               }>
                 {msg.text}
+                {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
+                {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
+                  <div className="mt-4 flex gap-2 justify-end">
+                    <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
+                    <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -274,13 +290,13 @@ const ChatAssistant = ({ userName }) => {
             disabled={analyzing}
           />
         </div>
-        {/* Botones de acción tras análisis */}
-        {lastAnalysis && (
+        {/* Botones de acción tras análisis (ya no van aquí) */}
+        {/* {lastAnalysis && (
           <div className="mt-4 flex gap-2 justify-end">
             <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
             <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
           </div>
-        )}
+        )} */}
       </CardContent>
       <Dialog open={showDocModal} onOpenChange={setShowDocModal}>
         <DialogContent>

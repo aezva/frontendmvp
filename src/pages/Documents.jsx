@@ -20,7 +20,7 @@ const Documents = () => {
 
   useEffect(() => {
     if (!client) return;
-    fetch(`/nnia/documents?clientId=${client.id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/nnia/documents?clientId=${client.id}`)
       .then(res => res.json())
       .then(data => {
         setDocuments(data);
@@ -36,7 +36,7 @@ const Documents = () => {
     if (!client || !newDocName.trim() || !newDocContent.trim()) return;
     setSaving(true);
     try {
-      const res = await fetch(`/nnia/documents`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/documents`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ clientId: client.id, name: newDocName, content: newDocContent })
@@ -46,7 +46,7 @@ const Documents = () => {
       setNewDocName('');
       setNewDocContent('');
       // Refrescar lista
-      fetch(`/nnia/documents?clientId=${client.id}`)
+      fetch(`${import.meta.env.VITE_API_URL}/nnia/documents?clientId=${client.id}`)
         .then(res => res.json())
         .then(data => setDocuments(data));
       toast({ title: 'Documento creado', description: 'El documento se creó correctamente.' });
