@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 
 const CHAT_SESSION_KEY = 'nnia_chat_messages';
 
@@ -282,9 +282,7 @@ const ChatAssistant = ({ userName }) => {
       </CardContent>
       <Dialog open={showDocModal} onOpenChange={setShowDocModal}>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Agregar análisis a un documento existente</DialogTitle>
-          </DialogHeader>
+          <DialogTitle>Agregar análisis a un documento existente</DialogTitle>
           <div className="space-y-2">
             <select
               className="w-full border rounded p-2"
