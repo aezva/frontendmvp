@@ -210,9 +210,9 @@ const ChatAssistant = ({ userName }) => {
   }, [client, userName]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" style={{ height: '400px' }}>
-      {/* Columna video vertical a la izquierda */}
-      <div className="flex items-center justify-center h-full">
+    <div className="grid grid-cols-3 gap-6" style={{ height: '400px' }}>
+      {/* Columna video: 1/3 */}
+      <div className="col-span-1 flex items-center justify-center h-full">
         <div className="w-full h-full max-w-[260px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
           <video
             src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
@@ -225,8 +225,8 @@ const ChatAssistant = ({ userName }) => {
           />
         </div>
       </div>
-      {/* Columna chat a la derecha, más ancha */}
-      <div className="h-full">
+      {/* Columna chat: 2/3 */}
+      <div className="col-span-2 h-full">
         <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
           <CardContent className="flex-1 flex flex-col justify-between p-4">
             <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '300px' }}>
