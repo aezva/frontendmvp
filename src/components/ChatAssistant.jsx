@@ -212,87 +212,85 @@ const ChatAssistant = ({ userName }) => {
   return (
     <Card className="bg-card/50 backdrop-blur-sm">
       {/* Eliminado header con imagen y nombre de NNIA */}
-      <CardContent className="h-[400px] md:h-[480px] p-0">
-        <div className="flex h-full">
-          {/* Columna video (más grande, sin padding, borde sutil) */}
-          <div className="w-2/5 h-full flex items-start">
-            <div className="aspect-square w-full h-full max-w-[180px] max-h-[180px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
-              <video
-                src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
-                className="object-cover w-full h-full"
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ background: '#000' }}
-              />
-            </div>
+      <CardContent className="h-[480px] p-0 flex flex-col">
+        {/* Video arriba */}
+        <div className="w-full flex items-start">
+          <div className="aspect-square w-full max-w-[200px] max-h-[200px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
+            <video
+              src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
+              className="object-cover w-full h-full"
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{ background: '#000' }}
+            />
           </div>
-          {/* Columna chat (más ancha, separada del video) */}
-          <div className="w-3/5 flex flex-col h-full justify-between">
-            <div className="flex-1 overflow-y-auto space-y-4">
-              {messages.map((msg, idx) => (
-                <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={
-                    `rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] break-words shadow-sm ` +
-                    (msg.sender === 'user'
-                      ? 'bg-primary text-primary-foreground rounded-br-md'
-                      : 'bg-muted text-foreground rounded-bl-md')
-                  }>
-                    {msg.text}
-                    {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
-                    {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
-                      <div className="mt-4 flex gap-2 justify-end">
-                        <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
-                        <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
-                      </div>
-                    )}
-                  </div>
+        </div>
+        {/* Chat debajo, ocupa el resto */}
+        <div className="flex-1 flex flex-col justify-between mt-4">
+          <div className="flex-1 overflow-y-auto space-y-4">
+            {messages.map((msg, idx) => (
+              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={
+                  `rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] break-words shadow-sm ` +
+                  (msg.sender === 'user'
+                    ? 'bg-primary text-primary-foreground rounded-br-md'
+                    : 'bg-muted text-foreground rounded-bl-md')
+                }>
+                  {msg.text}
+                  {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
+                  {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
+                    <div className="mt-4 flex gap-2 justify-end">
+                      <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
+                      <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
+                    </div>
+                  )}
                 </div>
-              ))}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="bg-muted text-foreground rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] shadow-sm opacity-70">
-                    NNIA está escribiendo...
-                  </div>
+              </div>
+            ))}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="bg-muted text-foreground rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] shadow-sm opacity-70">
+                  NNIA está escribiendo...
                 </div>
-              )}
-              {analyzing && (
-                <div className="text-center py-4 text-primary font-semibold">Analizando documento... Por favor espera.</div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-            <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
-              <Input
-                placeholder="Escribe un mensaje..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                className="flex-1"
-                autoComplete="off"
-                disabled={analyzing || loading}
-              />
-              <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
-                <Upload className="h-5 w-5" />
-              </Button>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-                disabled={analyzing || loading}
-              />
-              <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
-                <Send className="h-5 w-5" />
-              </Button>
-            </form>
-            {attachedFile && (
-              <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
-                <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
-                <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
               </div>
             )}
+            {analyzing && (
+              <div className="text-center py-4 text-primary font-semibold">Analizando documento... Por favor espera.</div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
+          <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
+            <Input
+              placeholder="Escribe un mensaje..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className="flex-1"
+              autoComplete="off"
+              disabled={analyzing || loading}
+            />
+            <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
+              <Upload className="h-5 w-5" />
+            </Button>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              disabled={analyzing || loading}
+            />
+            <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
+              <Send className="h-5 w-5" />
+            </Button>
+          </form>
+          {attachedFile && (
+            <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
+              <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
+              <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
+            </div>
+          )}
         </div>
       </CardContent>
       <Dialog open={showDocModal} onOpenChange={setShowDocModal}>
