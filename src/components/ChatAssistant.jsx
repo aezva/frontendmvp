@@ -229,8 +229,8 @@ const ChatAssistant = ({ userName }) => {
             </div>
           </div>
           {/* Columna chat (más ancha, separada del video) */}
-          <div className="w-3/5 flex flex-col h-full pl-6">
-            <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+          <div className="w-3/5 flex flex-col h-full justify-between">
+            <div className="flex-1 overflow-y-auto space-y-4">
               {messages.map((msg, idx) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={
