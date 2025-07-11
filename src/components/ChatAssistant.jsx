@@ -212,10 +212,10 @@ const ChatAssistant = ({ userName }) => {
   return (
     <Card className="bg-card/50 backdrop-blur-sm">
       {/* Eliminado header con imagen y nombre de NNIA */}
-      <CardContent className="h-[480px] p-0 flex flex-col">
-        {/* Video arriba */}
-        <div className="w-full flex items-start">
-          <div className="aspect-square w-full max-w-[200px] max-h-[200px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
+      <CardContent className="h-[480px] p-0 flex flex-row gap-6">
+        {/* Columna video vertical a la izquierda */}
+        <div className="w-1/3 h-full flex items-center">
+          <div className="w-full h-[90%] min-h-[300px] max-h-[420px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
             <video
               src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
               className="object-cover w-full h-full"
@@ -227,8 +227,8 @@ const ChatAssistant = ({ userName }) => {
             />
           </div>
         </div>
-        {/* Chat debajo, ocupa el resto */}
-        <div className="flex-1 flex flex-col justify-between mt-4">
+        {/* Columna chat a la derecha */}
+        <div className="w-2/3 h-full flex flex-col justify-between">
           <div className="flex-1 overflow-y-auto space-y-4">
             {messages.map((msg, idx) => (
               <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
