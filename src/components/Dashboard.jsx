@@ -9,6 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import ChatAssistant from './ChatAssistant';
 import { useNavigate } from 'react-router-dom';
 import { fetchAppointments } from '@/services/appointmentsService';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 const Dashboard = () => {
   const { client } = useAuth();
@@ -21,6 +22,8 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [nextAppointments, setNextAppointments] = useState([]);
+  // Estado para las conversaciones recientes
+  const [recentConversations, setRecentConversations] = useState([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -88,6 +91,21 @@ const Dashboard = () => {
 
     fetchDashboardData();
   }, [client, toast, navigate]);
+
+  useEffect(() => {
+    async function fetchRecentConversations() {
+      if (!client) return;
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/nnia/conversations?clientId=${client.id}`);
+        const data = await res.json();
+        if (data.success) setRecentConversations(data.conversations.slice(0, 3));
+        else setRecentConversations([]);
+      } catch {
+        setRecentConversations([]);
+      }
+    }
+    fetchRecentConversations();
+  }, [client]);
 
   const statsData = [
     {
@@ -159,30 +177,46 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Columna 1: Conversaciones Recientes */}
-          <Card className="bg-card/50 backdrop-blur-sm flex flex-col justify-between h-full">
+          <Card className="bg-card/50 backdrop-blur-sm flex flex-col h-full min-h-[260px] max-h-[260px] justify-between">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">Conversaciones Recientes</CardTitle>
             </CardHeader>
-            <CardContent className="text-center text-muted-foreground py-16">
-              <p>Gráfico de conversaciones irá aquí.</p>
-              <p className="text-sm">(Función en desarrollo)</p>
+            <CardContent className="p-0">
+              <ul className="divide-y divide-border">
+                {recentConversations.length === 0 ? (
+                  <li className="text-muted-foreground text-sm p-4">No hay conversaciones recientes.</li>
+                ) : (
+                  recentConversations.map((conv, idx) => (
+                    <li key={conv.visitor_id || idx} className="flex items-center gap-3 px-4 py-3 hover:bg-muted/50 transition cursor-pointer">
+                      <Avatar className="h-9 w-9">
+                        <AvatarFallback>{conv.visitor_id?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate">{conv.visitor_id?.slice(0, 8)}</div>
+                        <div className="text-xs text-muted-foreground truncate">{conv.last_message}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground whitespace-nowrap">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</div>
+                    </li>
+                  ))
+                )}
+              </ul>
             </CardContent>
           </Card>
-          {/* Columna 2: Métricas verticales */}
-          <div className="flex flex-col gap-4">
+          {/* Columna 2: Métricas verticales, más pequeñas y organizadas */}
+          <div className="flex flex-col gap-3 justify-between h-full min-h-[260px] max-h-[260px]">
             {statsData.map((stat, index) => (
-              <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
-                  <stat.icon className="h-5 w-5 text-primary" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{stat.value}</div>
-                  <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}> 
-                    {stat.change} vs el mes pasado
-                  </p>
+              <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300 p-2 flex-1 flex flex-col justify-center min-h-[70px] max-h-[70px]">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-primary/10 p-2"><stat.icon className="h-5 w-5 text-primary" /></span>
+                    <span className="text-xs font-medium text-muted-foreground">{stat.title}</span>
+                  </div>
+                  <div className="text-lg font-bold" style={{ color: '#7bdff2' }}>{stat.value}</div>
+                </div>
+                <div className="flex items-center justify-between mt-1">
+                  <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>{stat.change} vs mes pasado</p>
                   <button
-                    className="mt-2 text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                    className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
                     onClick={() => {
                       if (stat.title.includes('Conversaciones')) navigate('/messages');
                       else if (stat.title.includes('Tickets')) navigate('/messages');
@@ -191,7 +225,7 @@ const Dashboard = () => {
                   >
                     Ver todas
                   </button>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
