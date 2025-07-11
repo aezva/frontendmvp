@@ -152,9 +152,37 @@ const Dashboard = () => {
         <ChatAssistant userName={client?.name || 'Usuario'} />
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold tracking-tight">Dashboard</h1>
+            <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">Un resumen de la actividad de tu asistente.</p>
           </div>
+        </div>
+
+        {/* Accesos Rápidos */}
+        <div className="flex flex-wrap gap-3 mb-2">
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground shadow hover:bg-primary/90 transition-colors text-sm font-medium"
+            onClick={() => navigate('/citas')}
+          >
+            <span>Agendar Cita</span>
+          </button>
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-200 text-pink-900 shadow hover:bg-pink-300 transition-colors text-sm font-medium"
+            onClick={() => navigate('/documents')}
+          >
+            <span>Crear Documento</span>
+          </button>
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 text-blue-900 shadow hover:bg-blue-200 transition-colors text-sm font-medium"
+            onClick={() => navigate('/widget')}
+          >
+            <span>Configurar Widget</span>
+          </button>
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 text-gray-900 shadow hover:bg-gray-200 transition-colors text-sm font-medium"
+            onClick={() => navigate('/my-business')}
+          >
+            <span>Mi Negocio</span>
+          </button>
         </div>
 
         <motion.div
@@ -192,31 +220,50 @@ const Dashboard = () => {
         </motion.div>
 
         {/* Próximas citas */}
-        <Card className="bg-card/50 backdrop-blur-sm">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-base font-semibold">Próximas citas</CardTitle>
-            <button
-              className="text-xs text-blue-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
-              onClick={() => navigate('/citas')}
-            >
-              Ver todas
-            </button>
-          </CardHeader>
-          <CardContent>
-            {nextAppointments.length === 0 ? (
-              <div className="text-muted-foreground text-sm">No hay citas próximas.</div>
-            ) : (
-              <ul className="divide-y divide-border">
-                {nextAppointments.map((appt, idx) => (
-                  <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
-                    <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
-                    <div className="text-xs text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Tareas Pendientes */}
+          <Card className="bg-card/50 backdrop-blur-sm">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-semibold">Tareas Pendientes</CardTitle>
+              <button
+                className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                onClick={() => navigate('/tareas')}
+              >
+                Ver todas
+              </button>
+            </CardHeader>
+            <CardContent>
+              {/* Aquí se mostrarán las tareas pendientes cuando se conecte la funcionalidad */}
+              <div className="text-muted-foreground text-sm">No hay tareas pendientes.</div>
+            </CardContent>
+          </Card>
+          {/* Próximas citas */}
+          <Card className="bg-card/50 backdrop-blur-sm">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="text-lg font-semibold">Próximas citas</CardTitle>
+              <button
+                className="text-xs text-blue-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
+                onClick={() => navigate('/citas')}
+              >
+                Ver todas
+              </button>
+            </CardHeader>
+            <CardContent>
+              {nextAppointments.length === 0 ? (
+                <div className="text-muted-foreground text-sm">No hay citas próximas.</div>
+              ) : (
+                <ul className="divide-y divide-border">
+                  {nextAppointments.map((appt, idx) => (
+                    <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
+                      <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
+                      <div className="text-xs text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
         <motion.div
           className="grid gap-6 lg:grid-cols-2"
@@ -226,7 +273,7 @@ const Dashboard = () => {
         >
           <Card className="lg:col-span-1 bg-card/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-base font-semibold">Conversaciones Recientes</CardTitle>
+              <CardTitle className="text-lg font-semibold">Conversaciones Recientes</CardTitle>
             </CardHeader>
             <CardContent className="text-center text-muted-foreground py-16">
               <p>Gráfico de conversaciones irá aquí.</p>
@@ -235,7 +282,7 @@ const Dashboard = () => {
           </Card>
           <Card className="lg:col-span-1 bg-card/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-base font-semibold">Rendimiento del Asistente</CardTitle>
+              <CardTitle className="text-lg font-semibold">Rendimiento del Asistente</CardTitle>
             </CardHeader>
             <CardContent className="text-center text-muted-foreground py-16">
               <p>Gráfico de rendimiento irá aquí.</p>

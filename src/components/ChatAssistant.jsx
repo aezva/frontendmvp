@@ -212,7 +212,7 @@ const ChatAssistant = ({ userName }) => {
   return (
     <Card className="bg-card/50 backdrop-blur-sm">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <Avatar className="h-10 w-10">
+        <Avatar className="h-10 w-10 shadow-md shadow-black/10">
           <AvatarImage src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnia-profile-picture.webp" />
           <AvatarFallback>AI</AvatarFallback>
         </Avatar>
