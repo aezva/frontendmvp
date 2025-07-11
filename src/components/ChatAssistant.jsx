@@ -213,7 +213,7 @@ const ChatAssistant = ({ userName }) => {
     <div className="flex gap-6" style={{ height: '350px' }}>
       {/* Video con ancho fijo */}
       <div className="flex-shrink-0 w-[260px] flex items-center justify-start h-full">
-        <div className="w-full h-full bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
+        <div className="w-full h-full bg-white/80 rounded-2xl shadow-md border border-pink-200 flex items-center justify-center overflow-hidden">
           <video
             src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
             className="object-cover w-full h-full"
@@ -221,13 +221,13 @@ const ChatAssistant = ({ userName }) => {
             loop
             muted
             playsInline
-            style={{ background: '#000' }}
+            style={{ background: '#fff' }}
           />
         </div>
       </div>
       {/* Chat que ocupa el resto del espacio */}
       <div className="flex-1 h-full">
-        <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
+        <Card className="bg-white/80 rounded-2xl shadow-md border border-pink-200 h-full flex flex-col">
           <CardContent className="flex-1 flex flex-col justify-between p-4">
             <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '250px' }}>
               {messages.map((msg, idx) => (
