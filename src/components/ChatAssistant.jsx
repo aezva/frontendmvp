@@ -216,7 +216,7 @@ const ChatAssistant = ({ userName }) => {
           <AvatarImage src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnia-profile-picture.webp" />
           <AvatarFallback>AI</AvatarFallback>
         </Avatar>
-        <CardTitle className="text-xl font-alata tracking-[0.19em] text-black">NNIA</CardTitle>
+        <CardTitle className="text-lg font-alata tracking-[0.19em] text-black select-none">NNIA</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col h-[350px] md:h-[400px]">
         <div className="flex-1 overflow-y-auto space-y-4 pr-2">
@@ -281,16 +281,7 @@ const ChatAssistant = ({ userName }) => {
             <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
           </div>
         )}
-        <div className="mt-2 flex gap-2 items-center">
-          <span className="text-xs text-muted-foreground">Prompt para análisis:</span>
-          <Input
-            value={analysisPrompt}
-            onChange={e => setAnalysisPrompt(e.target.value)}
-            className="text-xs py-1 px-2 w-64"
-            disabled={analyzing}
-          />
-        </div>
-        {/* Botones de acción tras análisis (ya no van aquí) */}
+        {/* Eliminar el prompt para análisis y su casilla */}
         {/* {lastAnalysis && (
           <div className="mt-4 flex gap-2 justify-end">
             <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>

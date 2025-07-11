@@ -17,8 +17,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState({
     totalConversations: 0,
     openTickets: 0,
-    totalCustomers: 0,
-    resolutionRate: 0
+    totalLeads: 0 // Preparado para conectar
   });
   const [loading, setLoading] = useState(true);
   const [nextAppointments, setNextAppointments] = useState([]);
@@ -72,8 +71,7 @@ const Dashboard = () => {
         setStats({
           totalConversations: messageCount || 0,
           openTickets: openTicketCount || 0,
-          totalCustomers: uniqueCustomerCount,
-          resolutionRate: resolutionRate
+          totalLeads: 0 // Aquí se conectará el dato real después
         });
 
       } catch (error) {
@@ -92,30 +90,26 @@ const Dashboard = () => {
   }, [client, toast, navigate]);
 
   const statsData = [
-    { 
-      title: 'Conversaciones Totales', 
-      value: stats.totalConversations.toLocaleString(), 
-      icon: MessageSquare, 
-      change: '+0%' 
+    {
+      title: 'Conversaciones Totales',
+      value: stats.totalConversations.toLocaleString(),
+      icon: MessageSquare,
+      change: '+0%'
     },
-    { 
-      title: 'Tickets Abiertos', 
-      value: stats.openTickets.toString(), 
-      icon: Ticket, 
-      change: '+0%' 
+    // Nuevo apartado para Leads Captados
+    {
+      title: 'Leads Captados',
+      value: stats.totalLeads ? stats.totalLeads.toString() : '0', // Dejar preparado para conectar
+      icon: Users, // Puedes cambiar el icono si prefieres otro
+      change: '+0%'
     },
-    { 
-      title: 'Clientes Atendidos', 
-      value: stats.totalCustomers.toString(), 
-      icon: Users, 
-      change: '+0%' 
+    {
+      title: 'Tickets Abiertos',
+      value: stats.openTickets.toString(),
+      icon: Ticket,
+      change: '+0%'
     },
-    { 
-      title: 'Tasa de Resolución', 
-      value: `${stats.resolutionRate}%`, 
-      icon: BarChart3, 
-      change: '+0%' 
-    },
+    // Eliminados: Clientes Atendidos y Tasa de Resolución
   ];
 
   const containerVariants = {
@@ -158,7 +152,7 @@ const Dashboard = () => {
         <ChatAssistant userName={client?.name || 'Usuario'} />
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <h1 className="text-lg font-semibold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">Un resumen de la actividad de tu asistente.</p>
           </div>
         </div>
@@ -232,7 +226,7 @@ const Dashboard = () => {
         >
           <Card className="lg:col-span-1 bg-card/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Conversaciones Recientes</CardTitle>
+              <CardTitle className="text-base font-semibold">Conversaciones Recientes</CardTitle>
             </CardHeader>
             <CardContent className="text-center text-muted-foreground py-16">
               <p>Gráfico de conversaciones irá aquí.</p>
@@ -241,7 +235,7 @@ const Dashboard = () => {
           </Card>
           <Card className="lg:col-span-1 bg-card/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Rendimiento del Asistente</CardTitle>
+              <CardTitle className="text-base font-semibold">Rendimiento del Asistente</CardTitle>
             </CardHeader>
             <CardContent className="text-center text-muted-foreground py-16">
               <p>Gráfico de rendimiento irá aquí.</p>
