@@ -157,121 +157,9 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Accesos Rápidos */}
-        <div className="flex flex-wrap gap-3 mb-2">
-          <button
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground shadow hover:bg-primary/90 transition-colors text-sm font-medium"
-            onClick={() => navigate('/citas')}
-          >
-            <span>Agendar Cita</span>
-          </button>
-          <button
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-200 text-pink-900 shadow hover:bg-pink-300 transition-colors text-sm font-medium"
-            onClick={() => navigate('/documents')}
-          >
-            <span>Crear Documento</span>
-          </button>
-          <button
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 text-blue-900 shadow hover:bg-blue-200 transition-colors text-sm font-medium"
-            onClick={() => navigate('/widget')}
-          >
-            <span>Configurar Widget</span>
-          </button>
-          <button
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 text-gray-900 shadow hover:bg-gray-200 transition-colors text-sm font-medium"
-            onClick={() => navigate('/my-business')}
-          >
-            <span>Mi Negocio</span>
-          </button>
-        </div>
-
-        <motion.div
-          className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {statsData.map((stat, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
-                  <stat.icon className="h-5 w-5 text-primary" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{stat.value}</div>
-                  <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
-                    {stat.change} vs el mes pasado
-                  </p>
-                  <button
-                    className="mt-2 text-xs text-blue-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
-                    onClick={() => {
-                      if (stat.title.includes('Conversaciones')) navigate('/messages');
-                      else if (stat.title.includes('Tickets')) navigate('/messages');
-                      else if (stat.title.includes('Clientes')) navigate('/my-business');
-                    }}
-                  >
-                    Ver todas
-                  </button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Próximas citas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Tareas Pendientes */}
-          <Card className="bg-card/50 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-lg font-semibold">Tareas Pendientes</CardTitle>
-              <button
-                className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
-                onClick={() => navigate('/tareas')}
-              >
-                Ver todas
-              </button>
-            </CardHeader>
-            <CardContent>
-              {/* Aquí se mostrarán las tareas pendientes cuando se conecte la funcionalidad */}
-              <div className="text-muted-foreground text-sm">No hay tareas pendientes.</div>
-            </CardContent>
-          </Card>
-          {/* Próximas citas */}
-          <Card className="bg-card/50 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-lg font-semibold">Próximas citas</CardTitle>
-              <button
-                className="text-xs text-blue-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
-                onClick={() => navigate('/citas')}
-              >
-                Ver todas
-              </button>
-            </CardHeader>
-            <CardContent>
-              {nextAppointments.length === 0 ? (
-                <div className="text-muted-foreground text-sm">No hay citas próximas.</div>
-              ) : (
-                <ul className="divide-y divide-border">
-                  {nextAppointments.map((appt, idx) => (
-                    <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
-                      <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
-                      <div className="text-xs text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-        <motion.div
-          className="grid gap-6 lg:grid-cols-2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
-          <Card className="lg:col-span-1 bg-card/50 backdrop-blur-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Columna 1: Conversaciones Recientes */}
+          <Card className="bg-card/50 backdrop-blur-sm flex flex-col justify-between h-full">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">Conversaciones Recientes</CardTitle>
             </CardHeader>
@@ -280,16 +168,119 @@ const Dashboard = () => {
               <p className="text-sm">(Función en desarrollo)</p>
             </CardContent>
           </Card>
-          <Card className="lg:col-span-1 bg-card/50 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold">Rendimiento del Asistente</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center text-muted-foreground py-16">
-              <p>Gráfico de rendimiento irá aquí.</p>
-              <p className="text-sm">(Función en desarrollo)</p>
-            </CardContent>
-          </Card>
-        </motion.div>
+          {/* Columna 2: Métricas verticales */}
+          <div className="flex flex-col gap-4">
+            {statsData.map((stat, index) => (
+              <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
+                  <stat.icon className="h-5 w-5 text-primary" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}> 
+                    {stat.change} vs el mes pasado
+                  </p>
+                  <button
+                    className="mt-2 text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                    onClick={() => {
+                      if (stat.title.includes('Conversaciones')) navigate('/messages');
+                      else if (stat.title.includes('Tickets')) navigate('/messages');
+                      else if (stat.title.includes('Leads')) navigate('/messages');
+                    }}
+                  >
+                    Ver todas
+                  </button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Próximas citas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Columna 1: Tareas Pendientes y Documentos Creados */}
+          <div className="flex flex-col gap-4">
+            {/* Tareas Pendientes */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Tareas Pendientes</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/tareas')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {/* Aquí se mostrarán las tareas pendientes cuando se conecte la funcionalidad */}
+                <div className="text-muted-foreground text-sm">No hay tareas pendientes.</div>
+              </CardContent>
+            </Card>
+            {/* Documentos Creados */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Documentos Creados</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/documents')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {/* Aquí se mostrarán los documentos creados cuando se conecte la funcionalidad */}
+                <div className="text-muted-foreground text-sm">No hay documentos creados.</div>
+              </CardContent>
+            </Card>
+          </div>
+          {/* Columna 2: Próximas citas y Próximas reservas */}
+          <div className="flex flex-col gap-4">
+            {/* Próximas citas */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Próximas citas</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/citas')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {nextAppointments.length === 0 ? (
+                  <div className="text-muted-foreground text-sm">No hay citas próximas.</div>
+                ) : (
+                  <ul className="divide-y divide-border">
+                    {nextAppointments.map((appt, idx) => (
+                      <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
+                        <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
+                        <div className="text-xs text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </CardContent>
+            </Card>
+            {/* Próximas Reservas */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Próximas Reservas</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/reservas')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {/* Aquí se mostrarán las próximas reservas cuando se conecte la funcionalidad */}
+                <div className="text-muted-foreground text-sm">No hay reservas próximas.</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
       </div>
     </>
   );
