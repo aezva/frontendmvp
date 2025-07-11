@@ -211,19 +211,12 @@ const ChatAssistant = ({ userName }) => {
 
   return (
     <Card className="bg-card/50 backdrop-blur-sm">
-      <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <Avatar className="h-10 w-10 shadow-md shadow-black/10">
-          <AvatarImage src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//nnia-profile-picture.webp" />
-          <AvatarFallback>AI</AvatarFallback>
-        </Avatar>
-        <CardTitle className="text-lg font-alata tracking-[0.19em] text-black select-none">NNIA</CardTitle>
-      </CardHeader>
-      <CardContent className="h-[350px] md:h-[400px] p-0">
+      {/* Eliminado header con imagen y nombre de NNIA */}
+      <CardContent className="h-[400px] md:h-[480px] p-0">
         <div className="flex h-full">
-          {/* Columna video (1/3) */}
-          <div className="w-1/3 flex items-center justify-center p-2">
-            <div className="aspect-square w-full max-w-[110px] bg-black/10 rounded-xl flex items-center justify-center overflow-hidden border border-black/10 shadow-md">
-              {/* Aquí puedes poner un video real, imagen animada o placeholder */}
+          {/* Columna video (más grande, sin padding, borde sutil) */}
+          <div className="w-2/5 h-full flex items-start">
+            <div className="aspect-square w-full h-full max-w-[180px] max-h-[180px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
                 className="object-cover w-full h-full"
@@ -235,8 +228,8 @@ const ChatAssistant = ({ userName }) => {
               />
             </div>
           </div>
-          {/* Columna chat (2/3) */}
-          <div className="w-2/3 flex flex-col h-full px-2">
+          {/* Columna chat (más ancha, separada del video) */}
+          <div className="w-3/5 flex flex-col h-full pl-6">
             <div className="flex-1 overflow-y-auto space-y-4 pr-2">
               {messages.map((msg, idx) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
