@@ -210,10 +210,10 @@ const ChatAssistant = ({ userName }) => {
   }, [client, userName]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ height: '420px' }}>
-      {/* Columna video vertical a la izquierda, fuera del Card */}
-      <div className="flex items-center h-full">
-        <div className="w-full h-[220px] max-w-[260px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" style={{ height: '400px' }}>
+      {/* Columna video vertical a la izquierda */}
+      <div className="flex items-center justify-center h-full">
+        <div className="w-full h-full max-w-[260px] bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
           <video
             src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
             className="object-cover w-full h-full"
@@ -225,11 +225,11 @@ const ChatAssistant = ({ userName }) => {
           />
         </div>
       </div>
-      {/* Columna chat a la derecha, ocupa 2/3 y está dentro de su Card */}
-      <div className="col-span-2 h-full">
+      {/* Columna chat a la derecha, más ancha */}
+      <div className="h-full">
         <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
           <CardContent className="flex-1 flex flex-col justify-between p-4">
-            <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '320px' }}>
+            <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '300px' }}>
               {messages.map((msg, idx) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={
