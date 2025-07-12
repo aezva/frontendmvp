@@ -57,7 +57,8 @@ const ClientPanel = () => {
       <Topbar />
       <div className="flex flex-1">
         {/* Columna lateral izquierda: ChatAssistant siempre visible, video cuadrado arriba y chat debajo */}
-        <div className="hidden md:flex flex-col items-center bg-transparent border-r border-border" style={{ width: 256, minWidth: 256, maxWidth: 256, height: 'calc(100vh - 4rem)' }}>
+        <div className="hidden md:flex flex-col bg-transparent border-r border-border" style={{ width: 256, minWidth: 256, maxWidth: 256, height: 'calc(100vh - 4rem)' }}>
+          {/* Video cuadrado arriba */}
           <div className="w-full flex flex-col items-center pt-4" style={{ flex: 'none' }}>
             <div className="w-40 h-40 mb-4 bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
               <video
@@ -71,7 +72,8 @@ const ClientPanel = () => {
               />
             </div>
           </div>
-          <div className="flex-1 w-full flex flex-col justify-end">
+          {/* ChatAssistant debajo, ocupa el resto del espacio vertical */}
+          <div className="flex-1 w-full flex flex-col justify-end pb-4">
             <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
           </div>
         </div>

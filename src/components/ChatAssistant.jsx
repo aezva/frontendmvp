@@ -211,90 +211,73 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
   }, [client, userName]);
 
   return (
-    <div className="flex gap-6" style={{ height: '350px' }}>
-      {/* Video con ancho fijo */}
-      <div className="flex-shrink-0 w-[260px] flex items-center justify-start h-full">
-        <div className="w-full h-full bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
-          <video
-            src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
-            className="object-cover w-full h-full"
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{ background: '#000' }}
-          />
-        </div>
-      </div>
-      {/* Chat que ocupa el resto del espacio */}
-      <div className="flex-1 h-full">
-        <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
-          <CardContent className="flex-1 flex flex-col justify-between p-4">
-            <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '250px' }}>
-              {messages.map((msg, idx) => (
-                <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={
-                    `rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] break-words shadow-sm ` +
-                    (msg.sender === 'user'
-                      ? 'bg-primary text-primary-foreground rounded-br-md'
-                      : 'bg-muted text-foreground rounded-bl-md')
-                  }>
-                    {msg.text}
-                    {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
-                    {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
-                      <div className="mt-4 flex gap-2 justify-end">
-                        <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
-                        <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
-                      </div>
-                    )}
-                  </div>
+    <div className="flex-1 flex flex-col justify-between h-full">
+      <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
+        <CardContent className="flex-1 flex flex-col justify-between p-4">
+          <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '100%' }}>
+            {messages.map((msg, idx) => (
+              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={
+                  `rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] break-words shadow-sm ` +
+                  (msg.sender === 'user'
+                    ? 'bg-primary text-primary-foreground rounded-br-md'
+                    : 'bg-muted text-foreground rounded-bl-md')
+                }>
+                  {msg.text}
+                  {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
+                  {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
+                    <div className="mt-4 flex gap-2 justify-end">
+                      <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
+                      <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
+                    </div>
+                  )}
                 </div>
-              ))}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="bg-muted text-foreground rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] shadow-sm opacity-70">
-                    NNIA está escribiendo...
-                  </div>
+              </div>
+            ))}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="bg-muted text-foreground rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] shadow-sm opacity-70">
+                  NNIA está escribiendo...
                 </div>
-              )}
-              {analyzing && (
-                <div className="text-center py-4 text-primary font-semibold">Analizando documento... Por favor espera.</div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-            <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
-              <Input
-                placeholder="Escribe un mensaje..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                className="flex-1"
-                autoComplete="off"
-                disabled={analyzing || loading}
-              />
-              <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
-                <Upload className="h-5 w-5" />
-              </Button>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-                disabled={analyzing || loading}
-              />
-              <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
-                <Send className="h-5 w-5" />
-              </Button>
-            </form>
-            {attachedFile && (
-              <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
-                <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
-                <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
               </div>
             )}
-          </CardContent>
-        </Card>
-      </div>
+            {analyzing && (
+              <div className="text-center py-4 text-primary font-semibold">Analizando documento... Por favor espera.</div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+          <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
+            <Input
+              placeholder="Escribe un mensaje..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className="flex-1"
+              autoComplete="off"
+              disabled={analyzing || loading}
+            />
+            <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
+              <Upload className="h-5 w-5" />
+            </Button>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              disabled={analyzing || loading}
+            />
+            <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
+              <Send className="h-5 w-5" />
+            </Button>
+          </form>
+          {attachedFile && (
+            <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
+              <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
+              <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
       <Dialog open={showDocModal} onOpenChange={setShowDocModal}>
         <DialogContent>
           <DialogTitle>Agregar análisis a un documento existente</DialogTitle>
