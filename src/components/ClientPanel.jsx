@@ -22,7 +22,7 @@ import ChatAssistant from './ChatAssistant';
 
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const { signOut } = useAuth();
+  const { signOut, client } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -58,7 +58,7 @@ const ClientPanel = () => {
       <div className="flex flex-1">
         {/* Columna lateral izquierda: ChatAssistant siempre visible */}
         <div className="hidden md:block bg-transparent border-r border-border" style={{ minWidth: 340, maxWidth: 400, width: 380 }}>
-          <ChatAssistant userName={client?.name || 'Usuario'} />
+          <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
         </div>
         {/* Contenido principal a la derecha del chat */}
         <main className="flex-1 flex flex-col transition-all duration-300">

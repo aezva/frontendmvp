@@ -11,8 +11,9 @@ import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/u
 
 const CHAT_SESSION_KEY = 'nnia_chat_messages';
 
-const ChatAssistant = ({ userName }) => {
-  const { client } = useAuth();
+const ChatAssistant = ({ userName, client: clientProp }) => {
+  const { client: clientCtx } = useAuth();
+  const client = clientProp || clientCtx;
   const [messages, setMessages] = useState(() => {
     const saved = sessionStorage.getItem(CHAT_SESSION_KEY);
     return saved ? JSON.parse(saved) : [{
