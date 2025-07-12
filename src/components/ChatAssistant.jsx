@@ -213,15 +213,15 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
   return (
     <div className="flex-1 flex flex-col justify-between h-full">
       <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
-        <CardContent className="flex-1 flex flex-col justify-between p-4">
-          <div className="flex-1 overflow-y-auto space-y-4 pt-2 pr-1" style={{ maxHeight: '100%' }}>
+        <CardContent className="flex-1 flex flex-col justify-between p-2">
+          <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-1" style={{ maxHeight: '100%' }}>
             {messages.map((msg, idx) => (
-              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
                 <div className={
-                  `rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] break-words shadow-sm ` +
+                  `rounded-2xl px-4 py-2 w-fit max-w-[90%] break-words shadow-sm ` +
                   (msg.sender === 'user'
-                    ? 'bg-primary text-primary-foreground rounded-br-md'
-                    : 'bg-muted text-foreground rounded-bl-md')
+                    ? 'bg-primary text-primary-foreground rounded-br-md ml-8'
+                    : 'bg-muted text-foreground rounded-bl-md mr-8')
                 }>
                   {msg.text}
                   {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
@@ -235,8 +235,8 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
               </div>
             ))}
             {loading && (
-              <div className="flex justify-start">
-                <div className="bg-muted text-foreground rounded-2xl px-5 py-3 max-w-[80%] md:max-w-[65%] shadow-sm opacity-70">
+              <div className="flex justify-start w-full">
+                <div className="bg-muted text-foreground rounded-2xl px-4 py-2 w-fit max-w-[90%] shadow-sm opacity-70">
                   NNIA está escribiendo...
                 </div>
               </div>

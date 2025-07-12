@@ -58,9 +58,9 @@ const ClientPanel = () => {
       <div className="flex flex-1">
         {/* Columna lateral izquierda: ChatAssistant siempre visible, video cuadrado arriba y chat debajo */}
         <div className="hidden md:flex flex-col bg-transparent border-r border-border" style={{ width: 256, minWidth: 256, maxWidth: 256, height: 'calc(100vh - 4rem)' }}>
-          {/* Video cuadrado arriba */}
-          <div className="w-full flex flex-col items-center pt-4" style={{ flex: 'none' }}>
-            <div className="w-40 h-40 mb-4 bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
+          {/* Video cuadrado arriba, sin padding ni bordes propios */}
+          <div className="w-full" style={{ flex: 'none' }}>
+            <div className="w-full h-64" style={{ background: 'rgba(0,0,0,0.05)' }}>
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
                 className="object-cover w-full h-full"
