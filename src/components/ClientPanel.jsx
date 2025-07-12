@@ -18,6 +18,7 @@ import WidgetSettings from '@/components/WidgetSettings';
 import Reservations from '@/components/Reservations';
 import Documents from '@/pages/Documents';
 import DocumentView from '@/pages/DocumentView';
+import ChatAssistant from './ChatAssistant';
 
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -55,15 +56,18 @@ const ClientPanel = () => {
     <div className="min-h-screen flex flex-col">
       <Topbar />
       <div className="flex flex-1">
-        <Sidebar isSidebarOpen={isSidebarOpen} handleLogout={handleLogout} />
-        <main className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'ml-0'}`}>
+        {/* Columna lateral izquierda: ChatAssistant siempre visible */}
+        <div className="hidden md:block bg-transparent border-r border-border" style={{ minWidth: 340, maxWidth: 400, width: 380 }}>
+          <ChatAssistant userName={client?.name || 'Usuario'} />
+        </div>
+        {/* Contenido principal a la derecha del chat */}
+        <main className="flex-1 flex flex-col transition-all duration-300">
           <div className="md:hidden flex items-center justify-between p-4 border-b border-border">
             <span className="font-bold text-lg">Asistente IA</span>
             <button onClick={() => setSidebarOpen(!isSidebarOpen)}>
               {isSidebarOpen ? <X /> : <Menu />}
             </button>
           </div>
-          
           <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
             <AnimatePresence mode="wait">
               <Routes>

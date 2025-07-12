@@ -1,18 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Bell } from 'lucide-react';
 import { useNotifications } from '../contexts/NotificationsContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
+const navItems = [
+  { href: '/', label: 'Dashboard' },
+  { href: '/messages', label: 'Mensajes' },
+  { href: '/documents', label: 'Documentos' },
+  { href: '/citas', label: 'Citas' },
+  { href: '/reservas', label: 'Reservas' },
+  { href: '/my-business', label: 'Mi Negocio' },
+  { href: '/widget', label: 'Widget' },
+  { href: '/subscription', label: 'Suscripción' },
+];
+
 export default function Topbar() {
   const { unreadCount, notifications, markAsRead } = useNotifications();
   const { user, client, logout } = useAuth();
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const notifRef = useRef();
-  const profileRef = useRef();
+  const [notifOpen, setNotifOpen] = React.useState(false);
+  const [profileOpen, setProfileOpen] = React.useState(false);
+  const notifRef = React.useRef();
+  const profileRef = React.useRef();
 
-  useEffect(() => {
+  React.useEffect(() => {
     function handleClickOutside(event) {
       if (notifRef.current && !notifRef.current.contains(event.target)) setNotifOpen(false);
       if (profileRef.current && !profileRef.current.contains(event.target)) setProfileOpen(false);
@@ -23,7 +35,22 @@ export default function Topbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow flex items-center justify-between px-6 h-16">
-      <div className="font-alata text-2xl tracking-[0.19em] text-black select-none">NNIA</div>
+      <div className="flex items-center gap-8">
+        <div className="font-alata text-2xl tracking-[0.19em] text-black select-none">NNIA</div>
+        <nav className="flex gap-2">
+          {navItems.map(item => (
+            <NavLink
+              key={item.href}
+              to={item.href}
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-lg font-medium text-sm transition-colors ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+      </div>
       <div className="flex items-center gap-4">
         {/* Notificaciones */}
         <div className="relative" ref={notifRef}>
