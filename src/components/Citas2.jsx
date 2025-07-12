@@ -119,7 +119,7 @@ export default function Citas2() {
         <h2 className="text-xl font-semibold">Citas Agendadas</h2>
         {appointments.length === 0 ? (
           <div className="text-muted-foreground text-center p-4 bg-yellow-50 rounded border border-yellow-200">
-            <strong>No hay citas agendadas aún.</strong><br />
+            <strong style={{ color: '#ff9c9c' }}>No hay citas agendadas aún.</strong><br />
             Cuando NNIA o tus clientes agenden una cita, aparecerá aquí.
           </div>
         ) : (

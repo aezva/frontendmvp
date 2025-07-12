@@ -82,7 +82,7 @@ const Documents = () => {
               {loading ? (
                 <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
               ) : documents.length === 0 ? (
-                <tr><td colSpan={4} className="text-center py-8">No hay documentos aún.</td></tr>
+                <tr><td colSpan={4} className="text-center py-8" style={{ color: '#ff9c9c' }}>No hay documentos aún.</td></tr>
               ) : (
                 documents.map(doc => (
                   <tr key={doc.id}>
