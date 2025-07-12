@@ -56,9 +56,24 @@ const ClientPanel = () => {
     <div className="min-h-screen flex flex-col">
       <Topbar />
       <div className="flex flex-1">
-        {/* Columna lateral izquierda: ChatAssistant siempre visible */}
-        <div className="hidden md:block bg-transparent border-r border-border" style={{ minWidth: 340, maxWidth: 400, width: 380 }}>
-          <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
+        {/* Columna lateral izquierda: ChatAssistant siempre visible, video cuadrado arriba y chat debajo */}
+        <div className="hidden md:flex flex-col items-center bg-transparent border-r border-border" style={{ width: 256, minWidth: 256, maxWidth: 256, height: 'calc(100vh - 4rem)' }}>
+          <div className="w-full flex flex-col items-center pt-4" style={{ flex: 'none' }}>
+            <div className="w-40 h-40 mb-4 bg-black/10 rounded-lg flex items-center justify-center overflow-hidden border border-border shadow-sm">
+              <video
+                src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
+                className="object-cover w-full h-full"
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ background: '#000' }}
+              />
+            </div>
+          </div>
+          <div className="flex-1 w-full flex flex-col justify-end">
+            <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
+          </div>
         </div>
         {/* Contenido principal a la derecha del chat */}
         <main className="flex-1 flex flex-col transition-all duration-300">
