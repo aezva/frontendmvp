@@ -165,92 +165,156 @@ const Dashboard = () => {
       <Helmet>
         <title>Dashboard - Asistente IA</title>
       </Helmet>
-      {/* Video y chat (no modificar) */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
-        <div className="col-span-1 flex items-center justify-start h-full">
-          {/* ...video... */}
-        </div>
-        <div className="col-span-3 h-full">
-          {/* ...chat... */}
-        </div>
-      </div>
-      {/* Nuevo dashboard minimalista */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Métricas principales */}
-        <div className="col-span-1 flex flex-col gap-6">
-          <div className="bg-white rounded-xl shadow p-6 flex items-center gap-4">
-            <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /></svg>
-            <div>
-              <div className="text-xs text-muted-foreground">Citas activas</div>
-              <div className="text-2xl font-bold">{stats.totalConversations}</div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl shadow p-6 flex items-center gap-4">
-            <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" /></svg>
-            <div>
-              <div className="text-xs text-muted-foreground">Tickets abiertos</div>
-              <div className="text-2xl font-bold">{stats.openTickets}</div>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl shadow p-6 flex items-center gap-4">
-            <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 20v-6M12 4v2m0 0a8 8 0 1 1 0 16a8 8 0 0 1 0-16z" /></svg>
-            <div>
-              <div className="text-xs text-muted-foreground">Leads captados</div>
-              <div className="text-2xl font-bold">{stats.totalLeads}</div>
-            </div>
+      <div className="space-y-8">
+        {/* Chat tipo GPT al inicio */}
+        <ChatAssistant userName={client?.name || 'Usuario'} />
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
+            <p className="text-muted-foreground">Un resumen de la actividad de tu asistente.</p>
           </div>
         </div>
-        {/* Notificaciones y recordatorios */}
-        <div className="col-span-1 flex flex-col gap-6">
-          <div className="bg-white rounded-xl shadow p-6">
-            <div className="text-sm font-semibold mb-4">Notificaciones y recordatorios</div>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-3">
-                <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /></svg>
-                <span className="text-xs text-muted-foreground">Nueva cita agendada para mañana a las 10:00</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" /></svg>
-                <span className="text-xs text-muted-foreground">Ticket marcado como resuelto</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 20v-6M12 4v2m0 0a8 8 0 1 1 0 16a8 8 0 0 1 0-16z" /></svg>
-                <span className="text-xs text-muted-foreground">Lead nuevo: Juan Pérez</span>
-              </li>
-            </ul>
-          </div>
-          {/* Próximas tareas/citas/reservas */}
-          <div className="bg-white rounded-xl shadow p-6">
-            <div className="text-sm font-semibold mb-4">Próximas tareas y citas</div>
-            <ul className="space-y-2">
-              {nextAppointments.length === 0 ? (
-                <li className="text-sm" style={{ color: '#ff9c9c' }}>No hay citas próximas.</li>
-              ) : (
-                nextAppointments.map((appt, idx) => (
-                  <li key={appt.id || idx} className="flex items-center gap-2">
-                    <svg width="18" height="18" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /></svg>
-                    <span className="text-xs">{appt.name} - {appt.type} - {appt.date} {appt.time}</span>
-                  </li>
-                ))
-              )}
-            </ul>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Columna 1: Conversaciones Recientes */}
+          <Card className="bg-card/50 backdrop-blur-sm flex flex-col h-full min-h-[260px] max-h-[260px] justify-between">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">Conversaciones Recientes</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <ul className="divide-y divide-border">
+                {recentConversations.length === 0 ? (
+                  <li className="text-sm p-4" style={{ color: '#ff9c9c' }}>No hay conversaciones recientes.</li>
+                ) : (
+                  recentConversations.map((conv, idx) => (
+                    <li key={conv.visitor_id || idx} className="flex items-center gap-3 px-4 py-3 hover:bg-muted/50 transition cursor-pointer">
+                      <Avatar className="h-9 w-9">
+                        <AvatarFallback>{conv.visitor_id?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate">{conv.visitor_id?.slice(0, 8)}</div>
+                        <div className="text-xs text-muted-foreground truncate">{conv.last_message}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground whitespace-nowrap">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</div>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </CardContent>
+          </Card>
+          {/* Columna 2: Métricas verticales, más pequeñas y organizadas */}
+          <div className="flex flex-col gap-3 justify-between h-full min-h-[260px] max-h-[260px]">
+            {statsData.map((stat, index) => (
+              <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300 p-2 flex-1 flex flex-col justify-center min-h-[70px] max-h-[70px]">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-primary/10 p-2"><stat.icon className="h-5 w-5 text-primary" /></span>
+                    <span className="text-xs font-medium text-muted-foreground">{stat.title}</span>
+                  </div>
+                  <div className="text-lg font-bold" style={{ color: '#7bdff2' }}>{stat.value}</div>
+                </div>
+                <div className="flex items-center justify-between mt-1">
+                  <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>{stat.change} vs mes pasado</p>
+                  <button
+                    className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                    onClick={() => {
+                      if (stat.title.includes('Conversaciones')) navigate('/messages');
+                      else if (stat.title.includes('Tickets')) navigate('/messages');
+                      else if (stat.title.includes('Leads')) navigate('/messages');
+                    }}
+                  >
+                    Ver todas
+                  </button>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
-        {/* Analítica y documentos recientes */}
-        <div className="col-span-1 flex flex-col gap-6">
-          {/* Analítica visual (placeholder) */}
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col items-start">
-            <div className="text-sm font-semibold mb-4">Analítica de actividad</div>
-            <div className="w-full h-24 bg-gray-100 rounded flex items-center justify-center text-muted-foreground text-xs">[Gráfica próximamente]</div>
+
+        {/* Próximas citas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Columna 1: Tareas Pendientes y Documentos Creados */}
+          <div className="flex flex-col gap-4">
+            {/* Tareas Pendientes */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Tareas Pendientes</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/tareas')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {/* Aquí se mostrarán las tareas pendientes cuando se conecte la funcionalidad */}
+                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay tareas pendientes.</div>
+              </CardContent>
+            </Card>
+            {/* Documentos Creados */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Documentos Creados</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/documents')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {/* Aquí se mostrarán los documentos creados cuando se conecte la funcionalidad */}
+                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay documentos creados.</div>
+              </CardContent>
+            </Card>
           </div>
-          {/* Documentos recientes */}
-          <div className="bg-white rounded-xl shadow p-6">
-            <div className="text-sm font-semibold mb-4">Documentos recientes</div>
-            <ul className="space-y-2">
-              <li className="text-sm" style={{ color: '#ff9c9c' }}>No hay documentos recientes.</li>
-            </ul>
+          {/* Columna 2: Próximas citas y Próximas reservas */}
+          <div className="flex flex-col gap-4">
+            {/* Próximas citas */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Próximas citas</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/citas')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {nextAppointments.length === 0 ? (
+                  <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay citas próximas.</div>
+                ) : (
+                  <ul className="divide-y divide-border">
+                    {nextAppointments.map((appt, idx) => (
+                      <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
+                        <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
+                        <div className="text-xs text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </CardContent>
+            </Card>
+            {/* Próximas Reservas */}
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="text-lg font-semibold">Próximas Reservas</CardTitle>
+                <button
+                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
+                  onClick={() => navigate('/reservas')}
+                >
+                  Ver todas
+                </button>
+              </CardHeader>
+              <CardContent>
+                {/* Aquí se mostrarán las próximas reservas cuando se conecte la funcionalidad */}
+                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay reservas próximas.</div>
+              </CardContent>
+            </Card>
           </div>
         </div>
+
       </div>
     </>
   );

@@ -511,7 +511,7 @@ export default function Reservations() {
           {reservations.length === 0 ? (
             <Card>
               <CardContent className="p-8 text-center">
-                <p className="text-sm" style={{ color: '#ff9c9c' }}>No hay reservas pendientes</p>
+                <p style={{ color: '#ff9c9c' }}>No hay reservas pendientes</p>
               </CardContent>
             </Card>
           ) : (

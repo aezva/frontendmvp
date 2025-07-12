@@ -133,7 +133,7 @@ const Appointments = () => {
                 </div>
               )}
               {appointments.length === 0 ? (
-                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay citas agendadas aún.</div>
+                <div className="text-center py-8" style={{ color: '#ff9c9c' }}>No hay citas agendadas aún.</div>
               ) : (
                 <div className="space-y-4">
                   {appointments.map((appt, idx) => (
