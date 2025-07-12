@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Send, Upload } from 'lucide-react';
@@ -19,7 +18,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
     return saved ? JSON.parse(saved) : [{
       id: 1,
       sender: 'assistant',
-      text: `¡Buenas tardes, ${userName}! 👋\n\nPregunta o encuentra lo que quieras desde tu espacio de trabajo...`,
+      text: `Buenas tardes, ${userName}.\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
     }];
   });
   const [newMessage, setNewMessage] = useState('');
@@ -150,7 +149,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       toast({ title: 'Documento creado', description: 'El contenido se guardó como documento.' });
       setMessages((prev) => [
         ...prev,
-        { id: Date.now(), sender: 'assistant', text: '✅ El contenido se guardó como documento y ya está disponible en la sección Documentos.' }
+        { id: Date.now(), sender: 'assistant', text: 'El contenido se guardó como documento y ya está disponible en la sección Documentos.' }
       ]);
       setLastGenerated(null);
       setLastAnalysis(null);
@@ -188,7 +187,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       toast({ title: 'Documento actualizado', description: 'El contenido se agregó al documento.' });
       setMessages((prev) => [
         ...prev,
-        { id: Date.now(), sender: 'assistant', text: '✅ El contenido se agregó al documento seleccionado.' }
+        { id: Date.now(), sender: 'assistant', text: 'El contenido se agregó al documento seleccionado.' }
       ]);
       setShowDocModal(false);
       setLastGenerated(null);
@@ -205,79 +204,77 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       setMessages([{
         id: 1,
         sender: 'assistant',
-        text: `¡Buenas tardes, ${userName}! 👋\n\nPregunta o encuentra lo que quieras desde tu espacio de trabajo...`,
+        text: `Buenas tardes, ${userName}.\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
       }]);
     }
   }, [client, userName]);
 
   return (
-    <div className="flex-1 flex flex-col justify-between h-full">
-      <Card className="bg-card/50 backdrop-blur-sm h-full flex flex-col">
-        <CardContent className="flex-1 flex flex-col justify-between p-2">
-          <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-1" style={{ maxHeight: '100%' }}>
-            {messages.map((msg, idx) => (
-              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
-                <div className={
-                  `px-4 py-2 w-fit max-w-[90%] break-words shadow-sm border ` +
-                  (msg.sender === 'user'
-                    ? 'bg-primary text-primary-foreground ml-8'
-                    : 'bg-muted text-foreground mr-8')
-                }>
-                  {msg.text}
-                  {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
-                  {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
-                    <div className="mt-4 flex gap-2 justify-end">
-                      <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
-                      <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
-                    </div>
-                  )}
-                </div>
+    <div className="flex-1 flex flex-col justify-between h-full bg-card/50 backdrop-blur-sm">
+      <div className="flex-1 flex flex-col justify-between p-2">
+        <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-1" style={{ maxHeight: '100%' }}>
+          {messages.map((msg, idx) => (
+            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
+              <div className={
+                `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-relaxed ` +
+                (msg.sender === 'user'
+                  ? 'bg-primary text-primary-foreground ml-8'
+                  : 'bg-muted text-foreground mr-8')
+              }>
+                {msg.text}
+                {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
+                {msg.sender === 'assistant' && lastGenerated && idx === messages.length - 1 && (
+                  <div className="mt-4 flex gap-2 justify-end">
+                    <Button variant="default" size="sm" onClick={handleCreateDocument}>Crear nuevo documento</Button>
+                    <Button variant="outline" size="sm" onClick={handleOpenAddToExisting}>Agregar a existente</Button>
+                  </div>
+                )}
               </div>
-            ))}
-            {loading && (
-              <div className="flex justify-start w-full">
-                <div className="bg-muted text-foreground px-4 py-2 w-fit max-w-[90%] shadow-sm border opacity-70">
-                  NNIA está escribiendo...
-                </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="flex justify-start w-full">
+              <div className="bg-muted text-foreground px-3 py-2 w-fit max-w-[90%] shadow-sm border opacity-70 text-sm">
+                NNIA está escribiendo...
               </div>
-            )}
-            {analyzing && (
-              <div className="text-center py-4 text-primary font-semibold">Analizando documento... Por favor espera.</div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-          <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
-            <Input
-              placeholder="Escribe un mensaje..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              className="flex-1"
-              autoComplete="off"
-              disabled={analyzing || loading}
-            />
-            <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
-              <Upload className="h-5 w-5" />
-            </Button>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-              disabled={analyzing || loading}
-            />
-            <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
-              <Send className="h-5 w-5" />
-            </Button>
-          </form>
-          {attachedFile && (
-            <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
-              <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
-              <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
             </div>
           )}
-        </CardContent>
-      </Card>
+          {analyzing && (
+            <div className="text-center py-4 text-primary font-semibold text-sm">Analizando documento... Por favor espera.</div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+        <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
+          <Input
+            placeholder="Escribe un mensaje..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            className="flex-1"
+            autoComplete="off"
+            disabled={analyzing || loading}
+          />
+          <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
+            <Upload className="h-5 w-5" />
+          </Button>
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+            disabled={analyzing || loading}
+          />
+          <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
+            <Send className="h-5 w-5" />
+          </Button>
+        </form>
+        {attachedFile && (
+          <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
+            <span>Archivo adjunto: <b>{attachedFile.name}</b></span>
+            <Button size="sm" variant="ghost" onClick={() => setAttachedFile(null)}>Quitar</Button>
+          </div>
+        )}
+      </div>
       <Dialog open={showDocModal} onOpenChange={setShowDocModal}>
         <DialogContent>
           <DialogTitle>Agregar análisis a un documento existente</DialogTitle>

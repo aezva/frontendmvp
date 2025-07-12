@@ -72,10 +72,8 @@ const ClientPanel = () => {
               />
             </div>
           </div>
-          {/* ChatAssistant debajo, ocupa el resto del espacio vertical */}
-          <div className="flex-1 w-full flex flex-col justify-end pb-4">
-            <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
-          </div>
+          {/* ChatAssistant debajo, ocupa el resto del espacio vertical sin contenedor adicional */}
+          <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
         </div>
         {/* Contenido principal a la derecha del lateral fijo */}
         <main className="flex-1 flex flex-col transition-all duration-300" style={{ marginLeft: 256 }}>
