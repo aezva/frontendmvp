@@ -57,7 +57,7 @@ const ClientPanel = () => {
       <Topbar />
       <div className="flex flex-1">
         {/* Columna lateral izquierda: ChatAssistant siempre visible, video cuadrado arriba y chat debajo */}
-        <div className="hidden md:flex flex-col bg-transparent border-r border-border" style={{ width: 256, minWidth: 256, maxWidth: 256, height: 'calc(100vh - 4rem)' }}>
+        <div className="hidden md:flex flex-col bg-transparent border-r border-border fixed left-0 top-16 z-40" style={{ width: 256, minWidth: 256, maxWidth: 256, height: 'calc(100vh - 4rem)' }}>
           {/* Video cuadrado arriba, sin padding ni bordes propios */}
           <div className="w-full" style={{ flex: 'none' }}>
             <div className="w-full h-64" style={{ background: 'rgba(0,0,0,0.05)' }}>
@@ -77,8 +77,8 @@ const ClientPanel = () => {
             <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
           </div>
         </div>
-        {/* Contenido principal a la derecha del chat */}
-        <main className="flex-1 flex flex-col transition-all duration-300">
+        {/* Contenido principal a la derecha del lateral fijo */}
+        <main className="flex-1 flex flex-col transition-all duration-300" style={{ marginLeft: 256 }}>
           <div className="md:hidden flex items-center justify-between p-4 border-b border-border">
             <span className="font-bold text-lg">Asistente IA</span>
             <button onClick={() => setSidebarOpen(!isSidebarOpen)}>

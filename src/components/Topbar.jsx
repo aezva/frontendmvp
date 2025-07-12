@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Bell } from 'lucide-react';
-import { LayoutDashboard, MessageSquare, FileText, Calendar, Building2, MessageCircle, CreditCard } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, FileText, Calendar, Menu, Building2, MessageCircle, CreditCard, Settings, LogOut } from 'lucide-react';
 import { useNotifications } from '../contexts/NotificationsContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
@@ -12,23 +12,26 @@ const navItems = [
   { href: '/documents', label: 'Documentos', icon: FileText },
   { href: '/citas', label: 'Citas', icon: Calendar },
   { href: '/reservas', label: 'Reservas', icon: Calendar },
+];
+const profileMenuItems = [
   { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
   { href: '/widget', label: 'Widget', icon: MessageCircle },
   { href: '/subscription', label: 'Suscripción', icon: CreditCard },
+  { href: '/settings', label: 'Configuración', icon: Settings },
 ];
 
 export default function Topbar() {
   const { unreadCount, notifications, markAsRead } = useNotifications();
   const { user, client, logout } = useAuth();
   const [notifOpen, setNotifOpen] = React.useState(false);
-  const [profileOpen, setProfileOpen] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const notifRef = React.useRef();
-  const profileRef = React.useRef();
+  const menuRef = React.useRef();
 
   React.useEffect(() => {
     function handleClickOutside(event) {
       if (notifRef.current && !notifRef.current.contains(event.target)) setNotifOpen(false);
-      if (profileRef.current && !profileRef.current.contains(event.target)) setProfileOpen(false);
+      if (menuRef.current && !menuRef.current.contains(event.target)) setMenuOpen(false);
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -82,20 +85,34 @@ export default function Topbar() {
             </div>
           )}
         </div>
-        {/* Perfil */}
-        <div className="relative" ref={profileRef}>
-          <button className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100" onClick={() => setProfileOpen(o => !o)}>
-            <Avatar className="w-8 h-8">
-              <AvatarImage src={user?.avatar_url || ''} alt={user?.email || ''} />
-              <AvatarFallback>{user?.email?.[0]?.toUpperCase() || 'U'}</AvatarFallback>
-            </Avatar>
-            <span className="hidden md:inline text-sm font-medium">{client?.business_name || user?.email}</span>
+        {/* Menú de perfil */}
+        <div className="relative" ref={menuRef}>
+          <button className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100" onClick={() => setMenuOpen(o => !o)} aria-label="Menú">
+            <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
           </button>
-          {profileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-              <div className="p-3 border-b font-bold">Perfil</div>
-              <div className="px-4 py-2 text-sm">{user?.email}</div>
-              <button className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100" onClick={logout}>Cerrar sesión</button>
+          {menuOpen && (
+            <div className="absolute right-0 mt-2 w-56 bg-white border rounded shadow-lg z-50">
+              <div className="p-3 border-b font-bold">Menú</div>
+              {profileMenuItems.map(item => (
+                <NavLink
+                  key={item.href}
+                  to={item.href}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`
+                  }
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <item.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+                  {item.label}
+                </NavLink>
+              ))}
+              <button
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-gray-100 w-full border-t border-border mt-2"
+                onClick={logout}
+              >
+                <LogOut className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+                Cerrar sesión
+              </button>
             </div>
           )}
         </div>

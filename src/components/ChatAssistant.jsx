@@ -218,10 +218,10 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             {messages.map((msg, idx) => (
               <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
                 <div className={
-                  `rounded-2xl px-4 py-2 w-fit max-w-[90%] break-words shadow-sm ` +
+                  `px-4 py-2 w-fit max-w-[90%] break-words shadow-sm border ` +
                   (msg.sender === 'user'
-                    ? 'bg-primary text-primary-foreground rounded-br-md ml-8'
-                    : 'bg-muted text-foreground rounded-bl-md mr-8')
+                    ? 'bg-primary text-primary-foreground ml-8'
+                    : 'bg-muted text-foreground mr-8')
                 }>
                   {msg.text}
                   {/* Mostrar los botones debajo del último mensaje de NNIA si hay lastGenerated */}
@@ -236,7 +236,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             ))}
             {loading && (
               <div className="flex justify-start w-full">
-                <div className="bg-muted text-foreground rounded-2xl px-4 py-2 w-fit max-w-[90%] shadow-sm opacity-70">
+                <div className="bg-muted text-foreground px-4 py-2 w-fit max-w-[90%] shadow-sm border opacity-70">
                   NNIA está escribiendo...
                 </div>
               </div>
