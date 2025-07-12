@@ -80,7 +80,8 @@ const Sidebar = ({
   return (
     <aside className={cn("fixed top-16 left-0 h-[calc(100vh-4rem)] bg-card border-r border-border z-40 transition-transform duration-300 ease-in-out", isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full", "md:translate-x-0 md:w-64")}>
       <div className="flex flex-col h-full">
-        <div className="border-b border-border" style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}>
+        {/* Header eliminado para unir Sidebar y Topbar */}
+        {/* <div className="border-b border-border" style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}>
           <div className="flex items-center space-x-3">
             <motion.div animate={{
               rotate: [0, 15, -10, 5, 0]
@@ -92,7 +93,7 @@ const Sidebar = ({
             </motion.div>
             <span className="text-xl font-bold">NNIA</span>
           </div>
-        </div>
+        </div> */}
 
         <nav className="flex-1 px-4 py-6 space-y-2">
           {navItems.map(item => (
