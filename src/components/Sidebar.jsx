@@ -78,7 +78,7 @@ const Sidebar = ({
   };
 
   return (
-    <aside className={cn("fixed top-16 left-0 h-[calc(100vh-4rem)] bg-card border-r border-border z-40 transition-transform duration-300 ease-in-out", isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full", "md:translate-x-0 md:w-64")}>
+    <aside className={cn("fixed top-16 left-0 h-[calc(100vh-4rem)] bg-background border-r border-border z-40 transition-transform duration-300 ease-in-out", isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full", "md:translate-x-0 md:w-64")}>
       <div className="flex flex-col h-full">
         {/* Header eliminado para unir Sidebar y Topbar */}
         {/* <div className="border-b border-border" style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}>

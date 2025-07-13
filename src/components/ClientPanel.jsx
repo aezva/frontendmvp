@@ -7,7 +7,7 @@ import Messages from '@/components/Messages';
 import MyBusiness from '@/components/MyBusiness';
 import Subscription from '@/components/Subscription';
 import Settings from '@/components/Settings';
-import { Menu, X, MessageCircle, MessageSquare } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -28,21 +28,7 @@ const ClientPanel = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Función para obtener el icono correcto según el estado de la barra lateral
-  const getChatIcon = () => {
-    switch (sidebarState) {
-      case 'normal':
-        return MessageSquare;
-      case 'expanded':
-        return MessageSquare;
-      case 'hidden':
-        return MessageCircle;
-      default:
-        return MessageCircle;
-    }
-  };
 
-  const ChatIcon = getChatIcon();
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -76,7 +62,7 @@ const ClientPanel = () => {
       <div className="flex flex-1">
         {/* Columna lateral izquierda: Video cuadrado arriba y chat debajo con altura fija */}
         <div 
-          className={`hidden md:flex flex-col bg-transparent border-r border-border fixed left-0 top-16 z-40 transition-all duration-300 ease-in-out ${!isVisible ? 'opacity-0 pointer-events-none' : ''}`} 
+          className={`hidden md:flex flex-col bg-background border-r border-border fixed left-0 top-16 z-40 transition-all duration-300 ease-in-out ${!isVisible ? 'opacity-0 pointer-events-none' : ''}`} 
           style={{ 
             width: sidebarWidth, 
             minWidth: sidebarWidth, 
@@ -84,15 +70,7 @@ const ClientPanel = () => {
             height: 'calc(100vh - 4rem)' 
           }}
         >
-          {/* Pestañita de control del chat en la esquina superior derecha */}
-          <button 
-            className="absolute -right-6 top-0 z-50 w-6 h-8 shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-r-md flex items-center justify-center group" 
-            style={{ backgroundColor: '#ff9c9c' }}
-            onClick={toggleSidebar}
-            title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} chat`}
-          >
-            <ChatIcon className="h-3 w-3 transition-transform duration-300 group-hover:scale-110" style={{ color: '#000000' }} />
-          </button>
+
           
           {/* Video cuadrado arriba, altura fija */}
           <div className="w-full flex-shrink-0">
@@ -115,13 +93,13 @@ const ClientPanel = () => {
         </div>
         {/* Contenido principal a la derecha del lateral fijo */}
         <main className="flex-1 flex flex-col transition-all duration-300 ease-in-out" style={{ marginLeft: sidebarWidth }}>
-          <div className="md:hidden flex items-center justify-between p-4 border-b border-border">
-            <span className="font-bold text-lg">Asistente IA</span>
+          <div className="md:hidden flex items-center justify-between p-4 border-b border-border bg-background">
+            <span className="font-bold text-lg text-foreground">Asistente IA</span>
             <button onClick={() => setSidebarOpen(!isSidebarOpen)}>
               {isSidebarOpen ? <X /> : <Menu />}
             </button>
           </div>
-          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-background">
             <AnimatePresence mode="wait">
               <Routes>
                 <Route path="/" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Dashboard /></motion.div>} />
@@ -140,16 +118,7 @@ const ClientPanel = () => {
         </main>
       </div>
       
-      {/* Pestañita flotante para mostrar el chat cuando está oculto */}
-      {sidebarState === 'hidden' && (
-        <button 
-          className="fixed left-0 top-16 z-50 w-6 h-8 shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-r-md flex items-center justify-center group" 
-          style={{ backgroundColor: '#ff9c9c' }}
-          onClick={toggleSidebar}
-        >
-          <MessageSquare className="h-3 w-3 transition-transform duration-300 group-hover:scale-110" style={{ color: '#000000' }} />
-        </button>
-      )}
+
       
       <WelcomeMessage />
       <AppTutorial />

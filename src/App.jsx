@@ -10,6 +10,7 @@ import DocumentView from './pages/DocumentView.jsx';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import { Bot } from 'lucide-react';
 
 function App() {
@@ -61,9 +62,11 @@ function AppContent() {
                 ) : client ? (
                      <>
                         <Route path="/*" element={
-                            <SidebarProvider>
-                                <ClientPanel />
-                            </SidebarProvider>
+                            <ThemeProvider>
+                                <SidebarProvider>
+                                    <ClientPanel />
+                                </SidebarProvider>
+                            </ThemeProvider>
                         } />
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />

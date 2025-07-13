@@ -174,7 +174,7 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Columna 1: Conversaciones Recientes */}
-          <Card className="bg-card/50 backdrop-blur-sm flex flex-col h-full min-h-[260px] max-h-[260px] justify-between">
+          <Card className="bg-card/50 backdrop-blur-sm flex flex-col h-full min-h-[260px] max-h-[260px] justify-between border-border">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">Conversaciones Recientes</CardTitle>
             </CardHeader>
