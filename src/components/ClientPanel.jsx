@@ -86,6 +86,8 @@ const ClientPanel = () => {
               />
             </div>
           </div>
+          {/* Efecto de difuminado en la transición entre video y chat */}
+          <div className="absolute left-0 right-0 h-12 bg-gradient-to-b from-background via-background/90 to-transparent pointer-events-none z-10" style={{ top: '256px' }}></div>
           {/* ChatAssistant debajo, ocupa el resto del espacio vertical disponible */}
           <div className="flex-1 min-h-0">
             <ChatAssistant userName={client?.name || 'Usuario'} client={client} />

@@ -97,14 +97,14 @@ export default function Topbar() {
             )}
           </button>
           {notifOpen && (
-            <div className="absolute right-0 mt-2 w-80 bg-popover border border-border rounded shadow-lg max-h-96 overflow-y-auto z-50">
-                              <div className="p-3 border-b border-border font-bold text-popover-foreground">Notificaciones</div>
+            <div className="absolute right-0 top-full w-80 bg-popover border border-border/50 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
+                              <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Notificaciones</div>
               {notifications.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">Sin notificaciones recientes.</div>
               ) : (
                 <ul>
                   {notifications.slice(0, 10).map(n => (
-                    <li key={n.id} className={`px-4 py-3 border-b border-border last:border-b-0 cursor-pointer ${!n.read ? 'bg-accent' : ''}`}
+                    <li key={n.id} className={`px-4 py-3 border-b border-border/20 last:border-b-0 cursor-pointer hover:bg-accent/50 transition-colors ${!n.read ? 'bg-accent/30' : ''}`}
                         onClick={() => { markAsRead(n.id); setNotifOpen(false); }}>
                       <div className="font-semibold text-sm">{n.title}</div>
                       <div className="text-xs text-muted-foreground">{n.body}</div>
@@ -122,14 +122,14 @@ export default function Topbar() {
             <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
           </button>
           {menuOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-popover border border-border rounded shadow-lg z-50">
-              <div className="p-3 border-b border-border font-bold text-popover-foreground">Menú</div>
+            <div className="absolute right-0 top-full w-56 bg-popover border border-border/50 rounded-lg shadow-xl z-50 backdrop-blur-sm">
+              <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Menú</div>
               {profileMenuItems.map(item => (
                 <NavLink
                   key={item.href}
                   to={item.href}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`
+                    `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'}`
                   }
                   onClick={() => setMenuOpen(false)}
                 >
@@ -138,7 +138,7 @@ export default function Topbar() {
                 </NavLink>
               ))}
               <button
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-muted w-full border-t border-border mt-2"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-accent/50 transition-colors w-full border-t border-border/30 mt-2"
                 onClick={logout}
               >
                 <LogOut className="h-5 w-5" style={{ color: '#ff9c9c' }} />
