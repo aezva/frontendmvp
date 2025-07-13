@@ -53,10 +53,10 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
       {/* Columna central vacía (o logo si se desea) */}
       <div />
       {/* Columna derecha: Acciones */}
-      <div className="flex items-center justify-end min-w-0 gap-[25px]">
+      <div className="flex items-center justify-end min-w-0 gap-[25px] items-center">
         {/* Botón de Chat (barra lateral derecha) */}
         <button
-          className="transition-colors ml-0"
+          className="transition-colors ml-0 flex items-center"
           onClick={onToggleChat}
           title={isChatOpen ? 'Ocultar chat' : 'Mostrar chat'}
         >
@@ -64,7 +64,7 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
         </button>
         {/* Botón de Modo Día/Noche */}
         <button
-          className="transition-colors"
+          className="transition-colors flex items-center"
           onClick={toggleTheme}
           title={`Cambiar a modo ${isDarkMode ? 'día' : 'noche'}`}
         >
@@ -75,9 +75,9 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
           )}
         </button>
         {/* Notificaciones */}
-        <div className="relative" ref={notifRef}>
+        <div className="relative flex items-center" ref={notifRef}>
           <button
-            className="relative transition-colors"
+            className="relative transition-colors flex items-center"
             onClick={() => setNotifOpen(o => !o)}
             aria-label="Notificaciones"
           >
