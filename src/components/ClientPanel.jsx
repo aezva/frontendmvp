@@ -102,8 +102,7 @@ const ClientPanel = () => {
           }}
         >
           {/* Header de chat tipo WhatsApp */}
-          <div className="w-full flex-shrink-0 h-16 flex items-center gap-3 px-4 border-b border-border bg-background/80 relative" style={{height: 64}}>
-            {/* Elimino el botón de expandir/ocultar chat */}
+          <div className="w-full flex-shrink-0 h-13 flex items-center gap-3 px-4 border-b border-border bg-background/80 relative" style={{height: 52}}>
             <div className="flex items-center justify-center ml-0">
               {/* Avatar NNIA */}
               <img src="/logo-assistant.png" alt="NNIA" className="h-10 w-10 rounded-full bg-muted object-cover" />
