@@ -100,7 +100,7 @@ export default function Topbar() {
             )}
           </button>
           {notifOpen && (
-            <div className="absolute right-0 top-full mt-2 w-80 bg-popover border border-border/50 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
+            <div className="absolute right-0 top-[64px] w-80 bg-popover border border-border/50 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
                               <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Notificaciones</div>
               {notifications.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">Sin notificaciones recientes.</div>
@@ -125,7 +125,7 @@ export default function Topbar() {
             <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
           </button>
           {menuOpen && (
-            <div className="absolute right-0 top-full mt-2 w-56 bg-popover border border-border/50 rounded-lg shadow-xl z-50 backdrop-blur-sm">
+            <div className="absolute right-0 top-[64px] w-56 bg-popover border border-border/50 rounded-lg shadow-xl z-50 backdrop-blur-sm">
               <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Menú</div>
               {profileMenuItems.map(item => (
                 <NavLink
