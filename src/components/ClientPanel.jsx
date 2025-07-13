@@ -86,7 +86,7 @@ const ClientPanel = () => {
         >
           {/* Pestañita de control del chat en la esquina superior derecha */}
           <button 
-            className="absolute -right-6 top-2 z-50 w-6 h-8 bg-white shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-l-lg flex items-center justify-center group" 
+            className="absolute -right-6 top-0 z-50 w-6 h-8 bg-white shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-l-md flex items-center justify-center group" 
             onClick={toggleSidebar}
             title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} chat`}
           >
@@ -142,7 +142,7 @@ const ClientPanel = () => {
       {/* Pestañita flotante para mostrar el chat cuando está oculto */}
       {sidebarState === 'hidden' && (
         <button 
-          className="fixed left-0 top-20 z-50 w-6 h-8 bg-white shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-r-lg flex items-center justify-center group" 
+          className="fixed left-0 top-16 z-50 w-6 h-8 bg-white shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-r-md flex items-center justify-center group" 
           onClick={toggleSidebar}
         >
           <MessageSquare className="h-3 w-3 transition-transform duration-300 group-hover:scale-110" style={{ color: '#ff9c9c' }} />
