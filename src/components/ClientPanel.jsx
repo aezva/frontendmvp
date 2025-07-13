@@ -45,15 +45,13 @@ const ClientPanel = () => {
   };
 
   const pageVariants = {
-    initial: { opacity: 0, y: 20 },
-    in: { opacity: 1, y: 0 },
-    out: { opacity: 0, y: -20 },
+    initial: { opacity: 0 },
+    in: { opacity: 1 },
+    out: { opacity: 0 },
   };
-
   const pageTransition = {
-    type: 'tween',
-    ease: 'anticipate',
-    duration: 0.5,
+    duration: 0.35,
+    ease: 'easeInOut',
   };
 
   return (
@@ -103,16 +101,16 @@ const ClientPanel = () => {
           <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-background">
             <AnimatePresence mode="wait">
               <Routes>
-                <Route path="/" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Dashboard /></motion.div>} />
-                <Route path="/messages" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Messages /></motion.div>} />
-                <Route path="/my-business" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><MyBusiness /></motion.div>} />
-                <Route path="/subscription" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Subscription /></motion.div>} />
-                <Route path="/settings" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Settings /></motion.div>} />
-                <Route path="/citas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><CitasPage /></motion.div>} />
-                <Route path="/widget" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><WidgetSettings /></motion.div>} />
-                <Route path="/reservas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Reservations /></motion.div>} />
-                <Route path="/documents" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><Documents /></motion.div>} />
-                <Route path="/documents/:id" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}><DocumentView /></motion.div>} />
+                <Route path="/" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><Dashboard /></motion.div>} />
+                <Route path="/messages" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><Messages /></motion.div>} />
+                <Route path="/my-business" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><MyBusiness /></motion.div>} />
+                <Route path="/subscription" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><Subscription /></motion.div>} />
+                <Route path="/settings" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><Settings /></motion.div>} />
+                <Route path="/citas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><CitasPage /></motion.div>} />
+                <Route path="/widget" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><WidgetSettings /></motion.div>} />
+                <Route path="/reservas" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><Reservations /></motion.div>} />
+                <Route path="/documents" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><Documents /></motion.div>} />
+                <Route path="/documents/:id" element={<motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition} style={{ height: '100%' }}><DocumentView /></motion.div>} />
               </Routes>
             </AnimatePresence>
           </div>
