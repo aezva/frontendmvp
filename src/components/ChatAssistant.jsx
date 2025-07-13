@@ -229,8 +229,9 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
 
   return (
     <div className="flex flex-col h-full bg-card/50 backdrop-blur-sm">
+      <div className="absolute right-0 top-0 h-full w-px bg-border z-20" />
       {/* Área de mensajes con scroll interno */}
-      <div className="flex-1 overflow-y-auto chat-scrollbar p-2 relative">
+      <div className="flex-1 overflow-y-auto chat-scrollbar p-2 px-3 relative">
         <div className="space-y-2">
           {messages.map((msg, idx) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full ${idx === 0 ? 'mt-10' : ''}`}>

@@ -171,6 +171,15 @@ body {
   scrollbar-width: 1px;
 }
 
+/* Ocultar visualmente la barra de scroll del chat */
+.chat-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-scrollbar {
+  scrollbar-width: none;
+}
+
 /* Scrollbar global del navegador */
 ::-webkit-scrollbar {
   width: 4px;
