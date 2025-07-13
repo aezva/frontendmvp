@@ -247,7 +247,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
           {messages.map((msg, idx) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
               <div className={
-                `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-relaxed rounded-2xl ` +
+                `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-[1.35] rounded-2xl ` +
                 (msg.sender === 'user'
                   ? 'bg-primary text-primary-foreground ml-8'
                   : 'bg-muted text-foreground mr-8')
@@ -281,22 +281,24 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       )}
       {/* Área de input fija en la parte inferior */}
       <div className="flex-shrink-0 p-2 border-t border-border/50 bg-background/50 backdrop-blur-sm">
-        <form onSubmit={handleSendMessage} className="flex gap-2">
+        <form onSubmit={handleSendMessage} className="flex gap-1 items-center">
           <Input
-            placeholder="Escribe un mensaje..."
+            placeholder="Escríbele a NNIA"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-1"
+            className="flex-1 text-pink-400 placeholder-pink-400 focus:placeholder-pink-400 focus:text-pink-400"
+            style={{ minWidth: 0 }}
             autoComplete="off"
             disabled={analyzing || loading}
           />
           <Button
             type="button"
             size="icon"
-            className={`h-10 w-10 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
+            className={`h-9 w-9 min-w-0 p-0 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
             onClick={() => fileInputRef.current.click()}
             title="Adjuntar documento"
             disabled={analyzing || loading}
+            tabIndex={-1}
           >
             <Upload className="h-5 w-5" style={{ color: isDarkMode ? '#fff' : '#000' }} />
           </Button>
@@ -311,10 +313,10 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
           <Button
             type="submit"
             size="icon"
-            className={`h-10 w-10 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
+            className={`h-9 w-9 min-w-0 p-0 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
             disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}
           >
-            <Send className="h-5 w-5" style={{ color: isDarkMode ? '#ff9c9c' : '#ff9c9c' }} />
+            <Send className="h-5 w-5" style={{ color: '#ff9c9c' }} />
           </Button>
         </form>
         {attachedFile && (
