@@ -66,7 +66,7 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
         {/* Elimino el botón para expandir/colapsar sidebar y el divisor superior */}
         <nav className="flex-1 px-6 py-6 space-y-2">
           {navItems.map(item => (
-            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
+            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground')}>
               <item.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
               <span>{item.label}</span>
               {location.pathname === item.href && (
@@ -78,7 +78,7 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
           ))}
         </nav>
         <div className="p-4 border-t border-border mt-auto">
-          <button onClick={handleLogout} className="w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-medium rounded-lg text-muted-foreground transition-colors">
             <LogOut className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
             <span>Cerrar Sesión</span>
           </button>
