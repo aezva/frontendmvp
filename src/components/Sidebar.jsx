@@ -50,14 +50,19 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
   };
 
   return (
-    <aside className={cn("fixed top-16 left-0 h-[calc(100vh-4rem)] bg-background border-r border-border z-40 transition-transform duration-300 ease-in-out", isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full w-64", "md:translate-x-0 md:w-64")}>
+    <aside
+      // NOTA IMPORTANTE: Para que el sidebar pueda ocultarse correctamente en escritorio (pantallas md+),
+      // hay que eliminar la clase "md:translate-x-0" de aquí. Actualmente, esta clase fuerza a que el sidebar
+      // siempre esté visible en escritorio, aunque isSidebarOpen sea false. Cuando se quiera implementar el botón
+      // para ocultar el sidebar, simplemente eliminar esta clase y funcionará correctamente.
+      className={cn(
+        "fixed top-16 left-0 h-[calc(100vh-4rem)] bg-background border-r border-border z-40 transition-transform duration-300 ease-in-out",
+        isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full w-64",
+        "md:translate-x-0 md:w-64"
+      )}
+    >
       <div className="flex flex-col h-full">
-        {/* Botón para ocultar/mostrar sidebar */}
-        <div className="flex items-center justify-end p-2 border-b border-border">
-          <button onClick={onToggleSidebar} className="rounded p-1 hover:bg-muted transition-colors">
-            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-          </button>
-        </div>
+        {/* Eliminado el botón para ocultar/mostrar sidebar y el divisor superior */}
         <nav className="flex-1 px-4 py-6 space-y-2">
           {navItems.map(item => (
             <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>

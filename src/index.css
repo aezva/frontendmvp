@@ -26,6 +26,7 @@
     --input: 0 0% 90%;
     --ring: 220 14% 96%;
     --radius: 0.75rem;
+    transition: background-color 0.15s cubic-bezier(0.4,0,0.2,1), color 0.15s cubic-bezier(0.4,0,0.2,1), border-color 0.15s cubic-bezier(0.4,0,0.2,1);
   }
 
   .dark {
@@ -49,18 +50,20 @@
     --input: 220 15% 25%;
     --ring: 220 15% 25%;
     --radius: 0.75rem;
+    transition: background-color 0.15s cubic-bezier(0.4,0,0.2,1), color 0.15s cubic-bezier(0.4,0,0.2,1), border-color 0.15s cubic-bezier(0.4,0,0.2,1);
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    transition: background-color 0.15s cubic-bezier(0.4,0,0.2,1), color 0.15s cubic-bezier(0.4,0,0.2,1), border-color 0.15s cubic-bezier(0.4,0,0.2,1), box-shadow 0.15s cubic-bezier(0.4,0,0.2,1);
   }
   body {
     @apply bg-background text-foreground;
     font-family: 'Roboto', Arial, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.15s cubic-bezier(0.4,0,0.2,1), color 0.15s cubic-bezier(0.4,0,0.2,1);
   }
   h1 {
     font-family: 'Roboto', Arial, sans-serif;

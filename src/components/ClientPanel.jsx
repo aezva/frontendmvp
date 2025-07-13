@@ -67,7 +67,7 @@ const ClientPanel = () => {
       />
       <div className="flex flex-1 min-h-0">
         {/* Sidebar izquierdo de navegación */}
-        <Sidebar isSidebarOpen={isSidebarOpen} handleLogout={handleLogout} onToggleSidebar={() => setSidebarOpen(v => !v)} />
+        <Sidebar isSidebarOpen={isSidebarOpen} handleLogout={handleLogout} />
         {/* Contenido principal */}
         <main 
           className="flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0"
@@ -98,19 +98,15 @@ const ClientPanel = () => {
             height: 'calc(100vh - 4rem)'
           }}
         >
-          {/* Video cuadrado arriba, altura fija */}
-          <div className="w-full flex-shrink-0">
-            <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40 border-t-0 border-r-0 glitch-video-container" style={{ background: 'rgba(0,0,0,0.05)' }}>
-              <div className="glitch-color"></div>
-              <video
-                src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
-                className="glitch-video"
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ background: '#000' }}
-              />
+          {/* Header de chat tipo WhatsApp */}
+          <div className="w-full flex-shrink-0 h-16 flex items-center gap-3 px-4 border-b border-border bg-background/80" style={{height: 64}}>
+            <div className="flex items-center justify-center">
+              {/* Avatar NNIA */}
+              <img src="/logo-assistant.png" alt="NNIA" className="h-10 w-10 rounded-full bg-muted object-cover" />
+            </div>
+            <div className="flex flex-col justify-center min-w-0">
+              <span className="font-semibold text-base text-foreground truncate">Chat de NNIA</span>
+              <span className="text-xs text-muted-foreground truncate">Asistente IA</span>
             </div>
           </div>
           {/* ChatAssistant debajo, ocupa el resto del espacio vertical disponible */}

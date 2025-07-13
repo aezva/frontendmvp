@@ -46,15 +46,8 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border grid grid-cols-3 items-center px-6 h-16">
-      {/* Columna izquierda: Botón sidebar */}
+      {/* Columna izquierda: Solo logo NNIA, sin botón de menú */}
       <div className="flex items-center gap-4 min-w-0">
-        <button
-          className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
-          onClick={onToggleSidebar}
-          title={isSidebarOpen ? 'Ocultar menú' : 'Mostrar menú'}
-        >
-          <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
-        </button>
         <div className="font-alata text-2xl tracking-[0.19em] text-foreground select-none">NNIA</div>
       </div>
       {/* Columna central vacía (o logo si se desea) */}

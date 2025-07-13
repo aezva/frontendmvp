@@ -277,7 +277,9 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
         </div>
       </div>
       {showGradient && (
-        <div className="pointer-events-none z-10 absolute left-0 right-0 top-0 h-12 bg-gradient-to-b from-background via-background/90 to-transparent" />
+        <div className="pointer-events-none z-10 absolute left-0 right-0" style={{top: 64, height: 32, position: 'absolute'}}>
+          <div className="w-full h-full bg-gradient-to-b from-background via-background/90 to-transparent" />
+        </div>
       )}
       {/* Área de input fija en la parte inferior */}
       <div className="flex-shrink-0 p-2 border-t border-border/50 bg-background/50 backdrop-blur-sm">
