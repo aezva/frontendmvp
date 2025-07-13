@@ -142,11 +142,10 @@ const ClientPanel = () => {
       {/* Botón flotante para mostrar el chat cuando está oculto */}
       {sidebarState === 'hidden' && (
         <button 
-          className="fixed left-4 top-20 z-50 p-3 rounded-full bg-white shadow-lg border border-border hover:bg-gray-50 transition-colors" 
+          className="fixed left-4 top-20 z-50 p-2 rounded-full bg-white shadow-lg border border-border hover:bg-gray-50 transition-colors" 
           onClick={toggleSidebar}
-          title="Mostrar chat"
         >
-          <MessageCircle className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+          <MessageSquare className="h-4 w-4" style={{ color: '#ff9c9c' }} />
         </button>
       )}
       
