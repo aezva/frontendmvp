@@ -7,7 +7,7 @@ import Messages from '@/components/Messages';
 import MyBusiness from '@/components/MyBusiness';
 import Subscription from '@/components/Subscription';
 import Settings from '@/components/Settings';
-import { Menu, X, MessageCircle, MessageSquare, MessageSquareText } from 'lucide-react';
+import { Menu, X, MessageCircle, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -32,9 +32,9 @@ const ClientPanel = () => {
   const getChatIcon = () => {
     switch (sidebarState) {
       case 'normal':
-        return MessageSquareText;
+        return MessageSquare;
       case 'expanded':
-        return MessageSquareText;
+        return MessageSquare;
       case 'hidden':
         return MessageCircle;
       default:
