@@ -15,7 +15,7 @@ export const SidebarProvider = ({ children }) => {
 
   const sidebarWidths = {
     normal: 256,
-    expanded: 320, // 25% más que 256
+    expanded: 420, // 100px más que antes
     hidden: 0
   };
 
