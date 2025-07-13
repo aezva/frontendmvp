@@ -9,6 +9,7 @@ import Documents from './pages/Documents.jsx';
 import DocumentView from './pages/DocumentView.jsx';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext';
+import { SidebarProvider } from '@/contexts/SidebarContext';
 import { Bot } from 'lucide-react';
 
 function App() {
@@ -59,7 +60,11 @@ function AppContent() {
                     </>
                 ) : client ? (
                      <>
-                        <Route path="/*" element={<ClientPanel />} />
+                        <Route path="/*" element={
+                            <SidebarProvider>
+                                <ClientPanel />
+                            </SidebarProvider>
+                        } />
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />
                         <Route path="/onboarding" element={<Navigate to="/" replace />} />

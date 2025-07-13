@@ -10,6 +10,22 @@ import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/u
 
 const CHAT_SESSION_KEY = 'nnia_chat_messages';
 
+// Función para determinar el saludo según la hora del día
+const getGreetingByTime = (userName) => {
+  const hour = new Date().getHours();
+  let greeting = '';
+  
+  if (hour >= 5 && hour < 12) {
+    greeting = `Buenos días, ${userName}.`;
+  } else if (hour >= 12 && hour < 18) {
+    greeting = `Buenas tardes, ${userName}.`;
+  } else {
+    greeting = `Buenas noches, ${userName}.`;
+  }
+  
+  return greeting;
+};
+
 const ChatAssistant = ({ userName, client: clientProp }) => {
   const { client: clientCtx } = useAuth();
   const client = clientProp || clientCtx;
@@ -18,7 +34,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
     return saved ? JSON.parse(saved) : [{
       id: 1,
       sender: 'assistant',
-      text: `Buenas tardes, ${userName}.\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
+      text: `${getGreetingByTime(userName)}\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
     }];
   });
   const [newMessage, setNewMessage] = useState('');
@@ -204,7 +220,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       setMessages([{
         id: 1,
         sender: 'assistant',
-        text: `Buenas tardes, ${userName}.\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
+        text: `${getGreetingByTime(userName)}\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
       }]);
     }
   }, [client, userName]);
@@ -212,11 +228,11 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
   return (
     <div className="flex-1 flex flex-col justify-between h-full bg-card/50 backdrop-blur-sm">
       <div className="flex-1 flex flex-col justify-between p-2">
-        <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-1" style={{ maxHeight: '100%' }}>
+        <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-1" style={{ maxHeight: 'calc(100vh - 20rem)' }}>
           {messages.map((msg, idx) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
               <div className={
-                `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-relaxed ` +
+                `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-relaxed rounded-2xl ` +
                 (msg.sender === 'user'
                   ? 'bg-primary text-primary-foreground ml-8'
                   : 'bg-muted text-foreground mr-8')
@@ -234,7 +250,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
           ))}
           {loading && (
             <div className="flex justify-start w-full">
-              <div className="bg-muted text-foreground px-3 py-2 w-fit max-w-[90%] shadow-sm border opacity-70 text-sm">
+              <div className="bg-muted text-foreground px-3 py-2 w-fit max-w-[90%] shadow-sm border opacity-70 text-sm rounded-2xl">
                 NNIA está escribiendo...
               </div>
             </div>
