@@ -53,10 +53,10 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
       {/* Columna central vacía (o logo si se desea) */}
       <div />
       {/* Columna derecha: Acciones */}
-      <div className="flex items-center gap-4 justify-end min-w-0">
+      <div className="flex items-center justify-end min-w-0">
         {/* Botón de Chat (barra lateral derecha) */}
         <button
-          className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
+          className="h-10 w-10 flex items-center justify-center rounded-full transition-colors ml-0"
           onClick={onToggleChat}
           title={isChatOpen ? 'Ocultar chat' : 'Mostrar chat'}
         >
