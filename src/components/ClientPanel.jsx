@@ -59,7 +59,7 @@ const ClientPanel = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-pink-500/40">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-pink-500/10">
       <Topbar 
         onToggleSidebar={() => setSidebarOpen(v => !v)}
         onToggleChat={() => {
@@ -73,10 +73,10 @@ const ClientPanel = () => {
         <Sidebar isSidebarOpen={isSidebarOpen} handleLogout={handleLogout} />
         {/* Contenido principal */}
         <main 
-          className="flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0 bg-white/70 backdrop-blur-md rounded-none shadow-none"
+          className="flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0"
           style={{ marginLeft: isSidebarOpen ? sidebarWidth : 0, marginRight: chatbarWidth }}
         >
-          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto" style={{ background: '#F4F4F5' }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={location.pathname}
@@ -93,7 +93,7 @@ const ClientPanel = () => {
         </main>
         {/* Barra lateral derecha: chat */}
         <div
-          className={`hidden md:flex flex-col bg-white/70 backdrop-blur-md border-l border-border fixed right-0 top-[52px] z-40 transition-all duration-300 ease-in-out ${chatState === 'hidden' ? 'translate-x-full' : 'translate-x-0'} shadow-lg`}
+          className={`hidden md:flex flex-col bg-background border-l border-border fixed right-0 top-[52px] z-40 transition-all duration-300 ease-in-out ${chatState === 'hidden' ? 'translate-x-full' : 'translate-x-0'} shadow-lg`}
           style={{
             width: chatbarWidth,
             minWidth: chatbarWidth,
@@ -102,7 +102,7 @@ const ClientPanel = () => {
           }}
         >
           {/* Header de chat tipo WhatsApp */}
-          <div className="w-full flex-shrink-0 h-13 flex items-center gap-3 px-4 border-b border-border bg-white/80 backdrop-blur-md relative" style={{height: 52}}>
+          <div className="w-full flex-shrink-0 h-13 flex items-center gap-3 px-4 border-b border-border bg-background/80 relative" style={{height: 52}}>
             {/* Elimino el avatar, solo dejo el título */}
             <div className="flex flex-col justify-center min-w-0 h-full w-full">
               <span className="font-semibold text-base text-foreground truncate flex items-center h-full">Chat de NNIA</span>

@@ -45,7 +45,7 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-md border-b border-border grid grid-cols-3 items-center px-6 h-[52px]">
+    <header className="sticky top-0 z-50 w-full bg-background border-b border-border grid grid-cols-3 items-center px-6 h-[52px]">
       {/* Columna izquierda: Solo logo NNIA, sin botón de menú */}
       <div className="flex items-center gap-4 min-w-0">
         <div className="font-alata text-2xl tracking-[0.19em] text-foreground select-none">NNIA</div>
