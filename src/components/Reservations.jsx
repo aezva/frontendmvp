@@ -181,21 +181,21 @@ function ReservationTypes({ clientId, types, onRefresh }) {
               placeholder="Nombre (ej: Mesa para 4)"
               value={newType.name}
               onChange={(e) => setNewType({ ...newType, name: e.target.value })}
-              className="border rounded-md p-2"
+              className="border rounded-md p-2 focus:ring-0 focus:outline-none"
             />
             <input
               type="text"
               placeholder="Descripción"
               value={newType.description}
               onChange={(e) => setNewType({ ...newType, description: e.target.value })}
-              className="border rounded-md p-2"
+              className="border rounded-md p-2 focus:ring-0 focus:outline-none"
             />
             <input
               type="number"
               placeholder="Capacidad"
               value={newType.capacity}
               onChange={(e) => setNewType({ ...newType, capacity: parseInt(e.target.value) || 1 })}
-              className="border rounded-md p-2"
+              className="border rounded-md p-2 focus:ring-0 focus:outline-none"
             />
           </div>
           <Button 
@@ -219,19 +219,19 @@ function ReservationTypes({ clientId, types, onRefresh }) {
                     type="text"
                     value={editingType.name}
                     onChange={(e) => setEditingType({ ...editingType, name: e.target.value })}
-                    className="border rounded-md p-2 w-full"
+                    className="border rounded-md p-2 w-full focus:ring-0 focus:outline-none"
                   />
                   <input
                     type="text"
                     value={editingType.description}
                     onChange={(e) => setEditingType({ ...editingType, description: e.target.value })}
-                    className="border rounded-md p-2 w-full"
+                    className="border rounded-md p-2 w-full focus:ring-0 focus:outline-none"
                   />
                   <input
                     type="number"
                     value={editingType.capacity}
                     onChange={(e) => setEditingType({ ...editingType, capacity: parseInt(e.target.value) || 1 })}
-                    className="border rounded-md p-2 w-full"
+                    className="border rounded-md p-2 w-full focus:ring-0 focus:outline-none"
                   />
                   <div className="flex gap-2">
                     <Button size="sm" onClick={handleUpdateType}>Guardar</Button>
@@ -383,7 +383,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
             value={config.hours}
             onChange={(e) => setConfig({ ...config, hours: e.target.value })}
             placeholder="Ej: 12:00-15:00, 19:00-23:00"
-            className="w-full border rounded-md p-2 h-20"
+            className="w-full border rounded-md p-2 h-20 focus:ring-0 focus:outline-none"
             disabled={isSaving}
           />
           <p className="text-sm text-gray-500 mt-1">
@@ -398,7 +398,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
             type="number"
             value={config.advance_booking_days}
             onChange={(e) => setConfig({ ...config, advance_booking_days: parseInt(e.target.value) || 30 })}
-            className="border rounded-md p-2 w-32"
+            className="border rounded-md p-2 w-32 focus:ring-0 focus:outline-none"
             min="1"
             max="365"
             disabled={isSaving}

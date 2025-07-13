@@ -239,7 +239,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       <div className="absolute right-0 top-0 h-full w-px bg-border z-20" />
       {/* Área de mensajes con scroll interno */}
       <div
-        className="flex-1 overflow-y-auto chat-scrollbar p-2 px-3 relative"
+        className="flex-1 overflow-y-auto chat-scrollbar p-3 relative"
         ref={chatRef}
         onScroll={handleScroll}
       >
@@ -286,7 +286,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             placeholder="Escríbele a NNIA"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-1 text-[#ff9c9c] placeholder-[#ff9c9c] focus:placeholder-[#ff9c9c] focus:text-[#ff9c9c]"
+            className="flex-1 text-[#ff9c9c] placeholder-[#ff9c9c] focus:placeholder-[#ff9c9c] focus:text-[#ff9c9c] focus-visible:ring-0 focus-visible:ring-offset-0"
             style={{ minWidth: 0 }}
             autoComplete="off"
             disabled={analyzing || loading}

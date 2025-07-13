@@ -132,11 +132,11 @@ export default function Citas() {
                     <div key={appt.id} className="border rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 bg-white/80">
                       {editing === appt.id ? (
                         <div className="flex flex-col gap-2 w-full">
-                          <input className="border rounded px-2 py-1" value={editData.name || ''} onChange={e => handleEditChange('name', e.target.value)} placeholder="Nombre" />
-                          <input className="border rounded px-2 py-1" value={editData.email || ''} onChange={e => handleEditChange('email', e.target.value)} placeholder="Email" />
-                          <input className="border rounded px-2 py-1" value={editData.date || ''} onChange={e => handleEditChange('date', e.target.value)} placeholder="Fecha" />
-                          <input className="border rounded px-2 py-1" value={editData.time || ''} onChange={e => handleEditChange('time', e.target.value)} placeholder="Hora" />
-                          <input className="border rounded px-2 py-1" value={editData.type || ''} onChange={e => handleEditChange('type', e.target.value)} placeholder="Tipo" />
+                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.name || ''} onChange={e => handleEditChange('name', e.target.value)} placeholder="Nombre" />
+                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.email || ''} onChange={e => handleEditChange('email', e.target.value)} placeholder="Email" />
+                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.date || ''} onChange={e => handleEditChange('date', e.target.value)} placeholder="Fecha" />
+                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.time || ''} onChange={e => handleEditChange('time', e.target.value)} placeholder="Hora" />
+                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.type || ''} onChange={e => handleEditChange('type', e.target.value)} placeholder="Tipo" />
                           <div className="flex gap-2 mt-2">
                             <button className="px-3 py-1 bg-green-600 text-white rounded" onClick={handleEditSave}>Guardar</button>
                             <button className="px-3 py-1 bg-gray-300 rounded" onClick={() => setEditing(null)}>Cancelar</button>
