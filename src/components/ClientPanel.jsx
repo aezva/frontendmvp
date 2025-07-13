@@ -103,18 +103,8 @@ const ClientPanel = () => {
         >
           {/* Header de chat tipo WhatsApp */}
           <div className="w-full flex-shrink-0 h-16 flex items-center gap-3 px-4 border-b border-border bg-background/80 relative" style={{height: 64}}>
-            {/* Botón para ocultar/expandir chat */}
-            <button
-              className="absolute left-0 top-1/2 -translate-y-1/2 ml-2 h-10 w-10 flex items-center justify-center rounded-full transition-colors"
-              style={{paddingLeft: '0.5rem'}}
-              onClick={() => {
-                setChatState(prev => prev === 'default' ? 'expanded' : prev === 'expanded' ? 'hidden' : 'default');
-              }}
-              title={chatState === 'hidden' ? 'Mostrar chat' : chatState === 'expanded' ? 'Ocultar chat' : 'Expandir chat'}
-            >
-              <ArrowRight className="h-6 w-6" style={{ color: '#ff9c9c', transform: chatState === 'expanded' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-            </button>
-            <div className="flex items-center justify-center ml-12">
+            {/* Elimino el botón de expandir/ocultar chat */}
+            <div className="flex items-center justify-center ml-0">
               {/* Avatar NNIA */}
               <img src="/logo-assistant.png" alt="NNIA" className="h-10 w-10 rounded-full bg-muted object-cover" />
             </div>
