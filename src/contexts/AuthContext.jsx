@@ -169,16 +169,25 @@ export const AuthProvider = ({ children }) => {
     return { error };
   }, [toast]);
 
+  // Memoizar el objeto client para que solo cambie de referencia si cambian sus datos
+  const stableClient = useMemo(() => client, [
+    client?.id,
+    client?.email,
+    client?.onboarding_completed,
+    client?.businessInfoId,
+    // Agrega aquí cualquier otro campo relevante de client
+  ]);
+
   const value = useMemo(() => ({
     user,
     session,
-    client,
+    client: stableClient,
     loading,
     signUp,
     signIn,
     signOut,
     refreshClient,
-  }), [user, session, client, loading, signUp, signIn, signOut, refreshClient]);
+  }), [user, session, stableClient, loading, signUp, signIn, signOut, refreshClient]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
