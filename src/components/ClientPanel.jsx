@@ -84,13 +84,13 @@ const ClientPanel = () => {
             height: 'calc(100vh - 4rem)' 
           }}
         >
-          {/* Botón de control del chat en la esquina superior derecha */}
+          {/* Pestañita de control del chat en la esquina superior derecha */}
           <button 
-            className="absolute -right-3 top-2 z-50 p-2 rounded-full bg-white shadow-lg border border-border hover:bg-gray-50 transition-colors" 
+            className="absolute -right-6 top-2 z-50 w-6 h-8 bg-white shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-l-lg flex items-center justify-center group" 
             onClick={toggleSidebar}
             title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} chat`}
           >
-            <ChatIcon className="h-4 w-4" style={{ color: '#ff9c9c' }} />
+            <ChatIcon className="h-3 w-3 transition-transform duration-300 group-hover:scale-110" style={{ color: '#ff9c9c' }} />
           </button>
           
           {/* Video cuadrado arriba, altura fija */}
@@ -139,13 +139,13 @@ const ClientPanel = () => {
         </main>
       </div>
       
-      {/* Botón flotante para mostrar el chat cuando está oculto */}
+      {/* Pestañita flotante para mostrar el chat cuando está oculto */}
       {sidebarState === 'hidden' && (
         <button 
-          className="fixed left-4 top-20 z-50 p-2 rounded-full bg-white shadow-lg border border-border hover:bg-gray-50 transition-colors" 
+          className="fixed left-0 top-20 z-50 w-6 h-8 bg-white shadow-lg border border-border hover:bg-gray-50 transition-all duration-300 ease-in-out rounded-r-lg flex items-center justify-center group" 
           onClick={toggleSidebar}
         >
-          <MessageSquare className="h-4 w-4" style={{ color: '#ff9c9c' }} />
+          <MessageSquare className="h-3 w-3 transition-transform duration-300 group-hover:scale-110" style={{ color: '#ff9c9c' }} />
         </button>
       )}
       
