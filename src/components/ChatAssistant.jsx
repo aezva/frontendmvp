@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
 import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const CHAT_SESSION_KEY = 'nnia_chat_messages';
 
@@ -51,6 +52,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
   const [selectedDocId, setSelectedDocId] = useState('');
   const [attachedFile, setAttachedFile] = useState(null);
   const [lastGenerated, setLastGenerated] = useState(null);
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -231,7 +233,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       <div className="flex-1 overflow-y-auto chat-scrollbar p-2 relative">
         <div className="space-y-2">
           {messages.map((msg, idx) => (
-            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
+            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full ${idx === 0 ? 'mt-10' : ''}`}>
               <div className={
                 `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-relaxed rounded-2xl ` +
                 (msg.sender === 'user'
@@ -273,8 +275,15 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             autoComplete="off"
             disabled={analyzing || loading}
           />
-          <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
-            <Upload className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+          <Button
+            type="button"
+            size="icon"
+            className={`h-10 w-10 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
+            onClick={() => fileInputRef.current.click()}
+            title="Adjuntar documento"
+            disabled={analyzing || loading}
+          >
+            <Upload className="h-5 w-5" style={{ color: isDarkMode ? '#fff' : '#000' }} />
           </Button>
           <input
             type="file"
@@ -284,8 +293,13 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             onChange={handleFileChange}
             disabled={analyzing || loading}
           />
-          <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
-            <Send className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+          <Button
+            type="submit"
+            size="icon"
+            className={`h-10 w-10 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
+            disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}
+          >
+            <Send className="h-5 w-5" style={{ color: isDarkMode ? '#ff9c9c' : '#ff9c9c' }} />
           </Button>
         </form>
         {attachedFile && (

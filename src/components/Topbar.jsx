@@ -45,11 +45,13 @@ export default function Topbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background border-b border-border flex items-center justify-between px-6 h-16">
-      <div className="flex items-center gap-4">
+    <header className="sticky top-0 z-50 w-full bg-background border-b border-border grid grid-cols-3 items-center px-6 h-16">
+      {/* Columna izquierda: Logo */}
+      <div className="flex items-center gap-4 min-w-0">
         <div className="font-alata text-2xl tracking-[0.19em] text-foreground select-none">NNIA</div>
       </div>
-      <nav className="flex-1 flex justify-center">
+      {/* Columna central: Nav centrado */}
+      <nav className="flex items-center justify-center w-full">
         <div className="flex gap-2">
           {navItems.map(item => (
             <NavLink
@@ -65,7 +67,8 @@ export default function Topbar() {
           ))}
         </div>
       </nav>
-      <div className="flex items-center gap-4">
+      {/* Columna derecha: Acciones */}
+      <div className="flex items-center gap-4 justify-end min-w-0">
         {/* Botón de Chat */}
         <button 
           className="p-2 rounded-full transition-colors" 
@@ -97,7 +100,7 @@ export default function Topbar() {
             )}
           </button>
           {notifOpen && (
-            <div className="absolute right-0 mt-0 w-80 bg-popover border border-border/50 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
+            <div className="absolute right-0 top-[20px] w-80 bg-popover border border-border/50 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
                               <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Notificaciones</div>
               {notifications.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">Sin notificaciones recientes.</div>
@@ -122,7 +125,7 @@ export default function Topbar() {
             <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
           </button>
           {menuOpen && (
-            <div className="absolute right-0 mt-0 w-56 bg-popover border border-border/50 rounded-lg shadow-xl z-50 backdrop-blur-sm">
+            <div className="absolute right-0 top-[20px] w-56 bg-popover border border-border/50 rounded-lg shadow-xl z-50 backdrop-blur-sm">
               <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Menú</div>
               {profileMenuItems.map(item => (
                 <NavLink
