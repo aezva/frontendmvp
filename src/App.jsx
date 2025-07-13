@@ -3,6 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { AnimatePresence } from 'framer-motion';
 import Onboarding from '@/components/Onboarding';
 import ClientPanel from '@/components/ClientPanel';
+import Dashboard from '@/components/Dashboard';
+import Messages from '@/components/Messages';
+import MyBusiness from '@/components/MyBusiness';
+import Subscription from '@/components/Subscription';
+import Settings from '@/components/Settings';
+import CitasPage from '@/pages/Citas';
+import WidgetSettings from '@/components/WidgetSettings';
+import Reservations from '@/components/Reservations';
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
 import Documents from './pages/Documents.jsx';
@@ -61,13 +69,24 @@ function AppContent() {
                     </>
                 ) : client ? (
                      <>
-                        <Route path="/*" element={
+                        <Route path="/" element={
                             <ThemeProvider>
                                 <SidebarProvider>
                                     <ClientPanel />
                                 </SidebarProvider>
                             </ThemeProvider>
-                        } />
+                        }>
+                            <Route index element={<Dashboard />} />
+                            <Route path="messages" element={<Messages />} />
+                            <Route path="my-business" element={<MyBusiness />} />
+                            <Route path="subscription" element={<Subscription />} />
+                            <Route path="settings" element={<Settings />} />
+                            <Route path="citas" element={<CitasPage />} />
+                            <Route path="widget" element={<WidgetSettings />} />
+                            <Route path="reservas" element={<Reservations />} />
+                            <Route path="documents" element={<Documents />} />
+                            <Route path="documents/:id" element={<DocumentView />} />
+                        </Route>
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />
                         <Route path="/onboarding" element={<Navigate to="/" replace />} />
