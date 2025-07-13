@@ -74,7 +74,7 @@ const ClientPanel = () => {
           
           {/* Video cuadrado arriba, altura fija */}
           <div className="w-full flex-shrink-0">
-            <div className="w-full h-64 shadow-sm" style={{ background: 'rgba(0,0,0,0.05)' }}>
+            <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40" style={{ background: 'rgba(0,0,0,0.05)' }}>
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
                 className="object-cover w-full h-full"

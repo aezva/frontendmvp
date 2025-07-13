@@ -147,7 +147,7 @@ body {
 
 /* Scrollbar personalizada ultra minimalista */
 .chat-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
 
 .chat-scrollbar::-webkit-scrollbar-track {
@@ -155,19 +155,19 @@ body {
 }
 
 .chat-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/20;
+  background: #ff9c9c;
   border-radius: 2px;
 }
 
 /* Eliminar cualquier efecto hover en scrollbar del chat */
 .chat-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/20;
+  background: #ff9c9c;
 }
 
 /* Para Firefox */
 .chat-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
+  scrollbar-color: #ff9c9c transparent;
 }
 
 /* Scrollbar global del navegador */
