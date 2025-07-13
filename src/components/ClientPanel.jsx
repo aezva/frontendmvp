@@ -93,12 +93,12 @@ const ClientPanel = () => {
         </main>
         {/* Barra lateral derecha: chat */}
         <div
-          className={`hidden md:flex flex-col bg-background border-l border-border fixed right-0 top-16 z-40 transition-all duration-300 ease-in-out ${chatState === 'hidden' ? 'translate-x-full' : 'translate-x-0'} shadow-lg`}
+          className={`hidden md:flex flex-col bg-background border-l border-border fixed right-0 top-[52px] z-40 transition-all duration-300 ease-in-out ${chatState === 'hidden' ? 'translate-x-full' : 'translate-x-0'} shadow-lg`}
           style={{
             width: chatbarWidth,
             minWidth: chatbarWidth,
             maxWidth: chatbarWidth,
-            height: 'calc(100vh - 4rem)'
+            height: 'calc(100vh - 52px)'
           }}
         >
           {/* Header de chat tipo WhatsApp */}
