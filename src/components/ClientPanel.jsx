@@ -7,7 +7,7 @@ import Messages from '@/components/Messages';
 import MyBusiness from '@/components/MyBusiness';
 import Subscription from '@/components/Subscription';
 import Settings from '@/components/Settings';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, MessageCircle, MessageSquare, MessageSquareText } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -24,9 +24,25 @@ import ChatAssistant from './ChatAssistant';
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const { signOut, client } = useAuth();
-  const { sidebarWidth, isVisible } = useSidebar();
+  const { sidebarWidth, isVisible, sidebarState, toggleSidebar } = useSidebar();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Función para obtener el icono correcto según el estado de la barra lateral
+  const getChatIcon = () => {
+    switch (sidebarState) {
+      case 'normal':
+        return MessageSquareText;
+      case 'expanded':
+        return MessageSquareText;
+      case 'hidden':
+        return MessageCircle;
+      default:
+        return MessageCircle;
+    }
+  };
+
+  const ChatIcon = getChatIcon();
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -68,6 +84,15 @@ const ClientPanel = () => {
             height: 'calc(100vh - 4rem)' 
           }}
         >
+          {/* Botón de control del chat en la esquina superior derecha */}
+          <button 
+            className="absolute -right-3 top-2 z-50 p-2 rounded-full bg-white shadow-lg border border-border hover:bg-gray-50 transition-colors" 
+            onClick={toggleSidebar}
+            title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} chat`}
+          >
+            <ChatIcon className="h-4 w-4" style={{ color: '#ff9c9c' }} />
+          </button>
+          
           {/* Video cuadrado arriba, altura fija */}
           <div className="w-full flex-shrink-0">
             <div className="w-full h-64 shadow-sm" style={{ background: 'rgba(0,0,0,0.05)' }}>
@@ -113,6 +138,18 @@ const ClientPanel = () => {
           </div>
         </main>
       </div>
+      
+      {/* Botón flotante para mostrar el chat cuando está oculto */}
+      {sidebarState === 'hidden' && (
+        <button 
+          className="fixed left-4 top-20 z-50 p-3 rounded-full bg-white shadow-lg border border-border hover:bg-gray-50 transition-colors" 
+          onClick={toggleSidebar}
+          title="Mostrar chat"
+        >
+          <MessageCircle className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+        </button>
+      )}
+      
       <WelcomeMessage />
       <AppTutorial />
     </div>

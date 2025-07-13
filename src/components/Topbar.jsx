@@ -1,10 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Bell } from 'lucide-react';
-import { LayoutDashboard, MessageSquare, FileText, Calendar, Menu, Building2, MessageCircle, CreditCard, Settings, LogOut, PanelLeftClose, PanelLeftOpen, PanelLeft } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, FileText, Calendar, Menu, Building2, MessageCircle, CreditCard, Settings, LogOut } from 'lucide-react';
 import { useNotifications } from '../contexts/NotificationsContext';
 import { useAuth } from '../contexts/AuthContext';
-import { useSidebar } from '../contexts/SidebarContext';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const navItems = [
@@ -24,27 +23,10 @@ const profileMenuItems = [
 export default function Topbar() {
   const { unreadCount, notifications, markAsRead } = useNotifications();
   const { user, client, logout } = useAuth();
-  const { sidebarState, toggleSidebar } = useSidebar();
   const [notifOpen, setNotifOpen] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const notifRef = React.useRef();
   const menuRef = React.useRef();
-
-  // Función para obtener el icono correcto según el estado de la barra lateral
-  const getSidebarIcon = () => {
-    switch (sidebarState) {
-      case 'normal':
-        return PanelLeftOpen;
-      case 'expanded':
-        return PanelLeftClose;
-      case 'hidden':
-        return PanelLeft;
-      default:
-        return PanelLeft;
-    }
-  };
-
-  const SidebarIcon = getSidebarIcon();
 
   React.useEffect(() => {
     function handleClickOutside(event) {
@@ -59,14 +41,6 @@ export default function Topbar() {
     <header className="sticky top-0 z-50 w-full bg-white shadow flex items-center justify-between px-6 h-16">
       <div className="flex items-center gap-4">
         <div className="font-alata text-2xl tracking-[0.19em] text-black select-none">NNIA</div>
-        {/* Botón de control de la barra lateral */}
-        <button 
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors" 
-          onClick={toggleSidebar}
-          title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} barra lateral`}
-        >
-          <SidebarIcon className="h-5 w-5" style={{ color: '#ff9c9c' }} />
-        </button>
       </div>
       <nav className="flex-1 flex justify-center">
         <div className="flex gap-2">
