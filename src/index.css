@@ -104,9 +104,9 @@ body {
   font-family: 'Inter', Arial, sans-serif;
 }
 
-/* Scrollbar personalizada minimalista */
+/* Scrollbar personalizada ultra minimalista */
 .chat-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .chat-scrollbar::-webkit-scrollbar-track {
@@ -114,17 +114,32 @@ body {
 }
 
 .chat-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  transition: background 0.2s ease;
-}
-
-.chat-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
 }
 
 /* Para Firefox */
 .chat-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+}
+
+/* Scrollbar global del navegador */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+
+/* Para Firefox global */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
 }
