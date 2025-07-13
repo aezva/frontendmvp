@@ -274,7 +274,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             disabled={analyzing || loading}
           />
           <Button type="button" size="icon" className="h-10 w-10" onClick={() => fileInputRef.current.click()} title="Adjuntar documento" disabled={analyzing || loading}>
-            <Upload className="h-5 w-5" />
+            <Upload className="h-5 w-5" style={{ color: '#ff9c9c' }} />
           </Button>
           <input
             type="file"
@@ -285,7 +285,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             disabled={analyzing || loading}
           />
           <Button type="submit" size="icon" className="h-10 w-10" disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}>
-            <Send className="h-5 w-5" />
+            <Send className="h-5 w-5" style={{ color: '#ff9c9c' }} />
           </Button>
         </form>
         {attachedFile && (

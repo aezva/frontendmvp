@@ -181,7 +181,7 @@ const Dashboard = () => {
             <CardContent className="p-0">
               <ul className="divide-y divide-border">
                 {recentConversations.length === 0 ? (
-                  <li className="text-sm p-4" style={{ color: '#ff9c9c' }}>No hay conversaciones recientes.</li>
+                  <li className="text-sm p-4 text-muted-foreground">No hay conversaciones recientes.</li>
                 ) : (
                   recentConversations.map((conv, idx) => (
                     <li key={conv.visitor_id || idx} className="flex items-center gap-3 px-4 py-3 hover:bg-muted/50 transition cursor-pointer">
@@ -208,10 +208,10 @@ const Dashboard = () => {
                     <span className="rounded-full bg-primary/10 p-2"><stat.icon className="h-5 w-5 text-primary" /></span>
                     <span className="text-xs font-medium text-muted-foreground">{stat.title}</span>
                   </div>
-                  <div className="text-lg font-bold" style={{ color: '#7bdff2' }}>{stat.value}</div>
+                  <div className="text-lg font-bold text-muted-foreground">{stat.value}</div>
                 </div>
                 <div className="flex items-center justify-between mt-1">
-                  <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>{stat.change} vs mes pasado</p>
+                  <p className={`text-xs text-muted-foreground ${stat.change.startsWith('+') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>{stat.change} vs mes pasado</p>
                   <button
                     className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
                     onClick={() => {
@@ -245,7 +245,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 {/* Aquí se mostrarán las tareas pendientes cuando se conecte la funcionalidad */}
-                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay tareas pendientes.</div>
+                <div className="text-sm text-muted-foreground">No hay tareas pendientes.</div>
               </CardContent>
             </Card>
             {/* Documentos Creados */}
@@ -261,7 +261,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 {/* Aquí se mostrarán los documentos creados cuando se conecte la funcionalidad */}
-                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay documentos creados.</div>
+                <div className="text-sm text-muted-foreground">No hay documentos creados.</div>
               </CardContent>
             </Card>
           </div>
@@ -280,7 +280,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 {nextAppointments.length === 0 ? (
-                  <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay citas próximas.</div>
+                  <div className="text-sm text-muted-foreground">No hay citas próximas.</div>
                 ) : (
                   <ul className="divide-y divide-border">
                     {nextAppointments.map((appt, idx) => (
@@ -306,7 +306,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 {/* Aquí se mostrarán las próximas reservas cuando se conecte la funcionalidad */}
-                <div className="text-sm" style={{ color: '#ff9c9c' }}>No hay reservas próximas.</div>
+                <div className="text-sm text-muted-foreground">No hay reservas próximas.</div>
               </CardContent>
             </Card>
           </div>
