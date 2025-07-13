@@ -70,8 +70,8 @@ export default function Topbar() {
       {/* Columna derecha: Acciones */}
       <div className="flex items-center gap-4 justify-end min-w-0">
         {/* Botón de Chat */}
-        <button 
-          className="p-2 rounded-full transition-colors" 
+        <button
+          className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
           onClick={toggleSidebar}
           title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} chat`}
         >
@@ -79,8 +79,8 @@ export default function Topbar() {
         </button>
 
         {/* Botón de Modo Día/Noche */}
-        <button 
-          className="p-2 rounded-full transition-colors" 
+        <button
+          className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
           onClick={toggleTheme}
           title={`Cambiar a modo ${isDarkMode ? 'día' : 'noche'}`}
         >
@@ -93,7 +93,11 @@ export default function Topbar() {
 
         {/* Notificaciones */}
         <div className="relative" ref={notifRef}>
-          <button className="relative p-2 rounded-full" onClick={() => setNotifOpen(o => !o)} aria-label="Notificaciones">
+          <button
+            className="relative h-10 w-10 flex items-center justify-center rounded-full transition-colors"
+            onClick={() => setNotifOpen(o => !o)}
+            aria-label="Notificaciones"
+          >
             <Bell className="h-5 w-5" style={{ color: '#ff9c9c' }} />
             {unreadCount > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5 py-0.5">{unreadCount}</span>
@@ -121,7 +125,11 @@ export default function Topbar() {
         </div>
         {/* Menú de perfil */}
         <div className="relative" ref={menuRef}>
-          <button className="flex items-center gap-2 px-2 py-1 rounded" onClick={() => setMenuOpen(o => !o)} aria-label="Menú">
+          <button
+            className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Menú"
+          >
             <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
           </button>
           {menuOpen && (
