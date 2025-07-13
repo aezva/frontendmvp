@@ -13,8 +13,9 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/messages', label: 'Mensajes', icon: MessageSquare },
   { href: '/documents', label: 'Documentos', icon: FileText },
-  { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
   { href: '/subscription', label: 'Suscripción', icon: CreditCard },
+  { href: '/widget', label: 'Widget', icon: MessageCircle },
+  { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
   { href: '/settings', label: 'Configuración', icon: Settings },
 ];
 
@@ -62,23 +63,8 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
       )}
     >
       <div className="flex flex-col h-full">
-        {/* Botón para expandir/colapsar sidebar */}
-        <div className="flex items-center justify-end p-2 border-b border-border">
-          <button onClick={onToggleSidebar} className="rounded p-1 hover:bg-muted transition-colors">
-            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-          </button>
-        </div>
+        {/* Elimino el botón para expandir/colapsar sidebar y el divisor superior */}
         <nav className="flex-1 px-4 py-6 space-y-2">
-          {/* Acceso directo a Widget */}
-          <NavLink to="/widget" className={({ isActive }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
-            <MessageCircle className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
-            <span>Widget</span>
-            {location.pathname === '/widget' && (
-              <motion.div layoutId="active-indicator" className="ml-auto">
-                <ChevronRight className="h-4 w-4" />
-              </motion.div>
-            )}
-          </NavLink>
           {navItems.map(item => (
             <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
               <item.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />

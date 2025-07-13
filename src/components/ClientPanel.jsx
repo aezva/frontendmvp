@@ -108,9 +108,8 @@ const ClientPanel = () => {
               {/* Avatar NNIA */}
               <img src="/logo-assistant.png" alt="NNIA" className="h-10 w-10 rounded-full bg-muted object-cover" />
             </div>
-            <div className="flex flex-col justify-center min-w-0">
-              <span className="font-semibold text-base text-foreground truncate">Chat de NNIA</span>
-              <span className="text-xs text-muted-foreground truncate">Asistente IA</span>
+            <div className="flex flex-col justify-center min-w-0 h-full">
+              <span className="font-semibold text-base text-foreground truncate flex items-center h-full">Chat de NNIA</span>
             </div>
           </div>
           {/* ChatAssistant debajo, ocupa el resto del espacio vertical disponible */}
