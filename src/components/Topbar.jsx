@@ -54,7 +54,7 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
       <div />
       {/* Columna derecha: Acciones */}
       <div className="flex items-center gap-4 justify-end min-w-0">
-        {/* Botón de Chat (barra lateral derecha) - ahora en la posición del botón de menú */}
+        {/* Botón de Chat (barra lateral derecha) */}
         <button
           className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
           onClick={onToggleChat}
@@ -113,7 +113,10 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
             onClick={() => setMenuOpen(o => !o)}
             aria-label="Menú"
           >
-            <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={user?.avatar_url} alt={user?.name} />
+              <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
+            </Avatar>
           </button>
           {menuOpen && (
             <div className="absolute right-0 top-[54px] w-56 bg-popover border border-border/50 border-t-0 rounded-lg shadow-xl z-50 backdrop-blur-sm">
