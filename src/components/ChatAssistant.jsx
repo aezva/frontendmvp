@@ -226,9 +226,10 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
   }, [client, userName]);
 
   return (
-    <div className="flex-1 flex flex-col justify-between h-full bg-card/50 backdrop-blur-sm">
-      <div className="flex-1 flex flex-col justify-between p-2">
-        <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-1" style={{ maxHeight: 'calc(100vh - 20rem)' }}>
+    <div className="flex flex-col h-full bg-card/50 backdrop-blur-sm">
+      {/* Área de mensajes con scroll interno */}
+      <div className="flex-1 overflow-y-auto chat-scrollbar p-2">
+        <div className="space-y-2 pt-2">
           {messages.map((msg, idx) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
               <div className={
@@ -260,7 +261,10 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
           )}
           <div ref={messagesEndRef} />
         </div>
-        <form onSubmit={handleSendMessage} className="mt-4 flex gap-2">
+      </div>
+      {/* Área de input fija en la parte inferior */}
+      <div className="flex-shrink-0 p-2 border-t border-border/50 bg-background/50 backdrop-blur-sm">
+        <form onSubmit={handleSendMessage} className="flex gap-2">
           <Input
             placeholder="Escribe un mensaje..."
             value={newMessage}

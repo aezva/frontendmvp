@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/components/ui/use-toast';
-import ChatAssistant from './ChatAssistant';
 import { useNavigate } from 'react-router-dom';
 import { fetchAppointments } from '@/services/appointmentsService';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -166,8 +165,6 @@ const Dashboard = () => {
         <title>Dashboard - Asistente IA</title>
       </Helmet>
       <div className="space-y-8">
-        {/* Chat tipo GPT al inicio */}
-        <ChatAssistant userName={client?.name || 'Usuario'} />
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>

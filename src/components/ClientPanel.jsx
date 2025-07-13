@@ -58,7 +58,7 @@ const ClientPanel = () => {
     <div className="min-h-screen flex flex-col">
       <Topbar />
       <div className="flex flex-1">
-        {/* Columna lateral izquierda: ChatAssistant siempre visible, video cuadrado arriba y chat debajo */}
+        {/* Columna lateral izquierda: Video cuadrado arriba y chat debajo con altura fija */}
         <div 
           className={`hidden md:flex flex-col bg-transparent border-r border-border fixed left-0 top-16 z-40 transition-all duration-300 ease-in-out ${!isVisible ? 'opacity-0 pointer-events-none' : ''}`} 
           style={{ 
@@ -68,8 +68,8 @@ const ClientPanel = () => {
             height: 'calc(100vh - 4rem)' 
           }}
         >
-          {/* Video cuadrado arriba, sin padding ni bordes propios */}
-          <div className="w-full" style={{ flex: 'none' }}>
+          {/* Video cuadrado arriba, altura fija */}
+          <div className="w-full flex-shrink-0">
             <div className="w-full h-64 shadow-sm" style={{ background: 'rgba(0,0,0,0.05)' }}>
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
@@ -82,8 +82,10 @@ const ClientPanel = () => {
               />
             </div>
           </div>
-          {/* ChatAssistant debajo, ocupa el resto del espacio vertical sin contenedor adicional */}
-          <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
+          {/* ChatAssistant debajo, ocupa el resto del espacio vertical disponible */}
+          <div className="flex-1 min-h-0">
+            <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
+          </div>
         </div>
         {/* Contenido principal a la derecha del lateral fijo */}
         <main className="flex-1 flex flex-col transition-all duration-300 ease-in-out" style={{ marginLeft: sidebarWidth }}>
