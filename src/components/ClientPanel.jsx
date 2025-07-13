@@ -7,7 +7,7 @@ import Messages from '@/components/Messages';
 import MyBusiness from '@/components/MyBusiness';
 import Subscription from '@/components/Subscription';
 import Settings from '@/components/Settings';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useToast } from '@/components/ui/use-toast';
@@ -23,7 +23,8 @@ import ChatAssistant from './ChatAssistant';
 
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [isChatOpen, setChatOpen] = useState(true);
+  // Estados del chat: 'default', 'expanded', 'hidden'
+  const [chatState, setChatState] = useState('default');
   const { signOut, client } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -31,7 +32,7 @@ const ClientPanel = () => {
 
   // Ancho de sidebars
   const sidebarWidth = isSidebarOpen ? 256 : 0; // 64 = 16rem
-  const chatbarWidth = isChatOpen ? 340 : 0; // ancho fijo para chat
+  const chatbarWidth = chatState === 'default' ? 340 : chatState === 'expanded' ? 540 : 0;
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -61,9 +62,11 @@ const ClientPanel = () => {
     <div className="min-h-screen flex flex-col">
       <Topbar 
         onToggleSidebar={() => setSidebarOpen(v => !v)}
-        onToggleChat={() => setChatOpen(v => !v)}
+        onToggleChat={() => {
+          setChatState(prev => prev === 'hidden' ? 'default' : 'hidden');
+        }}
         isSidebarOpen={isSidebarOpen}
-        isChatOpen={isChatOpen}
+        isChatOpen={chatState !== 'hidden'}
       />
       <div className="flex flex-1 min-h-0">
         {/* Sidebar izquierdo de navegación */}
@@ -71,7 +74,7 @@ const ClientPanel = () => {
         {/* Contenido principal */}
         <main 
           className="flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0"
-          style={{ marginLeft: isSidebarOpen ? sidebarWidth : 0, marginRight: isChatOpen ? chatbarWidth : 0 }}
+          style={{ marginLeft: isSidebarOpen ? sidebarWidth : 0, marginRight: chatbarWidth }}
         >
           <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-background">
             <AnimatePresence mode="wait">
@@ -88,9 +91,9 @@ const ClientPanel = () => {
             </AnimatePresence>
           </div>
         </main>
-        {/* Barra lateral derecha: chat y video */}
+        {/* Barra lateral derecha: chat */}
         <div
-          className={`hidden md:flex flex-col bg-background border-l border-border fixed right-0 top-16 z-40 transition-all duration-300 ease-in-out ${isChatOpen ? 'translate-x-0' : 'translate-x-full'} shadow-lg`}
+          className={`hidden md:flex flex-col bg-background border-l border-border fixed right-0 top-16 z-40 transition-all duration-300 ease-in-out ${chatState === 'hidden' ? 'translate-x-full' : 'translate-x-0'} shadow-lg`}
           style={{
             width: chatbarWidth,
             minWidth: chatbarWidth,
@@ -99,8 +102,19 @@ const ClientPanel = () => {
           }}
         >
           {/* Header de chat tipo WhatsApp */}
-          <div className="w-full flex-shrink-0 h-16 flex items-center gap-3 px-4 border-b border-border bg-background/80" style={{height: 64}}>
-            <div className="flex items-center justify-center">
+          <div className="w-full flex-shrink-0 h-16 flex items-center gap-3 px-4 border-b border-border bg-background/80 relative" style={{height: 64}}>
+            {/* Botón para ocultar/expandir chat */}
+            <button
+              className="absolute left-0 top-1/2 -translate-y-1/2 ml-2 h-10 w-10 flex items-center justify-center rounded-full transition-colors"
+              style={{paddingLeft: '0.5rem'}}
+              onClick={() => {
+                setChatState(prev => prev === 'default' ? 'expanded' : prev === 'expanded' ? 'hidden' : 'default');
+              }}
+              title={chatState === 'hidden' ? 'Mostrar chat' : chatState === 'expanded' ? 'Ocultar chat' : 'Expandir chat'}
+            >
+              <ArrowRight className="h-6 w-6" style={{ color: '#ff9c9c', transform: chatState === 'expanded' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            </button>
+            <div className="flex items-center justify-center ml-12">
               {/* Avatar NNIA */}
               <img src="/logo-assistant.png" alt="NNIA" className="h-10 w-10 rounded-full bg-muted object-cover" />
             </div>
