@@ -106,44 +106,6 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
             </div>
           )}
         </div>
-        {/* Menú de perfil */}
-        <div className="relative" ref={menuRef}>
-          <button
-            className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
-            onClick={() => setMenuOpen(o => !o)}
-            aria-label="Menú"
-          >
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={user?.avatar_url} alt={user?.name} />
-              <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
-            </Avatar>
-          </button>
-          {menuOpen && (
-            <div className="absolute right-0 top-[54px] w-56 bg-popover border border-border/50 border-t-0 rounded-lg shadow-xl z-50 backdrop-blur-sm">
-              <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Menú</div>
-              {profileMenuItems.map(item => (
-                <NavLink
-                  key={item.href}
-                  to={item.href}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`
-                  }
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <item.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} />
-                  {item.label}
-                </NavLink>
-              ))}
-              <button
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 transition-colors w-full border-t border-border/30 mt-2"
-                onClick={logout}
-              >
-                <LogOut className="h-5 w-5" style={{ color: '#ff9c9c' }} />
-                Cerrar sesión
-              </button>
-            </div>
-          )}
-        </div>
       </div>
     </header>
   );
