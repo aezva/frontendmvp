@@ -13,9 +13,9 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/messages', label: 'Mensajes', icon: MessageSquare },
   { href: '/documents', label: 'Documentos', icon: FileText },
-  { href: '/subscription', label: 'Suscripción', icon: CreditCard },
   { href: '/widget', label: 'Widget', icon: MessageCircle },
   { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
+  { href: '/subscription', label: 'Suscripción', icon: CreditCard },
   { href: '/settings', label: 'Configuración', icon: Settings },
 ];
 

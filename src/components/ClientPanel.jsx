@@ -59,7 +59,7 @@ const ClientPanel = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-pink-500/10">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-pink-500/40">
       <Topbar 
         onToggleSidebar={() => setSidebarOpen(v => !v)}
         onToggleChat={() => {
