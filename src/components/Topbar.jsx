@@ -32,21 +32,8 @@ export default function Topbar() {
   const notifRef = React.useRef();
   const menuRef = React.useRef();
 
-  // Función para obtener el icono correcto según el estado de la barra lateral
-  const getChatIcon = () => {
-    switch (sidebarState) {
-      case 'normal':
-        return MessageSquare;
-      case 'expanded':
-        return MessageSquare;
-      case 'hidden':
-        return MessageCircle;
-      default:
-        return MessageCircle;
-    }
-  };
-
-  const ChatIcon = getChatIcon();
+  // Usar siempre el mismo icono para consistencia visual
+  const ChatIcon = MessageSquare;
 
   React.useEffect(() => {
     function handleClickOutside(event) {

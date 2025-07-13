@@ -29,25 +29,25 @@
   }
 
   .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 15%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 15%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 0 0% 15%;
-    --primary-foreground: 0 0% 95%;
-    --secondary: 0 0% 20%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 20%;
-    --accent-foreground: 0 0% 95%;
+    --background: 220 15% 8%;
+    --foreground: 220 15% 95%;
+    --card: 220 15% 12%;
+    --card-foreground: 220 15% 95%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 220 15% 95%;
+    --primary: 220 15% 12%;
+    --primary-foreground: 220 15% 95%;
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 220 15% 95%;
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 15% 65%;
+    --accent: 220 15% 18%;
+    --accent-foreground: 220 15% 95%;
     --destructive: 0 100% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
-    --ring: 0 0% 25%;
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
+    --ring: 220 15% 25%;
     --radius: 0.75rem;
   }
 }
@@ -60,47 +60,66 @@
     @apply bg-background text-foreground;
     font-family: 'Roboto', Arial, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   h1 {
     font-family: 'Roboto', Arial, sans-serif;
     @apply text-foreground;
     font-weight: 400;
     font-size: 1.3rem;
+    transition: color 0.3s ease;
   }
   h2 {
     font-family: 'Roboto', Arial, sans-serif;
     @apply text-foreground;
     font-weight: 400;
     font-size: 1.15rem;
+    transition: color 0.3s ease;
   }
   h3 {
     font-family: 'Roboto', Arial, sans-serif;
     @apply text-foreground;
     font-weight: 400;
     font-size: 1.05rem;
+    transition: color 0.3s ease;
   }
   h4 {
     font-family: 'Roboto', Arial, sans-serif;
     @apply text-foreground;
     font-weight: 400;
     font-size: 1rem;
+    transition: color 0.3s ease;
   }
   h5 {
     font-family: 'Roboto', Arial, sans-serif;
     @apply text-foreground;
     font-weight: 400;
     font-size: 0.95rem;
+    transition: color 0.3s ease;
   }
   h6 {
     font-family: 'Roboto', Arial, sans-serif;
     @apply text-foreground;
     font-weight: 400;
     font-size: 0.9rem;
+    transition: color 0.3s ease;
   }
 }
 
 body {
   @apply bg-background text-foreground;
+}
+
+/* Transiciones suaves para cambios de tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Excepciones para elementos que no deben tener transición */
+*:hover,
+*:focus,
+*:active {
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 @keyframes fade-in {
