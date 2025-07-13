@@ -22,7 +22,7 @@ const profileMenuItems = [
   { href: '/settings', label: 'Configuración', icon: Settings },
 ];
 
-export default function Topbar() {
+export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, isChatOpen }) {
   const { unreadCount, notifications, markAsRead } = useNotifications();
   const { user, client, logout } = useAuth();
   const { sidebarState, toggleSidebar } = useSidebar();
@@ -46,38 +46,29 @@ export default function Topbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border grid grid-cols-3 items-center px-6 h-16">
-      {/* Columna izquierda: Logo */}
+      {/* Columna izquierda: Botón sidebar */}
       <div className="flex items-center gap-4 min-w-0">
-        <div className="font-alata text-2xl tracking-[0.19em] text-foreground select-none">NNIA</div>
-      </div>
-      {/* Columna central: Nav centrado */}
-      <nav className="flex items-center justify-center w-full">
-        <div className="flex gap-2">
-          {navItems.map(item => (
-            <NavLink
-              key={item.href}
-              to={item.href}
-              className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors ${isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`
-              }
-            >
-              <item.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} />
-              {item.label}
-            </NavLink>
-          ))}
-        </div>
-      </nav>
-      {/* Columna derecha: Acciones */}
-      <div className="flex items-center gap-4 justify-end min-w-0">
-        {/* Botón de Chat */}
         <button
           className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
-          onClick={toggleSidebar}
-          title={`${sidebarState === 'normal' ? 'Expandir' : sidebarState === 'expanded' ? 'Ocultar' : 'Mostrar'} chat`}
+          onClick={onToggleSidebar}
+          title={isSidebarOpen ? 'Ocultar menú' : 'Mostrar menú'}
         >
-          <ChatIcon className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+          <Menu className="h-6 w-6" style={{ color: '#ff9c9c' }} />
         </button>
-
+        <div className="font-alata text-2xl tracking-[0.19em] text-foreground select-none">NNIA</div>
+      </div>
+      {/* Columna central vacía (o logo si se desea) */}
+      <div />
+      {/* Columna derecha: Acciones */}
+      <div className="flex items-center gap-4 justify-end min-w-0">
+        {/* Botón de Chat (barra lateral derecha) */}
+        <button
+          className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
+          onClick={onToggleChat}
+          title={isChatOpen ? 'Ocultar chat' : 'Mostrar chat'}
+        >
+          <MessageSquare className="h-5 w-5" style={{ color: '#ff9c9c' }} />
+        </button>
         {/* Botón de Modo Día/Noche */}
         <button
           className="h-10 w-10 flex items-center justify-center rounded-full transition-colors"
@@ -90,7 +81,6 @@ export default function Topbar() {
             <Moon className="h-5 w-5" style={{ color: '#ff9c9c' }} />
           )}
         </button>
-
         {/* Notificaciones */}
         <div className="relative" ref={notifRef}>
           <button
@@ -105,7 +95,7 @@ export default function Topbar() {
           </button>
           {notifOpen && (
             <div className="absolute right-0 top-[54px] w-80 bg-popover border border-border/50 border-t-0 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
-                              <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Notificaciones</div>
+              <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Notificaciones</div>
               {notifications.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">Sin notificaciones recientes.</div>
               ) : (

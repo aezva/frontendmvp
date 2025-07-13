@@ -9,44 +9,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNotifications } from '../contexts/NotificationsContext';
 import { useState, useRef, useEffect } from 'react';
 
-const navItems = [{
-  href: '/',
-  label: 'Dashboard',
-  icon: LayoutDashboard
-}, {
-  href: '/messages',
-  label: 'Mensajes',
-  icon: MessageSquare
-}, {
-  href: '/documents',
-  label: 'Documentos',
-  icon: FileText
-}, {
-  href: '/citas',
-  label: 'Citas',
-  icon: Calendar
-}, {
-  href: '/reservas',
-  label: 'Reservas',
-  icon: Calendar
-}, {
-  href: '/my-business',
-  label: 'Mi Negocio',
-  icon: Building2
-}, {
-  href: '/widget',
-  label: 'Widget',
-  icon: MessageCircle
-}, {
-  href: '/subscription',
-  label: 'Suscripción',
-  icon: CreditCard
-}];
+const navItems = [
+  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/messages', label: 'Mensajes', icon: MessageSquare },
+  { href: '/documents', label: 'Documentos', icon: FileText },
+  { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
+  { href: '/subscription', label: 'Suscripción', icon: CreditCard },
+  { href: '/settings', label: 'Configuración', icon: Settings },
+];
 
-const Sidebar = ({
-  isSidebarOpen,
-  handleLogout
-}) => {
+const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
   const location = useLocation();
   const { toast } = useToast();
   const { user, client } = useAuth();
@@ -78,28 +50,17 @@ const Sidebar = ({
   };
 
   return (
-    <aside className={cn("fixed top-16 left-0 h-[calc(100vh-4rem)] bg-background border-r border-border z-40 transition-transform duration-300 ease-in-out", isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full", "md:translate-x-0 md:w-64")}>
+    <aside className={cn("fixed top-16 left-0 h-[calc(100vh-4rem)] bg-background border-r border-border z-40 transition-transform duration-300 ease-in-out", isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full w-64", "md:translate-x-0 md:w-64")}>
       <div className="flex flex-col h-full">
-        {/* Header eliminado para unir Sidebar y Topbar */}
-        {/* <div className="border-b border-border" style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}>
-          <div className="flex items-center space-x-3">
-            <motion.div animate={{
-              rotate: [0, 15, -10, 5, 0]
-            }} transition={{
-              duration: 1,
-              ease: "easeInOut"
-            }}>
-              <Bot className="h-8 w-8 text-primary" />
-            </motion.div>
-            <span className="text-xl font-bold">NNIA</span>
-          </div>
-        </div> */}
-
+        {/* Botón para ocultar/mostrar sidebar */}
+        <div className="flex items-center justify-end p-2 border-b border-border">
+          <button onClick={onToggleSidebar} className="rounded p-1 hover:bg-muted transition-colors">
+            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+          </button>
+        </div>
         <nav className="flex-1 px-4 py-6 space-y-2">
           {navItems.map(item => (
-            <NavLink key={item.href} to={item.href} className={({
-              isActive
-            }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
+            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
               <item.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
               <span>{item.label}</span>
               {location.pathname === item.href && (
@@ -110,20 +71,11 @@ const Sidebar = ({
             </NavLink>
           ))}
         </nav>
-
         <div className="p-4 border-t border-border mt-auto">
-          <div className="space-y-2">
-            <NavLink to="/settings" className={({
-              isActive
-            }) => cn('flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground')}>
-              <Settings className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
-              <span>Ajustes</span>
-            </NavLink>
-            <button onClick={handleLogout} className="w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
-              <LogOut className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
-              <span>Cerrar Sesión</span>
-            </button>
-          </div>
+          <button onClick={handleLogout} className="w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
+            <LogOut className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
+            <span>Cerrar Sesión</span>
+          </button>
         </div>
       </div>
     </aside>

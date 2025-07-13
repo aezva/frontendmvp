@@ -23,12 +23,15 @@ import ChatAssistant from './ChatAssistant';
 
 const ClientPanel = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isChatOpen, setChatOpen] = useState(true);
   const { signOut, client } = useAuth();
-  const { sidebarWidth, isVisible, sidebarState, toggleSidebar } = useSidebar();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const location = useLocation();
 
-
+  // Ancho de sidebars
+  const sidebarWidth = isSidebarOpen ? 256 : 0; // 64 = 16rem
+  const chatbarWidth = isChatOpen ? 340 : 0; // ancho fijo para chat
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -54,24 +57,50 @@ const ClientPanel = () => {
     ease: 'easeInOut',
   };
 
-  const location = useLocation();
   return (
     <div className="min-h-screen flex flex-col">
-      <Topbar />
-      <div className="flex flex-1">
-        {/* Columna lateral izquierda: Video cuadrado arriba y chat debajo con altura fija */}
-        <div 
-          className={`hidden md:flex flex-col bg-background border-r-0 border-border fixed left-0 top-16 z-40 transition-all duration-300 ease-in-out ${!isVisible ? 'opacity-0 pointer-events-none' : ''}`} 
-          style={{ 
-            width: sidebarWidth, 
-            minWidth: sidebarWidth, 
-            maxWidth: sidebarWidth, 
-            height: 'calc(100vh - 4rem)' 
+      <Topbar 
+        onToggleSidebar={() => setSidebarOpen(v => !v)}
+        onToggleChat={() => setChatOpen(v => !v)}
+        isSidebarOpen={isSidebarOpen}
+        isChatOpen={isChatOpen}
+      />
+      <div className="flex flex-1 min-h-0">
+        {/* Sidebar izquierdo de navegación */}
+        <Sidebar isSidebarOpen={isSidebarOpen} handleLogout={handleLogout} onToggleSidebar={() => setSidebarOpen(v => !v)} />
+        {/* Contenido principal */}
+        <main 
+          className="flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0"
+          style={{ marginLeft: isSidebarOpen ? sidebarWidth : 0, marginRight: isChatOpen ? chatbarWidth : 0 }}
+        >
+          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-background">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
+                style={{ height: '100%' }}
+              >
+                <Outlet />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </main>
+        {/* Barra lateral derecha: chat y video */}
+        <div
+          className={`hidden md:flex flex-col bg-background border-l border-border fixed right-0 top-16 z-40 transition-all duration-300 ease-in-out ${isChatOpen ? 'translate-x-0' : 'translate-x-full'} shadow-lg`}
+          style={{
+            width: chatbarWidth,
+            minWidth: chatbarWidth,
+            maxWidth: chatbarWidth,
+            height: 'calc(100vh - 4rem)'
           }}
         >
           {/* Video cuadrado arriba, altura fija */}
           <div className="w-full flex-shrink-0">
-            <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40 border-t-0 border-l-0 glitch-video-container" style={{ background: 'rgba(0,0,0,0.05)' }}>
+            <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40 border-t-0 border-r-0 glitch-video-container" style={{ background: 'rgba(0,0,0,0.05)' }}>
               <div className="glitch-color"></div>
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
@@ -89,29 +118,6 @@ const ClientPanel = () => {
             <ChatAssistant userName={client?.name || 'Usuario'} client={client} />
           </div>
         </div>
-        {/* Contenido principal a la derecha del lateral fijo */}
-        <main className="flex-1 flex flex-col transition-all duration-300 ease-in-out" style={{ marginLeft: sidebarWidth }}>
-          <div className="md:hidden flex items-center justify-between p-4 border-b border-border bg-background">
-            <span className="font-bold text-lg text-foreground">Asistente IA</span>
-            <button onClick={() => setSidebarOpen(!isSidebarOpen)}>
-              {isSidebarOpen ? <X /> : <Menu />}
-            </button>
-          </div>
-          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-background">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={location.pathname}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35, ease: 'easeInOut' }}
-                style={{ height: '100%' }}
-              >
-                <Outlet />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </main>
       </div>
       <WelcomeMessage />
       <AppTutorial />

@@ -281,7 +281,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       )}
       {/* Área de input fija en la parte inferior */}
       <div className="flex-shrink-0 p-2 border-t border-border/50 bg-background/50 backdrop-blur-sm">
-        <form onSubmit={handleSendMessage} className="flex gap-1 items-center">
+        <form onSubmit={handleSendMessage} className="flex gap-2 items-center">
           <Input
             placeholder="Escríbele a NNIA"
             value={newMessage}
@@ -300,7 +300,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             tabIndex={-1}
             style={{ boxShadow: 'none' }}
           >
-            <Upload className="h-5 w-5" style={{ color: isDarkMode ? '#fff' : '#000' }} />
+            <Upload className="h-5 w-5" style={{ color: '#ff9c9c' }} />
           </button>
           <input
             type="file"
