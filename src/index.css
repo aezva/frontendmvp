@@ -147,7 +147,7 @@ body {
 
 /* Scrollbar personalizada ultra minimalista */
 .chat-scrollbar::-webkit-scrollbar {
-  width: 2px;
+  width: 1px;
 }
 
 .chat-scrollbar::-webkit-scrollbar-track {
@@ -168,6 +168,7 @@ body {
 .chat-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #ff9c9c transparent;
+  scrollbar-width: 1px;
 }
 
 /* Scrollbar global del navegador */

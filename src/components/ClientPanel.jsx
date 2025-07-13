@@ -62,7 +62,7 @@ const ClientPanel = () => {
       <div className="flex flex-1">
         {/* Columna lateral izquierda: Video cuadrado arriba y chat debajo con altura fija */}
         <div 
-          className={`hidden md:flex flex-col bg-background border-r border-border fixed left-0 top-16 z-40 transition-all duration-300 ease-in-out ${!isVisible ? 'opacity-0 pointer-events-none' : ''}`} 
+          className={`hidden md:flex flex-col bg-background border-r-0 border-border fixed left-0 top-16 z-40 transition-all duration-300 ease-in-out ${!isVisible ? 'opacity-0 pointer-events-none' : ''}`} 
           style={{ 
             width: sidebarWidth, 
             minWidth: sidebarWidth, 
@@ -74,7 +74,7 @@ const ClientPanel = () => {
           
           {/* Video cuadrado arriba, altura fija */}
           <div className="w-full flex-shrink-0">
-            <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40" style={{ background: 'rgba(0,0,0,0.05)' }}>
+            <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40 border-t-0 border-l-0" style={{ background: 'rgba(0,0,0,0.05)' }}>
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
                 className="object-cover w-full h-full"
