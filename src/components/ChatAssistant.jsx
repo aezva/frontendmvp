@@ -53,6 +53,13 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
   const [attachedFile, setAttachedFile] = useState(null);
   const [lastGenerated, setLastGenerated] = useState(null);
   const { isDarkMode } = useTheme();
+  const [showGradient, setShowGradient] = useState(false);
+  const chatRef = useRef();
+
+  const handleScroll = () => {
+    if (!chatRef.current) return;
+    setShowGradient(chatRef.current.scrollTop > 0);
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -231,10 +238,14 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
     <div className="flex flex-col h-full bg-card/50 backdrop-blur-sm">
       <div className="absolute right-0 top-0 h-full w-px bg-border z-20" />
       {/* Área de mensajes con scroll interno */}
-      <div className="flex-1 overflow-y-auto chat-scrollbar p-2 px-3 relative">
+      <div
+        className="flex-1 overflow-y-auto chat-scrollbar p-2 px-3 relative"
+        ref={chatRef}
+        onScroll={handleScroll}
+      >
         <div className="space-y-2">
           {messages.map((msg, idx) => (
-            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full ${idx === 0 ? 'mt-10' : ''}`}>
+            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
               <div className={
                 `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-relaxed rounded-2xl ` +
                 (msg.sender === 'user'
@@ -265,6 +276,9 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
+      {showGradient && (
+        <div className="pointer-events-none z-10 absolute left-0 right-0 top-0 h-12 bg-gradient-to-b from-background via-background/90 to-transparent" />
+      )}
       {/* Área de input fija en la parte inferior */}
       <div className="flex-shrink-0 p-2 border-t border-border/50 bg-background/50 backdrop-blur-sm">
         <form onSubmit={handleSendMessage} className="flex gap-2">
