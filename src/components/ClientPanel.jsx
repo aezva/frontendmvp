@@ -75,6 +75,7 @@ const ClientPanel = () => {
           {/* Video cuadrado arriba, altura fija */}
           <div className="w-full flex-shrink-0">
             <div className="w-full h-64 shadow-sm border border-[#ff9c9c]/40 border-t-0 border-l-0 glitch-video-container" style={{ background: 'rgba(0,0,0,0.05)' }}>
+              <div className="glitch-color"></div>
               <video
                 src="https://cafolvqmbzzqwtmuyvnj.supabase.co/storage/v1/object/public/app-assets//Professional_Mode_beautiful_pink_haired_woman_movi.mp4"
                 className="glitch-video"

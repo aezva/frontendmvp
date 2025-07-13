@@ -205,7 +205,7 @@ body {
   scrollbar-color: hsl(var(--muted-foreground) / 0.2) transparent;
 }
 
-/* === GLITCH VIDEO EFFECT === */
+/* === GLITCH VIDEO EFFECT (mejorado) === */
 .glitch-video-container {
   position: relative;
   overflow: hidden;
@@ -217,8 +217,13 @@ body {
   object-fit: cover;
   image-rendering: pixelated;
   filter: contrast(1.2) brightness(1.1);
+  position: relative;
+  z-index: 1;
+  /* Glitch horizontal y vertical combinados */
+  animation: glitch-shift 2.2s infinite steps(2, end) alternate, glitch-vert 3.1s infinite steps(2, end) alternate;
 }
 
+/* Scanlines overlay */
 .glitch-video-container::before {
   content: '';
   position: absolute;
@@ -235,6 +240,7 @@ body {
   mix-blend-mode: lighten;
 }
 
+/* Overlay rosa animado (glow/pico) */
 .glitch-video-container::after {
   content: '';
   position: absolute;
@@ -246,26 +252,26 @@ body {
   animation: glitch-glow 2.5s infinite linear alternate;
 }
 
-@keyframes glitch-glow {
-  0% { opacity: 0.10; }
-  10% { opacity: 0.13; }
-  20% { opacity: 0.10; }
-  30% { opacity: 0.16; }
-  40% { opacity: 0.10; }
-  50% { opacity: 0.18; }
-  60% { opacity: 0.10; }
-  70% { opacity: 0.14; }
-  80% { opacity: 0.10; }
-  90% { opacity: 0.12; }
-  100% { opacity: 0.10; }
+/* Glitch color lines (fugas/fugas de color) */
+.glitch-video-container .glitch-color {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  mix-blend-mode: lighten;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 156, 156, 0.18) 0px,
+    rgba(255, 156, 156, 0.18) 2px,
+    transparent 2px,
+    transparent 12px
+  );
+  opacity: 0.5;
+  animation: glitch-color 4.2s infinite steps(2, end) alternate;
 }
 
-/* Glitch lines (subtle, animated) */
-.glitch-video-container .glitch-video {
-  position: relative;
-  z-index: 1;
-}
-
+/* Glitch lines (blancas, animadas) */
 .glitch-video-container .glitch-video::after {
   content: '';
   display: block;
@@ -283,14 +289,22 @@ body {
   animation: glitch-lines 1.2s infinite linear alternate;
 }
 
+@keyframes glitch-glow {
+  0% { opacity: 0.10; }
+  10% { opacity: 0.13; }
+  20% { opacity: 0.10; }
+  30% { opacity: 0.16; }
+  40% { opacity: 0.10; }
+  50% { opacity: 0.18; }
+  60% { opacity: 0.10; }
+  70% { opacity: 0.14; }
+  80% { opacity: 0.10; }
+  90% { opacity: 0.12; }
+  100% { opacity: 0.10; }
+}
 @keyframes glitch-lines {
   0% { transform: translateY(0); }
   100% { transform: translateY(-4px); }
-}
-
-/* Opcional: glitch horizontal shift */
-.glitch-video-container .glitch-video {
-  animation: glitch-shift 2.2s infinite steps(2, end) alternate;
 }
 @keyframes glitch-shift {
   0% { transform: none; }
@@ -298,4 +312,25 @@ body {
   4% { transform: translateX(1.5px) skewX(1deg); }
   6% { transform: none; }
   100% { transform: none; }
+}
+@keyframes glitch-vert {
+  0% { transform: none; }
+  10% { transform: translateY(-1.5px); }
+  12% { transform: none; }
+  20% { transform: translateY(1.5px); }
+  22% { transform: none; }
+  100% { transform: none; }
+}
+@keyframes glitch-color {
+  0% { opacity: 0.2; }
+  10% { opacity: 0.5; }
+  20% { opacity: 0.2; }
+  30% { opacity: 0.7; }
+  40% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+  60% { opacity: 0.2; }
+  70% { opacity: 0.6; }
+  80% { opacity: 0.2; }
+  90% { opacity: 0.4; }
+  100% { opacity: 0.2; }
 }

@@ -286,22 +286,22 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             placeholder="Escríbele a NNIA"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-1 text-pink-400 placeholder-pink-400 focus:placeholder-pink-400 focus:text-pink-400"
+            className="flex-1 text-[#ff9c9c] placeholder-[#ff9c9c] focus:placeholder-[#ff9c9c] focus:text-[#ff9c9c]"
             style={{ minWidth: 0 }}
             autoComplete="off"
             disabled={analyzing || loading}
           />
-          <Button
+          <button
             type="button"
-            size="icon"
-            className={`h-9 w-9 min-w-0 p-0 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
+            className="h-9 w-9 min-w-0 p-0 bg-transparent hover:bg-transparent focus:bg-transparent outline-none border-none flex items-center justify-center"
             onClick={() => fileInputRef.current.click()}
             title="Adjuntar documento"
             disabled={analyzing || loading}
             tabIndex={-1}
+            style={{ boxShadow: 'none' }}
           >
             <Upload className="h-5 w-5" style={{ color: isDarkMode ? '#fff' : '#000' }} />
-          </Button>
+          </button>
           <input
             type="file"
             accept=".pdf,.doc,.docx,.txt,.xlsx,.xls"
@@ -310,14 +310,14 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             onChange={handleFileChange}
             disabled={analyzing || loading}
           />
-          <Button
+          <button
             type="submit"
-            size="icon"
-            className={`h-9 w-9 min-w-0 p-0 ${isDarkMode ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-white hover:bg-zinc-100'} border border-border`}
+            className="h-9 w-9 min-w-0 p-0 bg-transparent hover:bg-transparent focus:bg-transparent outline-none border-none flex items-center justify-center"
             disabled={analyzing || loading || (!newMessage.trim() && !attachedFile)}
+            style={{ boxShadow: 'none' }}
           >
             <Send className="h-5 w-5" style={{ color: '#ff9c9c' }} />
-          </Button>
+          </button>
         </form>
         {attachedFile && (
           <div className="mt-2 text-xs text-muted-foreground flex items-center gap-2">
