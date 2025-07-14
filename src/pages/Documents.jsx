@@ -94,9 +94,9 @@ const Documents = () => {
                   ) : (
                     documents.map(doc => (
                       <tr key={doc.id} className="border-b border-border">
-                        <td className="px-6 py-4 whitespace-nowrap font-medium border-r border-border">{doc.name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap border-r border-border">{doc.file_type || 'Texto'}</td>
-                        <td className="px-6 py-4 whitespace-nowrap border-r border-border">{new Date(doc.created_at).toLocaleString()}</td>
+                        <td className="px-6 py-4 whitespace-nowrap font-medium">{doc.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{doc.file_type || 'Texto'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">{new Date(doc.created_at).toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-right flex gap-2 justify-end">
                           <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)}><Eye className="h-4 w-4" /></Button>
                           <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)}><Edit className="h-4 w-4" /></Button>
