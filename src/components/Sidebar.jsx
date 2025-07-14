@@ -66,21 +66,21 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
         {/* Elimino el botón para expandir/colapsar sidebar y el divisor superior */}
         <nav className="flex-1 pl-6 pr-6 py-6 space-y-2">
           {navItems.map(item => (
-            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2.5 text-sm font-normal rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-gray-400')}>
-              <item.icon className="mr-3 h-5 w-5" color="#9ca3af" strokeWidth={1.5} />
-              <span className="text-gray-400 font-normal">{item.label}</span>
+            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2.5 text-sm font-normal rounded-lg transition-colors', isActive ? 'bg-primary/5 text-[#ff9c9c]' : 'text-gray-500')}>
+              <item.icon className="mr-3 h-5 w-5" color={location.pathname === item.href ? '#ff9c9c' : '#6b7280'} strokeWidth={1.5} />
+              <span className={location.pathname === item.href ? 'text-[#ff9c9c] font-normal' : 'text-gray-500 font-normal'}>{item.label}</span>
               {location.pathname === item.href && (
                 <motion.div layoutId="active-indicator" className="ml-auto">
-                  <ChevronRight className="h-4 w-4" color="#9ca3af" strokeWidth={1.5} />
+                  <ChevronRight className="h-4 w-4" color="#ff9c9c" strokeWidth={1.5} />
                 </motion.div>
               )}
             </NavLink>
           ))}
         </nav>
         <div className="pl-6 pr-6 border-t border-border mt-auto">
-          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-normal rounded-lg text-gray-400 transition-colors pl-0 pr-0">
+          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-normal rounded-lg text-gray-500 transition-colors pl-0 pr-0">
             <LogOut className="mr-3 h-5 w-5" color="#ff9c9c" strokeWidth={1.5} />
-            <span className="text-gray-400 font-normal">Cerrar Sesión</span>
+            <span className="text-gray-500 font-normal">Cerrar Sesión</span>
           </button>
         </div>
       </div>
