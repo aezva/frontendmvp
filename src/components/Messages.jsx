@@ -321,10 +321,10 @@ const Messages = () => {
               {activeTab === 'messages' && (
                 <>
                   {convLoading ? (
-                    <div className="flex-1 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin" /></div>
+                    <div className="flex-1 flex items-center justify-center h-full w-full"><Loader2 className="h-6 w-6 animate-spin" /></div>
                   ) : conversations.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
-                      <span className="mx-0 my-auto">Sin conversaciones</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span>Sin conversaciones</span>
                     </div>
                   ) : (
                     conversations.map(conv => (
@@ -349,8 +349,8 @@ const Messages = () => {
               {activeTab === 'leads' && (
                 <>
                   {leads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
-                      <span className="mx-0 my-auto">Sin leads</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span>Sin leads</span>
                     </div>
                   ) : (
                     leads.map(lead => (
@@ -366,8 +366,8 @@ const Messages = () => {
               {activeTab === 'tickets' && (
                 <>
                   {tickets.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
-                      <span className="mx-0 my-auto">Sin tickets</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span>Sin tickets</span>
                     </div>
                   ) : (
                     tickets.map(ticket => (
@@ -383,8 +383,8 @@ const Messages = () => {
               {activeTab === 'archived' && (
                 <>
                   {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
-                      <span className="mx-0 my-auto">Sin archivados</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span>Sin archivados</span>
                     </div>
                   ) : (
                     <>
@@ -440,7 +440,7 @@ const Messages = () => {
                   </form>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
+                <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
                   {activeTab === 'messages'
                     ? 'Selecciona una conversación para ver los mensajes.'
                     : 'Selecciona un ticket o lead para ver más detalles (próximamente).'}
