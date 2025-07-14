@@ -226,10 +226,10 @@ const Dashboard = () => {
           {statsData.map((stat, index) => (
             <Card key={index} className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-colors duration-300 p-4 flex flex-col items-start">
               <div className="flex flex-col items-start gap-1 w-full">
-                <div className="flex items-center justify-start w-full gap-2">
-                  {/* Ajuste aquí: flex-row, items-center para centrar verticalmente */}
-                  <span className="flex items-center mb-4"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
+                {/* Ajuste aquí: flex-row y items-center para alinear verticalmente */}
+                <div className="flex flex-row items-center justify-start w-full gap-2">
                   <h3 className="text-base font-light text-black mb-1 flex-1 flex items-center">{stat.title}</h3>
+                  <span className="flex items-center mb-4"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
                 </div>
                 <div className="flex flex-row items-center gap-[50px] w-full">
                   <span className="text-sm font-normal text-black">{stat.value}</span>
