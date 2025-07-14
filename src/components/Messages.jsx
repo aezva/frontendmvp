@@ -295,21 +295,25 @@ const Messages = () => {
         <h1 className="text-xl font-semibold tracking-tight">Mensajes</h1>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[500px]">
           {/* Pestañas dentro de la tarjeta */}
-          <div className="flex gap-6 border-b border-border mb-4">
-            {TABS.map(tab => (
-              <span
-                key={tab.key}
-                className={`text-sm font-medium cursor-pointer pb-2 transition-colors select-none ${activeTab === tab.key ? 'text-[#ff9c9c] border-b-2 border-[#ff9c9c]' : 'text-gray-500 hover:text-[#ff9c9c] border-b-2 border-transparent'}`}
-                onClick={() => setActiveTab(tab.key)}
-                style={{padding: 0, margin: 0}}
-              >
-                {tab.label}
-              </span>
-            ))}
+          <div className="relative mb-4">
+            <div className="flex items-center gap-6 w-full">
+              {TABS.map(tab => (
+                <span
+                  key={tab.key}
+                  className={`text-base font-light cursor-pointer pb-2 transition-colors select-none ${activeTab === tab.key ? 'text-[#ff9c9c]' : 'text-black hover:text-[#ff9c9c]'}`}
+                  onClick={() => setActiveTab(tab.key)}
+                  style={{padding: 0, margin: 0}}
+                >
+                  {tab.label}
+                </span>
+              ))}
+            </div>
+            <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
-          <div className="flex flex-row gap-6 min-h-[400px]">
+          {/* Cambia el layout de los paneles dentro de la tarjeta: */}
+          <div className="flex flex-row gap-6 min-h-[400px] h-full">
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
-            <div className="w-full md:w-1/3 flex flex-col gap-4 border-r border-border pr-4 overflow-y-auto">
+            <div className="w-full md:w-1/3 flex flex-col gap-4 pr-4 overflow-y-auto">
               {activeTab === 'messages' && (
                 <>
                   <div className="font-semibold text-base mb-2 text-gray-700">Conversaciones</div>
@@ -388,7 +392,7 @@ const Messages = () => {
               )}
             </div>
             {/* Panel derecho: mensajes de la conversación seleccionada */}
-            <div className="flex-1 flex flex-col min-w-0">
+            <div className="flex-1 flex flex-col min-w-0 border-l border-border pl-6">
               {activeTab === 'messages' && selectedConversation ? (
                 <>
                   <div className="flex-1 p-4 overflow-y-auto space-y-4">
