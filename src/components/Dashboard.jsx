@@ -231,7 +231,7 @@ const Dashboard = () => {
                   <h3 className="text-base font-light text-black flex-1 flex items-center">{stat.title}</h3>
                   <span className="flex items-center"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
                 </div>
-                <div className="flex flex-row items-center gap-[50px] w-full my-2">
+                <div className="flex flex-row items-center gap-[50px] w-full my-1">
                   <span className="text-sm font-normal text-black">{stat.value}</span>
                   <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{stat.change || '+0% hoy'}</span>
                 </div>
@@ -251,24 +251,26 @@ const Dashboard = () => {
           {/* Columna 1: Tareas Pendientes y Documentos Creados */}
           <div className="flex flex-col gap-6">
             {/* Tareas Pendientes */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-start">
               <div className="flex flex-col items-start gap-1 w-full">
-                <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-black mb-2 flex-1 flex items-center">Tareas Pendientes</h3>
-                  <span className="flex items-center mb-4"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg></span>
+                <div className="flex flex-row items-center justify-start w-full gap-2">
+                  <h3 className="text-base font-light text-black flex-1 flex items-center">Tareas Pendientes</h3>
+                  <span className="flex items-center"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg></span>
                 </div>
-                {lastTasks.length === 0 ? (
-                  <span className="text-sm text-gray-500 font-normal text-left">No hay tareas.</span>
-                ) : (
-                  <ul className="w-full flex flex-col gap-2">
-                    {lastTasks.map(task => (
-                      <li key={task.id} className="flex flex-row items-center gap-2">
-                        <span className="text-sm font-normal text-gray-500 flex-1 truncate">{task.name || task.title || 'Tarea'}</span>
-                        <span className="text-xs font-light text-gray-500">{task.status === 'completed' ? 'Completada' : task.status === 'in_progress' ? 'En Progreso' : 'Pendiente'}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="w-full my-1">
+                  {lastTasks.length === 0 ? (
+                    <span className="text-sm text-gray-500 font-normal text-left">No hay tareas.</span>
+                  ) : (
+                    <ul className="w-full flex flex-col gap-2">
+                      {lastTasks.map(task => (
+                        <li key={task.id} className="flex flex-row items-center gap-2">
+                          <span className="text-sm font-normal text-gray-500 flex-1 truncate">{task.name || task.title || 'Tarea'}</span>
+                          <span className="text-xs font-light text-gray-500">{task.status === 'completed' ? 'Completada' : task.status === 'in_progress' ? 'En Progreso' : 'Pendiente'}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
                 <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/tareas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -276,24 +278,26 @@ const Dashboard = () => {
               </div>
             </Card>
             {/* Documentos Creados */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-start">
               <div className="flex flex-col items-start gap-1 w-full">
-                <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-black mb-2 flex-1 flex items-center">Documentos Creados</h3>
-                  <span className="flex items-center mb-4"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg></span>
+                <div className="flex flex-row items-center justify-start w-full gap-2">
+                  <h3 className="text-base font-light text-black flex-1 flex items-center">Documentos Creados</h3>
+                  <span className="flex items-center"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg></span>
                 </div>
-                {lastDocuments.length === 0 ? (
-                  <span className="text-sm text-gray-500 font-normal text-left">No hay documentos creados.</span>
-                ) : (
-                  <ul className="w-full flex flex-col gap-2">
-                    {lastDocuments.map(doc => (
-                      <li key={doc.id} className="flex flex-col gap-0.5">
-                        <span className="text-sm font-normal text-black">{doc.name}</span>
-                        <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{doc.updated_at ? new Date(doc.updated_at).toLocaleString() : ''}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="w-full my-1">
+                  {lastDocuments.length === 0 ? (
+                    <span className="text-sm text-gray-500 font-normal text-left">No hay documentos creados.</span>
+                  ) : (
+                    <ul className="w-full flex flex-col gap-2">
+                      {lastDocuments.map(doc => (
+                        <li key={doc.id} className="flex flex-col gap-0.5">
+                          <span className="text-sm font-normal text-black">{doc.name}</span>
+                          <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{doc.updated_at ? new Date(doc.updated_at).toLocaleString() : ''}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
                 <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/documents')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -304,24 +308,26 @@ const Dashboard = () => {
           {/* Columna 2: Próximas citas y Próximas reservas */}
           <div className="flex flex-col gap-6">
             {/* Próximas citas */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-start">
               <div className="flex flex-col items-start gap-1 w-full">
-                <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-[#ff9c9c] mb-2 flex-1">Próximas Citas</h3>
-                  <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <div className="flex flex-row items-center justify-start w-full gap-2">
+                  <h3 className="text-base font-light text-black flex-1 flex items-center">Próximas Citas</h3>
+                  <span className="flex items-center"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
                 </div>
-                {nextAppointments.length === 0 ? (
-                  <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay citas próximas.</span>
-                ) : (
-                  <ul className="divide-y divide-border w-full flex flex-col gap-2">
-                    {nextAppointments.slice(0,2).map(appt => (
-                      <li key={appt.id} className="py-3 flex flex-col gap-1">
-                        <div className="font-medium text-sm text-black">{appt.name} ({appt.email})</div>
-                        <div className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{appt.type} - {appt.date} {appt.time}</div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="w-full my-1">
+                  {nextAppointments.length === 0 ? (
+                    <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay citas próximas.</span>
+                  ) : (
+                    <ul className="divide-y divide-border w-full flex flex-col gap-2">
+                      {nextAppointments.slice(0,2).map(appt => (
+                        <li key={appt.id} className="py-3 flex flex-col gap-1">
+                          <div className="font-medium text-sm text-black">{appt.name} ({appt.email})</div>
+                          <div className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{appt.type} - {appt.date} {appt.time}</div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
                 <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/citas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -329,24 +335,26 @@ const Dashboard = () => {
               </div>
             </Card>
             {/* Próximas Reservas */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-start">
               <div className="flex flex-col items-start gap-1 w-full">
-                <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-[#ff9c9c] mb-2 flex-1">Próximas Reservas</h3>
-                  <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
+                <div className="flex flex-row items-center justify-start w-full gap-2">
+                  <h3 className="text-base font-light text-black flex-1 flex items-center">Próximas Reservas</h3>
+                  <span className="flex items-center"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg></span>
                 </div>
-                {lastReservations.length === 0 ? (
-                  <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay reservas próximas.</span>
-                ) : (
-                  <ul className="divide-y divide-border w-full flex flex-col gap-2">
-                    {lastReservations.map(res => (
-                      <li key={res.id} className="py-3 flex flex-col gap-1">
-                        <div className="font-medium text-sm">{res.name} ({res.email})</div>
-                        <div className="text-xs text-muted-foreground">{res.type} - {res.date} {res.time}</div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <div className="w-full my-1">
+                  {lastReservations.length === 0 ? (
+                    <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay reservas próximas.</span>
+                  ) : (
+                    <ul className="divide-y divide-border w-full flex flex-col gap-2">
+                      {lastReservations.map(res => (
+                        <li key={res.id} className="py-3 flex flex-col gap-1">
+                          <div className="font-medium text-sm text-black">{res.name} ({res.email})</div>
+                          <div className="text-xs text-muted-foreground">{res.type} - {res.date} {res.time}</div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
                 <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/reservas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
