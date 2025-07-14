@@ -59,7 +59,7 @@ const Documents = () => {
   };
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 h-full w-full px-4 pt-8 pb-8">
+    <div className="flex flex-col flex-1 min-h-0 h-full w-full">
       <h1 className="text-xl font-semibold tracking-tight mb-6">Documentos</h1>
       <div className="flex-1 min-h-0 h-full flex flex-col">
         <div className="flex items-center gap-2 mb-4">
