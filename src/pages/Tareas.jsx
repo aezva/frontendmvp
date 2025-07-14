@@ -121,7 +121,7 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className="text-base font-light text-[#ff9c9c] mb-4">{label}</h2>
+                <h2 className="text-base font-light text-black mb-4">{label}</h2>
                 <div className="flex flex-col gap-3 min-h-[200px]">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
@@ -146,10 +146,10 @@ function Tareas() {
                             />
                             <div className="flex items-center ml-2" style={{gap: '8px'}}>
                               <button type="submit" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                                <Check className="h-4 w-4 text-gray-400" />
+                                <Check className="h-4 w-4 text-[#ff9c9c]" />
                               </button>
                               <button type="button" onClick={() => setEditId(null)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                                <X className="h-4 w-4 text-gray-400" />
+                                <X className="h-4 w-4 text-[#ff9c9c]" />
                               </button>
                             </div>
                           </form>
@@ -158,10 +158,10 @@ function Tareas() {
                             <span className="flex-1 text-sm font-normal text-black truncate">{task.name}</span>
                             <div className="flex gap-2 ml-2">
                               <button onClick={() => { setEditId(task.id); setEditValue(task.name); }} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                                <Edit className="h-4 w-4 text-gray-400" />
+                                <Edit className="h-4 w-4 text-[#ff9c9c]" />
                               </button>
                               <button onClick={() => handleDelete(task.id)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                                <Trash2 className="h-4 w-4 text-gray-400" />
+                                <Trash2 className="h-4 w-4 text-[#ff9c9c]" />
                               </button>
                             </div>
                           </>
