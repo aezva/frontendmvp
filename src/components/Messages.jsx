@@ -296,7 +296,7 @@ const Messages = () => {
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-[500px]">
           {/* Pestañas dentro de la tarjeta */}
           <div className="relative mb-4">
-            <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start" style={{alignItems: 'center'}}>
+            <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{alignItems: 'center'}}>
               {TABS.map(tab => (
                 <span
                   key={tab.key}
@@ -311,7 +311,7 @@ const Messages = () => {
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
           {/* Cambia el layout de los paneles dentro de la tarjeta: */}
-          <div className="flex flex-row gap-6 min-h-[400px] h-full">
+          <div className="flex flex-row min-h-[400px] h-full">
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
             <div className="w-full md:w-1/3 flex flex-col gap-4 overflow-y-auto py-2 pl-0 pr-0">
               <div className="px-4">
@@ -321,7 +321,9 @@ const Messages = () => {
                   {convLoading ? (
                     <div className="flex-1 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin" /></div>
                   ) : conversations.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin conversaciones</div>
+                    <div className="flex-1 flex items-center px-4 text-muted-foreground" style={{minHeight: '120px'}}>
+                      <span className="mx-0 my-auto">Sin conversaciones</span>
+                    </div>
                   ) : (
                     conversations.map(conv => (
                       <div
@@ -394,7 +396,7 @@ const Messages = () => {
               </div>
             </div>
             {/* Panel derecho: mensajes de la conversación seleccionada */}
-            <div className="flex-1 flex flex-col min-w-0 border-l border-border py-2 pl-0 pr-0">
+            <div className="flex-1 flex flex-col min-w-0 py-2 pl-0 pr-0 border-l border-border" style={{marginLeft: '-1px'}}>
               <div className="px-4 h-full flex flex-col">
               {activeTab === 'messages' && selectedConversation ? (
                 <>
