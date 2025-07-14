@@ -213,7 +213,7 @@ const Dashboard = () => {
       <Helmet>
         <title>Dashboard - Asistente IA</title>
       </Helmet>
-      <div className="space-y-8">
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>

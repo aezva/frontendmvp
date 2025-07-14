@@ -96,7 +96,7 @@ function Tareas() {
   // Try/catch visual para el render
   try {
     return (
-      <div className="space-y-8">
+      <div className="space-y-6">
         <Helmet><title>Tareas - NNIA</title></Helmet>
         <h1 className="text-xl font-semibold tracking-tight">Tareas</h1>
         <form onSubmit={handleCreate} className="flex gap-2 mb-4">
@@ -126,7 +126,7 @@ function Tareas() {
   key === 'in_progress' ? 'text-[#fca5a5]' :
   key === 'pending' ? 'text-[#fecaca]' : ''
 }`}>{label}</h2>
-                <div className="flex flex-col gap-2 min-h-[200px]">
+                <div className="flex flex-col gap-6 min-h-[200px]">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
                       <motion.div
@@ -148,11 +148,11 @@ function Tareas() {
                               className="flex-1 text-sm"
                               autoFocus
                             />
-                            <div className="flex gap-2 ml-2">
-                              <button type="submit" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                            <div className="flex items-center ml-2" style={{gap: '8px'}}>
+                              <button type="submit" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none h-6 w-6 flex items-center justify-center">
                                 <Check className="h-4 w-4 text-gray-400" />
                               </button>
-                              <button type="button" onClick={() => setEditId(null)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                              <button type="button" onClick={() => setEditId(null)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none h-6 w-6 flex items-center justify-center">
                                 <X className="h-4 w-4 text-gray-400" />
                               </button>
                             </div>
