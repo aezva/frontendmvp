@@ -86,11 +86,9 @@ const Settings = () => {
       <Helmet>
         <title>Ajustes - Asistente IA</title>
       </Helmet>
-      <div className="space-y-8 max-w-4xl mx-auto">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Ajustes de Usuario</h1>
-          <p className="text-muted-foreground">Gestiona tu perfil y la seguridad de tu cuenta.</p>
-        </div>
+      <div className="flex flex-col flex-1 min-h-0 h-full w-full">
+        <h1 className="text-xl font-semibold tracking-tight mb-2" style={{ color: '#ff9c9c' }}>Ajustes de Usuario</h1>
+        <p className="text-muted-foreground mb-6">Gestiona tu perfil y la seguridad de tu cuenta.</p>
 
         <form onSubmit={handleSubmit}>
           <Card className="bg-card/50">

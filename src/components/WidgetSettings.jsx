@@ -168,13 +168,11 @@ const WidgetSettings = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Configuración del Widget</h1>
-        <p className="text-gray-600 mt-2">
-          Personaliza la apariencia y comportamiento del widget de chat en tu sitio web.
-        </p>
-      </div>
+    <div className="flex flex-col flex-1 min-h-0 h-full w-full">
+      <h1 className="text-xl font-semibold tracking-tight mb-2" style={{ color: '#ff9c9c' }}>Configuración del Widget</h1>
+      <p className="text-muted-foreground mb-6">
+        Personaliza la apariencia y comportamiento del widget de chat en tu sitio web.
+      </p>
 
       <Tabs defaultValue="appearance" className="space-y-4">
         <TabsList>

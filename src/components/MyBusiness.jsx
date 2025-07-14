@@ -267,28 +267,23 @@ const MyBusiness = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Mi Negocio - NNIA</title>
-      </Helmet>
-      
-      <div className="space-y-8 max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">Mi Negocio</h1>
-            <p className="text-muted-foreground">
-              Configura la información que NNIA usará para responder a tus clientes
-            </p>
-          </div>
+      <div className="flex flex-col flex-1 min-h-0 h-full w-full">
+        <Helmet>
+          <title>Mi Negocio - NNIA</title>
+        </Helmet>
+        <h1 className="text-xl font-semibold tracking-tight mb-2" style={{ color: '#ff9c9c' }}>Mi Negocio</h1>
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-muted-foreground">
+            Configura la información que NNIA usará para responder a tus clientes
+          </p>
           <Badge variant="secondary" className="flex items-center gap-2">
             <Info className="h-4 w-4" />
             Información Pública
           </Badge>
         </div>
-
-        <form onSubmit={handleSubmit}>
-          <Tabs defaultValue="general" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+        <form onSubmit={handleSubmit} className="flex-1 flex flex-col min-h-0">
+          <Tabs defaultValue="general" className="flex-1 flex flex-col min-h-0">
+            <TabsList className="grid w-full grid-cols-5 mb-4">
               <TabsTrigger value="general" className="flex items-center gap-2">
                 <Building className="h-4 w-4" />
                 General
