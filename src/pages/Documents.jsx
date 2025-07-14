@@ -68,17 +68,20 @@ const Documents = () => {
           </Button>
         </div>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
-          <CardContent className="pt-4">
-            <div className="overflow-x-auto">
+          {/* Encabezados de tabla con estilo de pestañas */}
+          <div className="relative">
+            <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{alignItems: 'center'}}>
+              <span className="text-base font-light text-black pb-2">Nombre</span>
+              <span className="text-base font-light text-black pb-2">Tipo</span>
+              <span className="text-base font-light text-black pb-2">Fecha</span>
+              <span className="text-base font-light text-black pb-2">Acciones</span>
+            </div>
+            <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
+          </div>
+          {/* Contenido de la tabla con scroll interno */}
+          <div className="flex-1 min-h-0 h-full overflow-y-auto">
+            <div className="p-4">
               <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="px-6 py-3 text-left text-base font-light text-black border-r border-border">Nombre</th>
-                    <th className="px-6 py-3 text-left text-base font-light text-black border-r border-border">Tipo</th>
-                    <th className="px-6 py-3 text-left text-base font-light text-black border-r border-border">Fecha</th>
-                    <th className="px-6 py-3 text-right text-base font-light text-black">Acciones</th>
-                  </tr>
-                </thead>
                 <tbody className="bg-card">
                   {loading ? (
                     <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
@@ -102,7 +105,7 @@ const Documents = () => {
                 </tbody>
               </table>
             </div>
-          </CardContent>
+          </div>
         </Card>
       </div>
       <Dialog open={showNewDoc} onOpenChange={setShowNewDoc}>
