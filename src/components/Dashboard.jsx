@@ -225,9 +225,9 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {statsData.map((stat, index) => (
             <Card key={index} className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-colors duration-300 p-4 flex flex-col items-start">
-              <div className="flex flex-col items-start gap-2 w-full">
+              <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-black mb-2 flex-1 flex items-center">{stat.title}</h3>
+                  <h3 className="text-base font-light text-black mb-1 flex-1 flex items-center">{stat.title}</h3>
                   <span className="flex items-center mb-4"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
                 </div>
                 <div className="flex flex-row items-center gap-[50px] w-full">
@@ -251,7 +251,7 @@ const Dashboard = () => {
           <div className="flex flex-col gap-6">
             {/* Tareas Pendientes */}
             <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
-              <div className="flex flex-col items-start gap-3 w-full">
+              <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
                   <h3 className="text-base font-light text-black mb-2 flex-1 flex items-center">Tareas Pendientes</h3>
                   <span className="flex items-center mb-4"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg></span>
@@ -276,7 +276,7 @@ const Dashboard = () => {
             </Card>
             {/* Documentos Creados */}
             <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
-              <div className="flex flex-col items-start gap-3 w-full">
+              <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
                   <h3 className="text-base font-light text-black mb-2 flex-1 flex items-center">Documentos Creados</h3>
                   <span className="flex items-center mb-4"><svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg></span>
@@ -304,7 +304,7 @@ const Dashboard = () => {
           <div className="flex flex-col gap-6">
             {/* Próximas citas */}
             <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
-              <div className="flex flex-col items-start gap-3 w-full">
+              <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
                   <h3 className="text-base font-light text-[#ff9c9c] mb-4 flex-1">Próximas Citas</h3>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -329,7 +329,7 @@ const Dashboard = () => {
             </Card>
             {/* Próximas Reservas */}
             <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
-              <div className="flex flex-col items-start gap-3 w-full">
+              <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
                   <h3 className="text-base font-light text-[#ff9c9c] mb-4 flex-1">Próximas Reservas</h3>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
