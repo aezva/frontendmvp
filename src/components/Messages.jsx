@@ -323,7 +323,7 @@ const Messages = () => {
                   {convLoading ? (
                     <div className="flex-1 flex items-center justify-center h-full w-full"><Loader2 className="h-6 w-6 animate-spin" /></div>
                   ) : conversations.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
                       <span>Sin conversaciones</span>
                     </div>
                   ) : (
@@ -349,7 +349,7 @@ const Messages = () => {
               {activeTab === 'leads' && (
                 <>
                   {leads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
                       <span>Sin leads</span>
                     </div>
                   ) : (
@@ -366,7 +366,7 @@ const Messages = () => {
               {activeTab === 'tickets' && (
                 <>
                   {tickets.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
                       <span>Sin tickets</span>
                     </div>
                   ) : (
@@ -383,7 +383,7 @@ const Messages = () => {
               {activeTab === 'archived' && (
                 <>
                   {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
                       <span>Sin archivados</span>
                     </div>
                   ) : (
