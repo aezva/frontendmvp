@@ -121,11 +121,7 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className={`text-base font-light mb-2 ${
-  key === 'completed' ? 'text-[#ff9c9c]' :
-  key === 'in_progress' ? 'text-[#fca5a5]' :
-  key === 'pending' ? 'text-[#fecaca]' : ''
-}`}>{label}</h2>
+                <h2 className="text-base font-light mb-2 text-black">{label}</h2>
                 <div className="flex flex-col gap-6 min-h-[200px]">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
