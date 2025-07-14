@@ -228,8 +228,8 @@ const Dashboard = () => {
               <div className="flex flex-col items-start gap-1 w-full">
                 {/* Ajuste aquí: flex-row y items-center para alinear verticalmente */}
                 <div className="flex flex-row items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-black mb-1 flex-1 flex items-center">{stat.title}</h3>
-                  <span className="flex items-center mb-4"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
+                  <h3 className="text-base font-light text-black flex-1 flex items-center">{stat.title}</h3>
+                  <span className="flex items-center"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
                 </div>
                 <div className="flex flex-row items-center gap-[50px] w-full">
                   <span className="text-sm font-normal text-black">{stat.value}</span>
