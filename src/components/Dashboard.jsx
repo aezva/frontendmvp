@@ -259,10 +259,10 @@ const Dashboard = () => {
                 {lastTasks.length === 0 ? (
                   <span className="text-sm text-gray-500 font-normal text-left">No hay tareas.</span>
                 ) : (
-                  <ul className="w-full flex flex-col gap-4">
+                  <ul className="w-full flex flex-col gap-2">
                     {lastTasks.map(task => (
                       <li key={task.id} className="flex flex-row items-center gap-2">
-                        <span className="text-sm font-normal text-black flex-1 truncate">{task.name || task.title || 'Tarea'}</span>
+                        <span className="text-sm font-normal text-gray-500 flex-1 truncate">{task.name || task.title || 'Tarea'}</span>
                         <span className="text-xs font-light text-gray-500">{task.status === 'completed' ? 'Completada' : task.status === 'in_progress' ? 'En Progreso' : 'Pendiente'}</span>
                       </li>
                     ))}
@@ -284,7 +284,7 @@ const Dashboard = () => {
                 {lastDocuments.length === 0 ? (
                   <span className="text-sm text-gray-500 font-normal text-left">No hay documentos creados.</span>
                 ) : (
-                  <ul className="w-full flex flex-col gap-4">
+                  <ul className="w-full flex flex-col gap-2">
                     {lastDocuments.map(doc => (
                       <li key={doc.id} className="flex flex-col gap-0.5">
                         <span className="text-sm font-normal text-black">{doc.name}</span>
@@ -312,7 +312,7 @@ const Dashboard = () => {
                 {nextAppointments.length === 0 ? (
                   <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay citas próximas.</span>
                 ) : (
-                  <ul className="divide-y divide-border w-full flex flex-col gap-4">
+                  <ul className="divide-y divide-border w-full flex flex-col gap-2">
                     {nextAppointments.slice(0,2).map(appt => (
                       <li key={appt.id} className="py-3 flex flex-col gap-1">
                         <div className="font-medium text-sm text-black">{appt.name} ({appt.email})</div>
@@ -337,7 +337,7 @@ const Dashboard = () => {
                 {lastReservations.length === 0 ? (
                   <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay reservas próximas.</span>
                 ) : (
-                  <ul className="divide-y divide-border w-full flex flex-col gap-4">
+                  <ul className="divide-y divide-border w-full flex flex-col gap-2">
                     {lastReservations.map(res => (
                       <li key={res.id} className="py-3 flex flex-col gap-1">
                         <div className="font-medium text-sm">{res.name} ({res.email})</div>
