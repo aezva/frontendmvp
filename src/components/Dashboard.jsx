@@ -175,7 +175,7 @@ const Dashboard = () => {
         {/* NUEVA FILA DE ESTADÍSTICAS EN 3 COLUMNAS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {statsData.map((stat, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300 p-6 flex flex-col justify-center items-center min-h-[180px]">
+            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-colors duration-300 p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-center gap-3 w-full">
                 <div className="flex items-center justify-center w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-center flex-1">{stat.title}</span>
@@ -198,7 +198,7 @@ const Dashboard = () => {
           {/* Columna 1: Tareas Pendientes y Documentos Creados */}
           <div className="flex flex-col gap-6">
             {/* Tareas Pendientes */}
-            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-center gap-3 w-full">
                 <div className="flex items-center justify-center w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-center flex-1">Tareas Pendientes</span>
@@ -212,7 +212,7 @@ const Dashboard = () => {
               </div>
             </Card>
             {/* Documentos Creados */}
-            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-center gap-3 w-full">
                 <div className="flex items-center justify-center w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-center flex-1">Documentos Creados</span>
@@ -229,7 +229,7 @@ const Dashboard = () => {
           {/* Columna 2: Próximas citas y Próximas reservas */}
           <div className="flex flex-col gap-6">
             {/* Próximas citas */}
-            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-center gap-3 w-full">
                 <div className="flex items-center justify-center w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-center flex-1">Próximas Citas</span>
@@ -254,16 +254,13 @@ const Dashboard = () => {
               </div>
             </Card>
             {/* Próximas Reservas */}
-            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-center gap-3 w-full">
                 <div className="flex items-center justify-center w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-center flex-1">Próximas Reservas</span>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
                 </div>
-                <span className="text-sm text-gray-500 font-normal text-center flex flex-col items-center gap-2 mt-2">
-                  <svg width="40" height="40" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h4l2 2"/></svg>
-                  No hay reservas próximas.
-                </span>
+                <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay reservas próximas.</span>
                 <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/reservas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
