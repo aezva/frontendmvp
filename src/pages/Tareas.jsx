@@ -96,7 +96,7 @@ function Tareas() {
   // Try/catch visual para el render
   try {
     return (
-      <div className="space-y-6">
+      <div className="flex flex-col flex-1 min-h-0 h-full">
         <Helmet><title>Tareas - NNIA</title></Helmet>
         <h1 className="text-xl font-semibold tracking-tight">Tareas</h1>
         <form onSubmit={handleCreate} className="flex gap-2 mb-4">
@@ -113,16 +113,16 @@ function Tareas() {
         ) : error ? (
           <div className="text-center text-red-500 py-8">{error}</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 min-h-0">
             {Array.isArray(estados) && estados.map(({ key, label, color }) => (
               <Card
                 key={key}
-                className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[300px]"
+                className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-0 h-full"
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
                 <h2 className="text-base font-light text-black mb-4">{label}</h2>
-                <div className="flex flex-col gap-3 min-h-[200px]">
+                <div className="flex flex-col gap-3 min-h-[200px] flex-1">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
                       <motion.div
