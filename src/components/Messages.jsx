@@ -316,7 +316,7 @@ const Messages = () => {
             {/* Línea divisoria */}
             <div className="hidden md:block absolute top-0 left-[33.3333%] bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
             {/* Panel izquierdo: conversaciones */}
-            <div className={`w-full md:w-1/3 flex flex-col flex-1 min-h-0 h-full overflow-y-auto pr-0 ${
+            <div className={`relative w-full md:w-1/3 flex flex-col flex-1 min-h-0 h-full overflow-y-auto pr-0 ${
               (activeTab === 'messages' && conversations.length > 0) ||
               (activeTab === 'leads' && leads.length > 0) ||
               (activeTab === 'tickets' && tickets.length > 0) ||
@@ -407,7 +407,7 @@ const Messages = () => {
               </div>
             </div>
             {/* Panel derecho: mensajes */}
-            <div className={`flex-1 flex flex-col min-w-0 min-h-0 h-full overflow-y-auto ${
+            <div className={`relative flex-1 flex flex-col min-w-0 min-h-0 h-full overflow-y-auto ${
               activeTab === 'messages' && selectedConversation ? 'pl-4' : ''
             }`}>
               <div className="flex-1 h-full flex flex-col min-h-0">
