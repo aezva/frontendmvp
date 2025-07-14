@@ -231,7 +231,7 @@ const Dashboard = () => {
                   <h3 className="text-base font-light text-black flex-1 flex items-center">{stat.title}</h3>
                   <span className="flex items-center"><stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} /></span>
                 </div>
-                <div className="flex flex-row items-center gap-[50px] w-full">
+                <div className="flex flex-row items-center gap-[50px] w-full my-2">
                   <span className="text-sm font-normal text-black">{stat.value}</span>
                   <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{stat.change || '+0% hoy'}</span>
                 </div>
