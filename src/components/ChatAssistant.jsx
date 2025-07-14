@@ -281,6 +281,25 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
           <div className="w-full h-full bg-gradient-to-b from-background via-background/90 to-transparent" />
         </div>
       )}
+      {/* Prompts rápidos sugeridos */}
+      <div className="flex gap-3 pb-2 px-4">
+        {[
+          '¿Cuáles son mis próximas citas?',
+          '¿Tengo mensajes nuevos o pendientes?',
+          '¿Qué puedo hacer con NNIA?'
+        ].map((prompt, idx) => (
+          <button
+            key={idx}
+            type="button"
+            className="flex items-center gap-1 text-[#ff9c9c] font-normal text-base hover:underline transition"
+            style={{ padding: 0, background: 'none', border: 'none' }}
+            onClick={() => setNewMessage(prompt)}
+          >
+            {prompt}
+            <svg className="w-4 h-4" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
+          </button>
+        ))}
+      </div>
       {/* Área de input fija en la parte inferior */}
       <div className="flex-shrink-0 p-2 border-t border-border/50 bg-background/50 backdrop-blur-sm">
         <form onSubmit={handleSendMessage} className="flex gap-2 items-center">
