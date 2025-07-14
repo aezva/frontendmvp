@@ -31,7 +31,7 @@ const ClientPanel = () => {
   const location = useLocation();
 
   // Ancho de sidebars
-  const sidebarWidth = isSidebarOpen ? 256 : 0; // 64 = 16rem
+  const sidebarWidth = isSidebarOpen ? 192 : 0; // 48 = 12rem
   const chatbarWidth = chatState === 'default' ? 340 : chatState === 'expanded' ? 540 : 0;
 
   const handleLogout = async () => {
