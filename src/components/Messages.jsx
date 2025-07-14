@@ -311,13 +311,13 @@ const Messages = () => {
             </div>
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
-          {/* Cambia el layout de los paneles dentro de la tarjeta: */}
-          <div className="flex flex-row min-h-[400px] h-full w-full relative">
-            {/* Borde vertical absoluto para conectar con las pestañas */}
-            <div className="hidden md:block absolute top-0 left-[33.3333%] h-full w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
-            {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
-            <div className="w-full md:w-1/3 flex flex-col overflow-y-auto py-2 pl-4 pr-0 h-full min-h-0">
-              <div className="flex-1 flex flex-col">
+          {/* Layout de paneles con altura fija y scroll interno */}
+          <div className="flex flex-row flex-1 min-h-0 h-full w-full relative">
+            {/* Línea divisoria */}
+            <div className="hidden md:block absolute top-0 left-[33.3333%] bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+            {/* Panel izquierdo: conversaciones */}
+            <div className="w-full md:w-1/3 flex flex-col flex-1 min-h-0 h-full overflow-y-auto pl-4 pr-0">
+              <div className="flex-1 flex flex-col min-h-0">
               {activeTab === 'messages' && (
                 <>
                   {convLoading ? (
@@ -400,12 +400,12 @@ const Messages = () => {
               )}
               </div>
             </div>
-            {/* Panel derecho: mensajes de la conversación seleccionada */}
-            <div className="flex-1 flex flex-col min-w-0 h-full min-h-0 pl-4">
-              <div className="h-full flex flex-col">
+            {/* Panel derecho: mensajes */}
+            <div className="flex-1 flex flex-col min-w-0 min-h-0 h-full pl-4 overflow-y-auto">
+              <div className="flex-1 h-full flex flex-col min-h-0">
               {activeTab === 'messages' && selectedConversation ? (
                 <>
-                  <div className="flex-1 p-0 overflow-y-auto space-y-4">
+                  <div className="p-0 overflow-y-auto space-y-4">
                     {loading ? (
                       <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin" /></div>
                     ) : (
