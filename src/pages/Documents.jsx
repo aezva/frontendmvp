@@ -70,30 +70,26 @@ const Documents = () => {
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
           <CardContent className="pt-4">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-border text-sm">
+              <table className="w-full text-sm">
                 <thead>
-                  <tr className="relative">
-                    <th className="px-6 py-3 text-left text-base font-light text-black pb-2">Nombre</th>
-                    <th className="px-6 py-3 text-left text-base font-light text-black pb-2">Tipo</th>
-                    <th className="px-6 py-3 text-left text-base font-light text-black pb-2">Fecha</th>
-                    <th className="px-6 py-3 text-right text-base font-light text-black pb-2">Acciones</th>
-                    {/* Líneas divisorias verticales */}
-                    <div className="absolute top-0 left-1/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
-                    <div className="absolute top-0 left-1/2 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
-                    <div className="absolute top-0 left-3/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+                  <tr className="border-b border-border">
+                    <th className="px-6 py-3 text-left text-base font-light text-black border-r border-border">Nombre</th>
+                    <th className="px-6 py-3 text-left text-base font-light text-black border-r border-border">Tipo</th>
+                    <th className="px-6 py-3 text-left text-base font-light text-black border-r border-border">Fecha</th>
+                    <th className="px-6 py-3 text-right text-base font-light text-black">Acciones</th>
                   </tr>
                 </thead>
-                <tbody className="bg-card divide-y divide-border">
+                <tbody className="bg-card">
                   {loading ? (
                     <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
                   ) : documents.length === 0 ? (
                     null
                   ) : (
                     documents.map(doc => (
-                      <tr key={doc.id}>
-                        <td className="px-6 py-4 whitespace-nowrap font-medium">{doc.name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{doc.file_type || 'Texto'}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{new Date(doc.created_at).toLocaleString()}</td>
+                      <tr key={doc.id} className="border-b border-border">
+                        <td className="px-6 py-4 whitespace-nowrap font-medium border-r border-border">{doc.name}</td>
+                        <td className="px-6 py-4 whitespace-nowrap border-r border-border">{doc.file_type || 'Texto'}</td>
+                        <td className="px-6 py-4 whitespace-nowrap border-r border-border">{new Date(doc.created_at).toLocaleString()}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-right flex gap-2 justify-end">
                           <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)}><Eye className="h-4 w-4" /></Button>
                           <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)}><Edit className="h-4 w-4" /></Button>
@@ -140,7 +136,7 @@ const Documents = () => {
               variant="outline" 
               onClick={() => setShowNewDoc(false)} 
               disabled={saving}
-              className="hover:bg-background hover:text-foreground hover:border-border"
+              className="hover:bg-transparent hover:text-[#ff9c9c]"
             >
               Cancelar
             </Button>
