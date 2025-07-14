@@ -294,7 +294,7 @@ const Messages = () => {
       <div className="flex flex-col flex-1 min-h-0 h-full justify-center">
         <h1 className="text-xl font-semibold tracking-tight mb-6">Mensajes</h1>
         <div className="flex-1 min-h-0 h-full">
-          <Card className="rounded-b-xl border bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full min-h-0">
+          <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full min-h-0 rounded-b-xl rounded-t-none border-0">
           {/* Pestañas dentro de la tarjeta */}
           <div className="relative mb-4">
             <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{alignItems: 'center'}}>
@@ -311,10 +311,10 @@ const Messages = () => {
             </div>
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
-          {/* Cambia el layout de los paneles dentro de la tarjeta: */}
+          {/* Layout de columnas dentro del Card */}
           <div className="flex flex-row min-h-[400px] h-full w-full relative">
-            {/* Borde vertical absoluto para conectar con las pestañas */}
-            <div className="hidden md:block absolute top-0 bottom-0 z-10" style={{ left: 'calc(33.333% + 16px)', width: '1px', background: 'var(--border-color, #e5e7eb)', minHeight: 0 }} />
+            {/* Borde vertical absoluto dentro del Card */}
+            <div className="hidden md:block absolute top-0 bottom-0 z-20" style={{ left: 'calc(33.333% + 16px)', width: '1px', background: 'var(--border-color, #e5e7eb)', minHeight: 0 }} />
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
             <div className="w-full md:w-1/3 flex flex-col overflow-y-auto py-2 pl-0 pr-0 h-full min-h-0">
               <div className="flex-1 flex flex-col px-4">
