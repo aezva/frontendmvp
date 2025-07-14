@@ -64,29 +64,30 @@ const Documents = () => {
       <div className="flex-1 min-h-0 h-full flex flex-col">
         <div className="flex items-center gap-2 mb-4">
           <Button variant="default" className="flex items-center gap-2" onClick={() => setShowNewDoc(true)}>
-            <Plus className="h-4 w-4" /> Nuevo Documento
+            Nuevo Documento
           </Button>
         </div>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
-          <CardHeader className="pb-0">
-            <CardTitle className="text-base font-light text-black">Lista de documentos</CardTitle>
-          </CardHeader>
           <CardContent className="pt-4">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-border text-sm">
                 <thead>
-                  <tr className="bg-muted text-muted-foreground">
-                    <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">Nombre</th>
-                    <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">Tipo</th>
-                    <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">Fecha</th>
-                    <th className="px-6 py-3 text-right font-medium uppercase tracking-wider">Acciones</th>
+                  <tr className="relative">
+                    <th className="px-6 py-3 text-left text-base font-light text-black pb-2">Nombre</th>
+                    <th className="px-6 py-3 text-left text-base font-light text-black pb-2">Tipo</th>
+                    <th className="px-6 py-3 text-left text-base font-light text-black pb-2">Fecha</th>
+                    <th className="px-6 py-3 text-right text-base font-light text-black pb-2">Acciones</th>
+                    {/* Líneas divisorias verticales */}
+                    <div className="absolute top-0 left-1/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+                    <div className="absolute top-0 left-1/2 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+                    <div className="absolute top-0 left-3/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
                   </tr>
                 </thead>
                 <tbody className="bg-card divide-y divide-border">
                   {loading ? (
                     <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
                   ) : documents.length === 0 ? (
-                    <tr><td colSpan={4} className="text-center py-8 text-[#ff9c9c]">No hay documentos aún.</td></tr>
+                    null
                   ) : (
                     documents.map(doc => (
                       <tr key={doc.id}>
@@ -119,7 +120,7 @@ const Documents = () => {
               disabled={saving}
             />
             <textarea
-              className="w-full border rounded p-2 min-h-[120px] text-sm"
+              className="w-full border rounded p-2 min-h-[120px] text-sm focus:outline-none focus:ring-0 focus:border-border"
               placeholder="Contenido..."
               value={newDocContent}
               onChange={e => setNewDocContent(e.target.value)}
@@ -127,8 +128,22 @@ const Documents = () => {
             />
           </div>
           <DialogFooter>
-            <Button variant="default" onClick={handleCreateNewDoc} disabled={saving || !newDocName.trim() || !newDocContent.trim()}>Crear</Button>
-            <Button variant="outline" onClick={() => setShowNewDoc(false)} disabled={saving}>Cancelar</Button>
+            <Button 
+              variant="default" 
+              onClick={handleCreateNewDoc} 
+              disabled={saving || !newDocName.trim() || !newDocContent.trim()}
+              className="hover:bg-primary hover:text-primary-foreground"
+            >
+              Crear
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowNewDoc(false)} 
+              disabled={saving}
+              className="hover:bg-background hover:text-foreground hover:border-border"
+            >
+              Cancelar
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
