@@ -121,7 +121,7 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className="text-base font-light mb-2 text-[#ff9c9c]">{label}</h2>
+                <h2 className="text-base font-light text-[#ff9c9c] mb-2">{label}</h2>
                 <div className="flex flex-col gap-3 min-h-[200px]">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (

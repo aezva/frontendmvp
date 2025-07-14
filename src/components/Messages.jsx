@@ -291,86 +291,118 @@ const Messages = () => {
       <Helmet>
         <title>Mensajes - Asistente IA</title>
       </Helmet>
-      <div className="h-full flex flex-col">
-        <h1 className="text-3xl font-bold tracking-tight mb-6">Mensajes</h1>
-        <div className="mb-4 flex gap-2">
-          {TABS.map(tab => (
-            <Button key={tab.key} variant={activeTab === tab.key ? 'default' : 'outline'} onClick={() => setActiveTab(tab.key)}>
-              {tab.label}
-            </Button>
-          ))}
-        </div>
-        <Card className="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 h-[calc(100vh-12rem)] bg-card/50">
-          {activeTab === 'messages' && (
-            <div className="col-span-1 border-r border-border flex flex-col overflow-y-auto">
-              <div className="p-4 border-b border-border font-semibold">Conversaciones</div>
-              {convLoading ? (
-                <div className="flex-1 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin" /></div>
-              ) : conversations.length === 0 ? (
-                <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin conversaciones</div>
-              ) : (
-                conversations.map(conv => (
-                  <div
-                    key={conv.visitor_id}
-                    className={`flex items-center gap-3 p-4 cursor-pointer hover:bg-muted/50 ${selectedConversation && selectedConversation.visitor_id === conv.visitor_id ? 'bg-muted' : ''}`}
-                    onClick={() => setSelectedConversation(conv)}
-                  >
-                    <Avatar>
-                      <AvatarFallback>{conv.visitor_id?.slice(0, 2).toUpperCase()}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium truncate">{conv.visitor_id?.slice(0, 8)}</div>
-                      <div className="text-xs text-muted-foreground truncate">{conv.last_message}</div>
-                    </div>
-                    <div className="text-xs text-muted-foreground">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleString() : ''}</div>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-          {activeTab === 'leads' && (
-            <div className="col-span-1 border-r border-border flex flex-col overflow-y-auto p-4">
-              <div className="font-semibold mb-2">Leads</div>
-              {leads.length === 0 ? (
-                <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin leads</div>
-              ) : (
-                leads.map(lead => (
-                  <LeadTicketCard key={lead.id} item={lead} type="lead" onViewConversation={(visitorId) => {
-                    setActiveTab('messages');
-                    const conv = conversations.find(c => c.visitor_id === visitorId) || { visitor_id: visitorId };
-                    setSelectedConversation(conv);
-                  }} />
-                ))
-              )}
-            </div>
-          )}
-          {activeTab === 'tickets' && (
-            <div className="col-span-1 border-r border-border flex flex-col overflow-y-auto p-4">
-              <div className="font-semibold mb-2">Tickets</div>
-              {tickets.length === 0 ? (
-                <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin tickets</div>
-              ) : (
-                tickets.map(ticket => (
-                  <LeadTicketCard key={ticket.id} item={ticket} type="ticket" onViewConversation={(visitorId) => {
-                    setActiveTab('messages');
-                    const conv = conversations.find(c => c.visitor_id === visitorId) || { visitor_id: visitorId };
-                    setSelectedConversation(conv);
-                  }} />
-                ))
-              )}
-            </div>
-          )}
-          <div className={`col-span-1 md:col-span-2 lg:col-span-3 flex flex-col ${activeTab === 'messages' ? '' : 'items-center justify-center'}`}>
-            {activeTab === 'messages' ? (
-              selectedConversation ? (
+      <div className="space-y-6">
+        <h1 className="text-xl font-semibold tracking-tight">Mensajes</h1>
+        <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[500px]">
+          {/* Pestañas dentro de la tarjeta */}
+          <div className="flex gap-2 mb-4">
+            {TABS.map(tab => (
+              <button
+                key={tab.key}
+                className={`px-4 py-2 rounded-lg text-sm font-normal transition-colors border-none outline-none focus:outline-none ${activeTab === tab.key ? 'bg-[#ff9c9c] text-white shadow-sm' : 'bg-white text-gray-500 hover:text-[#ff9c9c]'}`}
+                onClick={() => setActiveTab(tab.key)}
+                type="button"
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-row gap-6 min-h-[400px]">
+            {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
+            <div className="w-full md:w-1/3 flex flex-col gap-4 border-r border-border pr-4 overflow-y-auto">
+              {activeTab === 'messages' && (
                 <>
-                  <div className="flex-1 p-6 overflow-y-auto space-y-4">
+                  <div className="font-semibold text-base mb-2 text-gray-700">Conversaciones</div>
+                  {convLoading ? (
+                    <div className="flex-1 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin" /></div>
+                  ) : conversations.length === 0 ? (
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin conversaciones</div>
+                  ) : (
+                    conversations.map(conv => (
+                      <div
+                        key={conv.visitor_id}
+                        className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${selectedConversation && selectedConversation.visitor_id === conv.visitor_id ? 'bg-muted border border-[#ff9c9c]' : 'hover:bg-muted/50'}`}
+                        onClick={() => setSelectedConversation(conv)}
+                      >
+                        <Avatar>
+                          <AvatarFallback>{conv.visitor_id?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium truncate text-sm">{conv.visitor_id?.slice(0, 8)}</div>
+                          <div className="text-xs text-muted-foreground truncate">{conv.last_message}</div>
+                        </div>
+                        <div className="text-xs text-muted-foreground">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleString() : ''}</div>
+                      </div>
+                    ))
+                  )}
+                </>
+              )}
+              {activeTab === 'leads' && (
+                <>
+                  <div className="font-semibold text-base mb-2 text-gray-700">Leads</div>
+                  {leads.length === 0 ? (
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin leads</div>
+                  ) : (
+                    leads.map(lead => (
+                      <LeadTicketCard key={lead.id} item={lead} type="lead" onViewConversation={(visitorId) => {
+                        setActiveTab('messages');
+                        const conv = conversations.find(c => c.visitor_id === visitorId) || { visitor_id: visitorId };
+                        setSelectedConversation(conv);
+                      }} />
+                    ))
+                  )}
+                </>
+              )}
+              {activeTab === 'tickets' && (
+                <>
+                  <div className="font-semibold text-base mb-2 text-gray-700">Tickets</div>
+                  {tickets.length === 0 ? (
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin tickets</div>
+                  ) : (
+                    tickets.map(ticket => (
+                      <LeadTicketCard key={ticket.id} item={ticket} type="ticket" onViewConversation={(visitorId) => {
+                        setActiveTab('messages');
+                        const conv = conversations.find(c => c.visitor_id === visitorId) || { visitor_id: visitorId };
+                        setSelectedConversation(conv);
+                      }} />
+                    ))
+                  )}
+                </>
+              )}
+              {activeTab === 'archived' && (
+                <>
+                  <div className="font-semibold text-base mb-2 text-gray-700">Archivados</div>
+                  {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">Sin archivados</div>
+                  ) : (
+                    <>
+                      {archivedTickets.map(ticket => (
+                        <LeadTicketCard key={ticket.id} item={ticket} type="ticket" onViewConversation={() => {}} />
+                      ))}
+                      {archivedLeads.map(lead => (
+                        <LeadTicketCard key={lead.id} item={lead} type="lead" onViewConversation={() => {}} />
+                      ))}
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+            {/* Panel derecho: mensajes de la conversación seleccionada */}
+            <div className="flex-1 flex flex-col min-w-0">
+              {activeTab === 'messages' && selectedConversation ? (
+                <>
+                  <div className="flex-1 p-4 overflow-y-auto space-y-4">
                     {loading ? (
                       <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin" /></div>
                     ) : (
                       conversationMessages.map((msg) => (
                         <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                          <div className={`${msg.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'} p-3 rounded-lg max-w-xs`}>
+                          <div className={
+                            `px-3 py-2 w-fit max-w-[90%] break-words shadow-sm border text-sm leading-[1.35] rounded-2xl ` +
+                            (msg.sender === 'user'
+                              ? 'bg-primary text-primary-foreground ml-8'
+                              : 'bg-muted text-foreground mr-8')
+                          }>
                             {msg.text}
                           </div>
                         </div>
@@ -394,13 +426,13 @@ const Messages = () => {
                   </form>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center text-muted-foreground">Selecciona una conversación para ver los mensajes.</div>
-              )
-            ) : (
-              <div className="flex-1 flex items-center justify-center text-muted-foreground">
-                <span>Selecciona un ticket o lead para ver más detalles (próximamente).</span>
-              </div>
-            )}
+                <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm">
+                  {activeTab === 'messages'
+                    ? 'Selecciona una conversación para ver los mensajes.'
+                    : 'Selecciona un ticket o lead para ver más detalles (próximamente).'}
+                </div>
+              )}
+            </div>
           </div>
         </Card>
       </div>
