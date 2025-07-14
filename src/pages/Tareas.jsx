@@ -149,10 +149,10 @@ function Tareas() {
                               autoFocus
                             />
                             <div className="flex items-center ml-2" style={{gap: '8px'}}>
-                              <button type="submit" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none h-6 w-6 flex items-center justify-center">
+                              <button type="submit" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
                                 <Check className="h-4 w-4 text-gray-400" />
                               </button>
-                              <button type="button" onClick={() => setEditId(null)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none h-6 w-6 flex items-center justify-center">
+                              <button type="button" onClick={() => setEditId(null)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
                                 <X className="h-4 w-4 text-gray-400" />
                               </button>
                             </div>
