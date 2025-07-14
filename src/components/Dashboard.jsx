@@ -175,13 +175,15 @@ const Dashboard = () => {
         {/* NUEVA FILA DE ESTADÍSTICAS EN 3 COLUMNAS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {statsData.map((stat, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-colors duration-300 p-6 flex flex-col justify-center items-center min-h-[180px]">
+            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-colors duration-300 p-6 flex flex-col justify-center items-start min-h-[180px]">
               <div className="flex flex-col items-start gap-3 w-full">
                 <div className="flex items-center justify-start w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">{stat.title}</span>
                   <stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
                 </div>
-                <span className="text-3xl font-bold text-[#ff9c9c] text-left">{stat.value}</span>
+                <span className="text-sm font-normal text-black text-left">{stat.value}</span>
+                {/* Estadística secundaria: progreso diario o aumento porcentual */}
+                <span className="text-xs font-normal text-black text-left mt-1">{stat.change || '+0% hoy'}</span>
                 {/* Barra de progreso visual minimalista */}
                 <div className="w-full mt-4">
                   <div className="relative h-2 w-full rounded-full bg-[#ff9c9c]/20">

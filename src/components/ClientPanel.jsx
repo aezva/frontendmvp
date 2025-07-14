@@ -76,7 +76,7 @@ const ClientPanel = () => {
           className="flex-1 flex flex-col transition-all duration-300 ease-in-out min-w-0"
           style={{ marginLeft: isSidebarOpen ? sidebarWidth : 0, marginRight: chatbarWidth }}
         >
-          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto" style={{ background: '#F4F4F5' }}>
+          <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto" style={{ background: '#fff' }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={location.pathname}
