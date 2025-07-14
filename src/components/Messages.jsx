@@ -316,8 +316,8 @@ const Messages = () => {
             {/* Borde vertical absoluto para conectar con las pestañas */}
             <div className="hidden md:block absolute top-0 bottom-0 z-10" style={{ left: '33.3333%', width: '1px', background: 'var(--border-color, #e5e7eb)', minHeight: 0 }} />
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
-            <div className="w-full md:w-1/3 flex flex-col overflow-y-auto py-2 pl-0 pr-0 h-full min-h-0">
-              <div className="flex-1 flex flex-col px-4">
+            <div className="w-full md:w-1/3 flex flex-col overflow-y-auto py-2 pl-4 pr-0 h-full min-h-0">
+              <div className="flex-1 flex flex-col">
               {activeTab === 'messages' && (
                 <>
                   {convLoading ? (
@@ -401,8 +401,8 @@ const Messages = () => {
               </div>
             </div>
             {/* Panel derecho: mensajes de la conversación seleccionada */}
-            <div className="flex-1 flex flex-col min-w-0 h-full min-h-0">
-              <div className="px-4 h-full flex flex-col">
+            <div className="flex-1 flex flex-col min-w-0 h-full min-h-0 pl-4">
+              <div className="h-full flex flex-col">
               {activeTab === 'messages' && selectedConversation ? (
                 <>
                   <div className="flex-1 p-0 overflow-y-auto space-y-4">
