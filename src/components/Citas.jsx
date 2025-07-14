@@ -107,8 +107,8 @@ export default function Citas() {
   const grouped = groupByStatus(appointments);
 
   return (
-    <div className="max-w-2xl mx-auto py-8 space-y-8">
-      <h1 className="text-3xl font-bold mb-2">Citas</h1>
+    <div className="flex flex-col flex-1 min-h-0 h-full w-full">
+      <h1 className="text-xl font-semibold tracking-tight mb-6">Citas</h1>
       {loading && (
         <div className="flex items-center gap-2 text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin" />Cargando...</div>
       )}

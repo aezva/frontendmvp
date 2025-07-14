@@ -96,7 +96,7 @@ function Tareas() {
   // Try/catch visual para el render
   try {
     return (
-      <div className="flex flex-col flex-1 min-h-0 h-full w-full px-4 pt-8 pb-8">
+      <div className="flex flex-col flex-1 min-h-0 h-full w-full">
         <Helmet><title>Tareas - NNIA</title></Helmet>
         <h1 className="text-xl font-semibold tracking-tight mb-6">Tareas</h1>
         <form onSubmit={handleCreate} className="flex gap-2 mb-4">
