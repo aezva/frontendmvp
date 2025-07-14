@@ -263,12 +263,12 @@ const Dashboard = () => {
                     {lastTasks.map(task => (
                       <li key={task.id} className="flex flex-row items-center gap-2">
                         <span className="text-sm font-normal text-black flex-1 truncate">{task.name || task.title || 'Tarea'}</span>
-                        <span className={`text-xs font-semibold ${task.status === 'completed' ? 'text-green-500' : task.status === 'in_progress' ? 'text-blue-500' : 'text-[#ff9c9c]'}`}>{task.status === 'completed' ? 'Completada' : task.status === 'in_progress' ? 'En Progreso' : 'Pendiente'}</span>
+                        <span className={`text-xs font-light ${task.status === 'completed' ? 'text-green-500' : task.status === 'in_progress' ? 'text-blue-500' : 'text-[#ff9c9c]'}`}>{task.status === 'completed' ? 'Completada' : task.status === 'in_progress' ? 'En Progreso' : 'Pendiente'}</span>
                       </li>
                     ))}
                   </ul>
                 )}
-                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/tareas')}>
+                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/tareas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
@@ -293,7 +293,7 @@ const Dashboard = () => {
                     ))}
                   </ul>
                 )}
-                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/documents')}>
+                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/documents')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
@@ -321,7 +321,7 @@ const Dashboard = () => {
                     ))}
                   </ul>
                 )}
-                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/citas')}>
+                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/citas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
@@ -346,7 +346,7 @@ const Dashboard = () => {
                     ))}
                   </ul>
                 )}
-                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/reservas')}>
+                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105" onClick={() => navigate('/reservas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
