@@ -35,7 +35,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
     return saved ? JSON.parse(saved) : [{
       id: 1,
       sender: 'assistant',
-      text: `${getGreetingByTime(userName)}\n\n¿En qué puedo ayudarte?`,
+      text: `¡Hola! Soy NNIA, tu asistente virtual. ¿En qué puedo ayudarte hoy?`,
     }];
   });
   const [newMessage, setNewMessage] = useState('');
