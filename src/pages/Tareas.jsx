@@ -121,7 +121,7 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className="text-base font-light mb-2 text-black">{label}</h2>
+                <h2 className="text-base font-light mb-2 text-[#ff9c9c]">{label}</h2>
                 <div className="flex flex-col gap-6 min-h-[200px]">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
@@ -141,7 +141,7 @@ function Tareas() {
                             <Input
                               value={editValue}
                               onChange={e => setEditValue(e.target.value)}
-                              className="flex-1 text-sm"
+                              className="flex-1 text-sm h-auto py-0"
                               autoFocus
                             />
                             <div className="flex items-center ml-2" style={{gap: '8px'}}>
