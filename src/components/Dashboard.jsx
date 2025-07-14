@@ -168,7 +168,7 @@ const Dashboard = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">Dashboard</h1>
-            <p className="text-muted-foreground">Un resumen de la actividad de tu asistente.</p>
+            <p className="text-gray-500 font-normal">Un resumen de la actividad de tu asistente.</p>
           </div>
         </div>
 
@@ -177,10 +177,10 @@ const Dashboard = () => {
           {statsData.map((stat, index) => (
             <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300 p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-center gap-3 w-full">
-                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
-                  <stat.icon className="h-8 w-8" style={{ color: '#ff9c9c' }} />
-                </span>
-                <span className="text-lg font-semibold text-foreground text-center">{stat.title}</span>
+                <div className="flex items-center justify-center w-full gap-2 mb-2">
+                  <span className="font-semibold text-base text-foreground text-center flex-1">{stat.title}</span>
+                  <stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
+                </div>
                 <span className="text-3xl font-bold text-[#ff9c9c] text-center">{stat.value}</span>
                 {/* Barra de progreso visual minimalista */}
                 <div className="w-full mt-4">
@@ -200,11 +200,11 @@ const Dashboard = () => {
             {/* Tareas Pendientes */}
             <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
               <div className="flex flex-col items-center gap-3 w-full">
-                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
-                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg>
-                </span>
-                <span className="text-lg font-semibold text-foreground text-center">Tareas Pendientes</span>
-                <span className="text-sm text-muted-foreground text-center">No hay tareas pendientes.</span>
+                <div className="flex items-center justify-center w-full gap-2 mb-2">
+                  <span className="font-semibold text-base text-foreground text-center flex-1">Tareas Pendientes</span>
+                  <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg>
+                </div>
+                <span className="text-sm text-gray-500 font-normal text-center">No hay tareas pendientes.</span>
                 <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/tareas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -214,11 +214,11 @@ const Dashboard = () => {
             {/* Documentos Creados */}
             <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
               <div className="flex flex-col items-center gap-3 w-full">
-                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
-                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
-                </span>
-                <span className="text-lg font-semibold text-foreground text-center">Documentos Creados</span>
-                <span className="text-sm text-muted-foreground text-center">No hay documentos creados.</span>
+                <div className="flex items-center justify-center w-full gap-2 mb-2">
+                  <span className="font-semibold text-base text-foreground text-center flex-1">Documentos Creados</span>
+                  <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
+                </div>
+                <span className="text-sm text-gray-500 font-normal text-center">No hay documentos creados.</span>
                 <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/documents')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -231,15 +231,12 @@ const Dashboard = () => {
             {/* Próximas citas */}
             <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
               <div className="flex flex-col items-center gap-3 w-full">
-                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
-                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                </span>
-                <span className="text-lg font-semibold text-foreground text-center">Próximas Citas</span>
+                <div className="flex items-center justify-center w-full gap-2 mb-2">
+                  <span className="font-semibold text-base text-foreground text-center flex-1">Próximas Citas</span>
+                  <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
                 {nextAppointments.length === 0 ? (
-                  <span className="text-sm text-muted-foreground text-center flex flex-col items-center gap-2 mt-2">
-                    <svg width="40" height="40" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h4l2 2"/></svg>
-                    No hay citas próximas.
-                  </span>
+                  <span className="text-sm text-gray-500 font-normal text-center mt-2">No hay citas próximas.</span>
                 ) : (
                   <ul className="divide-y divide-border w-full mt-2">
                     {nextAppointments.map((appt, idx) => (
@@ -259,11 +256,11 @@ const Dashboard = () => {
             {/* Próximas Reservas */}
             <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
               <div className="flex flex-col items-center gap-3 w-full">
-                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
-                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
-                </span>
-                <span className="text-lg font-semibold text-foreground text-center">Próximas Reservas</span>
-                <span className="text-sm text-muted-foreground text-center flex flex-col items-center gap-2 mt-2">
+                <div className="flex items-center justify-center w-full gap-2 mb-2">
+                  <span className="font-semibold text-base text-foreground text-center flex-1">Próximas Reservas</span>
+                  <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
+                </div>
+                <span className="text-sm text-gray-500 font-normal text-center flex flex-col items-center gap-2 mt-2">
                   <svg width="40" height="40" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h4l2 2"/></svg>
                   No hay reservas próximas.
                 </span>
