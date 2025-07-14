@@ -295,16 +295,16 @@ const Messages = () => {
         <h1 className="text-xl font-semibold tracking-tight">Mensajes</h1>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[500px]">
           {/* Pestañas dentro de la tarjeta */}
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-6 border-b border-border mb-4">
             {TABS.map(tab => (
-              <button
+              <span
                 key={tab.key}
-                className={`px-4 py-2 rounded-lg text-sm font-normal transition-colors border-none outline-none focus:outline-none ${activeTab === tab.key ? 'bg-[#ff9c9c] text-white shadow-sm' : 'bg-white text-gray-500 hover:text-[#ff9c9c]'}`}
+                className={`text-sm font-medium cursor-pointer pb-2 transition-colors select-none ${activeTab === tab.key ? 'text-[#ff9c9c] border-b-2 border-[#ff9c9c]' : 'text-gray-500 hover:text-[#ff9c9c] border-b-2 border-transparent'}`}
                 onClick={() => setActiveTab(tab.key)}
-                type="button"
+                style={{padding: 0, margin: 0}}
               >
                 {tab.label}
-              </button>
+              </span>
             ))}
           </div>
           <div className="flex flex-row gap-6 min-h-[400px]">
