@@ -323,8 +323,8 @@ const Messages = () => {
                   {convLoading ? (
                     <div className="flex-1 flex items-center justify-center h-full w-full"><Loader2 className="h-6 w-6 animate-spin" /></div>
                   ) : conversations.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
-                      <span>Sin conversaciones</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span className="w-full text-center">Sin conversaciones</span>
                     </div>
                   ) : (
                     conversations.map(conv => (
@@ -349,8 +349,8 @@ const Messages = () => {
               {activeTab === 'leads' && (
                 <>
                   {leads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
-                      <span>Sin leads</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span className="w-full text-center">Sin leads</span>
                     </div>
                   ) : (
                     leads.map(lead => (
@@ -366,8 +366,8 @@ const Messages = () => {
               {activeTab === 'tickets' && (
                 <>
                   {tickets.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
-                      <span>Sin tickets</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span className="w-full text-center">Sin tickets</span>
                     </div>
                   ) : (
                     tickets.map(ticket => (
@@ -383,8 +383,8 @@ const Messages = () => {
               {activeTab === 'archived' && (
                 <>
                   {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm text-center">
-                      <span>Sin archivados</span>
+                    <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
+                      <span className="w-full text-center">Sin archivados</span>
                     </div>
                   ) : (
                     <>
@@ -441,9 +441,11 @@ const Messages = () => {
                 </>
               ) : (
                 <div className="flex-1 flex items-center justify-center h-full w-full text-muted-foreground text-sm">
-                  {activeTab === 'messages'
-                    ? 'Selecciona una conversación para ver los mensajes.'
-                    : 'Selecciona un ticket o lead para ver más detalles (próximamente).'}
+                  <span className="w-full text-center">
+                    {activeTab === 'messages'
+                      ? 'Selecciona una conversación para ver los mensajes.'
+                      : 'Selecciona un ticket o lead para ver más detalles (próximamente).'}
+                  </span>
                 </div>
               )}
               </div>
