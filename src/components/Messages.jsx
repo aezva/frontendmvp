@@ -312,7 +312,9 @@ const Messages = () => {
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
           {/* Cambia el layout de los paneles dentro de la tarjeta: */}
-          <div className="flex flex-row min-h-[400px] h-full w-full">
+          <div className="flex flex-row min-h-[400px] h-full w-full relative">
+            {/* Borde vertical absoluto para conectar con las pestañas */}
+            <div className="hidden md:block absolute top-0 bottom-0 left-1/3 w-px bg-border z-10" style={{minHeight: '0'}} />
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
             <div className="w-full md:w-1/3 flex flex-col overflow-y-auto py-2 pl-0 pr-0 h-full min-h-0">
               <div className="flex-1 flex flex-col px-4">
@@ -399,7 +401,7 @@ const Messages = () => {
               </div>
             </div>
             {/* Panel derecho: mensajes de la conversación seleccionada */}
-            <div className="flex-1 flex flex-col min-w-0 h-full min-h-0 border-l border-border" style={{marginLeft: '-1px'}}>
+            <div className="flex-1 flex flex-col min-w-0 h-full min-h-0" style={{marginLeft: '-1px'}}>
               <div className="px-4 h-full flex flex-col">
               {activeTab === 'messages' && selectedConversation ? (
                 <>
