@@ -282,16 +282,16 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
         </div>
       )}
       {/* Prompts rápidos sugeridos */}
-      <div className="flex gap-3 pb-2 px-4">
+      <div className="flex flex-col gap-2 pb-2 px-4">
         {[
-          '¿Cuáles son mis próximas citas?',
-          '¿Tengo mensajes nuevos o pendientes?',
-          '¿Qué puedo hacer con NNIA?'
+          'Ver próximas citas',
+          'Ver mensajes nuevos',
+          '¿Qué puede hacer NNIA?'
         ].map((prompt, idx) => (
           <button
             key={idx}
             type="button"
-            className="flex items-center gap-1 text-[#ff9c9c] font-normal text-base hover:underline transition"
+            className="flex items-center gap-1 text-[#ff9c9c] font-normal text-sm leading-[1.35] hover:underline transition"
             style={{ padding: 0, background: 'none', border: 'none' }}
             onClick={() => setNewMessage(prompt)}
           >
