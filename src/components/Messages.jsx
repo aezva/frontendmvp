@@ -329,7 +329,7 @@ const Messages = () => {
                   {convLoading ? (
                     <div className="flex-1 flex items-center justify-center h-full w-full"><Loader2 className="h-6 w-6 animate-spin" /></div>
                   ) : conversations.length === 0 ? (
-                    <div className="flex-1 w-full h-full flex items-center justify-center text-muted-foreground text-sm text-center">Sin conversaciones</div>
+                    <div className="w-full h-full flex-1 text-center text-muted-foreground text-sm flex flex-col justify-center">Sin conversaciones</div>
                   ) : (
                     conversations.map(conv => (
                       <div
@@ -353,7 +353,7 @@ const Messages = () => {
               {activeTab === 'leads' && (
                 <>
                   {leads.length === 0 ? (
-                    <div className="flex-1 w-full h-full flex items-center justify-center text-muted-foreground text-sm text-center">Sin leads</div>
+                    <div className="w-full h-full flex-1 text-center text-muted-foreground text-sm flex flex-col justify-center">Sin leads</div>
                   ) : (
                     leads.map(lead => (
                       <LeadTicketCard key={lead.id} item={lead} type="lead" onViewConversation={(visitorId) => {
@@ -368,7 +368,7 @@ const Messages = () => {
               {activeTab === 'tickets' && (
                 <>
                   {tickets.length === 0 ? (
-                    <div className="flex-1 w-full h-full flex items-center justify-center text-muted-foreground text-sm text-center">Sin tickets</div>
+                    <div className="w-full h-full flex-1 text-center text-muted-foreground text-sm flex flex-col justify-center">Sin tickets</div>
                   ) : (
                     tickets.map(ticket => (
                       <LeadTicketCard key={ticket.id} item={ticket} type="ticket" onViewConversation={(visitorId) => {
@@ -383,7 +383,7 @@ const Messages = () => {
               {activeTab === 'archived' && (
                 <>
                   {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
-                    <div className="flex-1 w-full h-full flex items-center justify-center text-muted-foreground text-sm text-center">Sin archivados</div>
+                    <div className="w-full h-full flex-1 text-center text-muted-foreground text-sm flex flex-col justify-center">Sin archivados</div>
                   ) : (
                     <>
                       {archivedTickets.map(ticket => (
@@ -440,7 +440,7 @@ const Messages = () => {
                   </form>
                 </>
               ) : (
-                <div className="flex-1 w-full h-full flex items-center justify-center text-muted-foreground text-sm text-center">
+                <div className="w-full h-full flex-1 text-center text-muted-foreground text-sm flex flex-col justify-center">
                   {activeTab === 'messages'
                     ? 'Selecciona una conversación para ver los mensajes.'
                     : 'Selecciona un ticket o lead para ver más detalles (próximamente).'}
