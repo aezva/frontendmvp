@@ -72,9 +72,9 @@ const Documents = () => {
           <div className="relative">
             <div className="grid grid-cols-4 w-full h-12 min-h-[48px] items-center px-4">
               <span className="text-base font-light text-black">Nombre</span>
-              <span className="text-base font-light text-black pl-6">Tipo</span>
-              <span className="text-base font-light text-black pl-6">Fecha</span>
-              <span className="text-base font-light text-black text-right">Acciones</span>
+              <span className="text-base font-light text-black pl-2">Tipo</span>
+              <span className="text-base font-light text-black pl-2">Fecha</span>
+              <span className="text-base font-light text-black pl-2">Acciones</span>
             </div>
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
