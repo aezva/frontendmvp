@@ -15,6 +15,7 @@ import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
 import Documents from './pages/Documents.jsx';
 import DocumentView from './pages/DocumentView.jsx';
+import Tareas from './pages/Tareas.jsx';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
@@ -86,6 +87,7 @@ function AppContent() {
                             <Route path="reservas" element={<Reservations />} />
                             <Route path="documents" element={<Documents />} />
                             <Route path="documents/:id" element={<DocumentView />} />
+                            <Route path="tareas" element={<Tareas />} />
                         </Route>
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />
