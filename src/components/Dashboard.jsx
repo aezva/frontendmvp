@@ -23,6 +23,10 @@ const Dashboard = () => {
   const [nextAppointments, setNextAppointments] = useState([]);
   // Estado para las conversaciones recientes
   const [recentConversations, setRecentConversations] = useState([]);
+  // 1. Añadir estados para documentos, tareas, reservas
+  const [lastDocuments, setLastDocuments] = useState([]);
+  const [lastTasks, setLastTasks] = useState([]);
+  const [lastReservations, setLastReservations] = useState([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -106,6 +110,55 @@ const Dashboard = () => {
     fetchRecentConversations();
   }, [client]);
 
+  // 2. useEffect para cargar los dos últimos documentos, tareas y reservas
+  useEffect(() => {
+    async function fetchLastDocuments() {
+      if (!client) return;
+      try {
+        const { data, error } = await supabase
+          .from('documents')
+          .select('*')
+          .eq('client_id', client.id)
+          .order('updated_at', { ascending: false })
+          .limit(2);
+        setLastDocuments(data || []);
+      } catch {
+        setLastDocuments([]);
+      }
+    }
+    async function fetchLastTasks() {
+      if (!client) return;
+      try {
+        const { data, error } = await supabase
+          .from('tasks')
+          .select('*')
+          .eq('client_id', client.id)
+          .order('updated_at', { ascending: false })
+          .limit(2);
+        setLastTasks(data || []);
+      } catch {
+        setLastTasks([]);
+      }
+    }
+    async function fetchLastReservations() {
+      if (!client) return;
+      try {
+        const { data, error } = await supabase
+          .from('reservations')
+          .select('*')
+          .eq('client_id', client.id)
+          .order('updated_at', { ascending: false })
+          .limit(2);
+        setLastReservations(data || []);
+      } catch {
+        setLastReservations([]);
+      }
+    }
+    fetchLastDocuments();
+    fetchLastTasks();
+    fetchLastReservations();
+  }, [client]);
+
   const statsData = [
     {
       title: 'Conversaciones Totales',
@@ -175,15 +228,16 @@ const Dashboard = () => {
         {/* NUEVA FILA DE ESTADÍSTICAS EN 3 COLUMNAS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {statsData.map((stat, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-colors duration-300 p-6 flex flex-col justify-center items-start min-h-[180px]">
+            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:shadow-md transition-colors duration-300 p-6 flex flex-col justify-center items-start min-h-[180px]">
               <div className="flex flex-col items-start gap-3 w-full">
                 <div className="flex items-center justify-start w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">{stat.title}</span>
                   <stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-normal text-black text-left">{stat.value}</span>
-                {/* Estadística secundaria: progreso diario o aumento porcentual */}
-                <span className="text-xs font-normal text-black text-left mt-1">{stat.change || '+0% hoy'}</span>
+                <div className="flex flex-row items-center gap-[50px] w-full">
+                  <span className="text-sm font-normal text-black">{stat.value}</span>
+                  <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{stat.change || '+0% hoy'}</span>
+                </div>
                 {/* Barra de progreso visual minimalista */}
                 <div className="w-full mt-4">
                   <div className="relative h-2 w-full rounded-full bg-[#ff9c9c]/20">
@@ -206,7 +260,18 @@ const Dashboard = () => {
                   <span className="font-semibold text-base text-foreground text-left flex-1">Tareas Pendientes</span>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg>
                 </div>
-                <span className="text-sm text-gray-500 font-normal text-left">No hay tareas pendientes.</span>
+                {lastTasks.length === 0 ? (
+                  <span className="text-sm text-gray-500 font-normal text-left">No hay tareas pendientes.</span>
+                ) : (
+                  <ul className="w-full mt-2">
+                    {lastTasks.map(task => (
+                      <li key={task.id} className="py-1 flex flex-col gap-0.5">
+                        <span className="text-sm font-normal text-black">{task.name || task.title || 'Tarea'}</span>
+                        <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{task.updated_at ? new Date(task.updated_at).toLocaleString() : ''}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/tareas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -220,7 +285,18 @@ const Dashboard = () => {
                   <span className="font-semibold text-base text-foreground text-left flex-1">Documentos Creados</span>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
                 </div>
-                <span className="text-sm text-gray-500 font-normal text-left">No hay documentos creados.</span>
+                {lastDocuments.length === 0 ? (
+                  <span className="text-sm text-gray-500 font-normal text-left">No hay documentos creados.</span>
+                ) : (
+                  <ul className="w-full mt-2">
+                    {lastDocuments.map(doc => (
+                      <li key={doc.id} className="py-1 flex flex-col gap-0.5">
+                        <span className="text-sm font-normal text-black">{doc.name}</span>
+                        <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{doc.updated_at ? new Date(doc.updated_at).toLocaleString() : ''}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/documents')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
@@ -241,10 +317,10 @@ const Dashboard = () => {
                   <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay citas próximas.</span>
                 ) : (
                   <ul className="divide-y divide-border w-full mt-2">
-                    {nextAppointments.map((appt, idx) => (
-                      <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
-                        <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
-                        <div className="text-xs text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
+                    {nextAppointments.slice(0,2).map(appt => (
+                      <li key={appt.id} className="py-3 flex flex-col gap-1">
+                        <div className="font-medium text-sm text-black">{appt.name} ({appt.email})</div>
+                        <div className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{appt.type} - {appt.date} {appt.time}</div>
                       </li>
                     ))}
                   </ul>
@@ -262,7 +338,18 @@ const Dashboard = () => {
                   <span className="font-semibold text-base text-foreground text-left flex-1">Próximas Reservas</span>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
                 </div>
-                <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay reservas próximas.</span>
+                {lastReservations.length === 0 ? (
+                  <span className="text-sm text-gray-500 font-normal text-left mt-2">No hay reservas próximas.</span>
+                ) : (
+                  <ul className="divide-y divide-border w-full mt-2">
+                    {lastReservations.map(res => (
+                      <li key={res.id} className="py-3 flex flex-col gap-1">
+                        <div className="font-medium text-sm">{res.name} ({res.email})</div>
+                        <div className="text-xs text-muted-foreground">{res.type} - {res.date} {res.time}</div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/reservas')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
