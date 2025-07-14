@@ -28,12 +28,26 @@ function Tareas() {
   const [editId, setEditId] = useState(null);
   const [editValue, setEditValue] = useState('');
   const [dragged, setDragged] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!client) return;
+    if (!client) {
+      setLoading(false);
+      setTasks([]);
+      setError('No hay usuario autenticado.');
+      return;
+    }
     setLoading(true);
+    setError(null);
     fetchTasks(client.id)
-      .then(setTasks)
+      .then(data => {
+        setTasks(Array.isArray(data) ? data : []);
+        setError(null);
+      })
+      .catch(e => {
+        setError('Error al cargar tareas: ' + (e?.message || e));
+        setTasks([]);
+      })
       .finally(() => setLoading(false));
   }, [client]);
 
@@ -93,6 +107,8 @@ function Tareas() {
       </form>
       {loading ? (
         <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
+      ) : error ? (
+        <div className="text-center text-red-500 py-8">{error}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {estados.map(({ key, label, color }) => (
