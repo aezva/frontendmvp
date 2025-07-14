@@ -172,117 +172,76 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Columna 1: Conversaciones Recientes */}
-          <Card className="bg-card/50 backdrop-blur-sm flex flex-col h-full min-h-[260px] max-h-[260px] justify-between border-border">
-            <CardHeader>
-              <CardTitle className="text-lg font-semibold">Conversaciones Recientes</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <ul className="divide-y divide-border">
-                {recentConversations.length === 0 ? (
-                  <li className="text-sm p-4 text-muted-foreground">No hay conversaciones recientes.</li>
-                ) : (
-                  recentConversations.map((conv, idx) => (
-                    <li key={conv.visitor_id || idx} className="flex items-center gap-3 px-4 py-3 hover:bg-muted/50 transition cursor-pointer">
-                      <Avatar className="h-9 w-9">
-                        <AvatarFallback>{conv.visitor_id?.slice(0, 2).toUpperCase()}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{conv.visitor_id?.slice(0, 8)}</div>
-                        <div className="text-xs text-muted-foreground truncate">{conv.last_message}</div>
-                      </div>
-                      <div className="text-xs text-muted-foreground whitespace-nowrap">{conv.last_timestamp ? new Date(conv.last_timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</div>
-                    </li>
-                  ))
-                )}
-              </ul>
-            </CardContent>
-          </Card>
-          {/* Columna 2: Métricas verticales, más pequeñas y organizadas */}
-          <div className="flex flex-col gap-3 justify-between h-full min-h-[260px] max-h-[260px]">
-            {statsData.map((stat, index) => (
-              <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300 p-2 flex-1 flex flex-col justify-center min-h-[70px] max-h-[70px]">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-primary/10 p-2"><stat.icon className="h-5 w-5 text-primary" /></span>
-                    <span className="text-xs font-medium text-muted-foreground">{stat.title}</span>
+        {/* NUEVA FILA DE ESTADÍSTICAS EN 3 COLUMNAS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {statsData.map((stat, index) => (
+            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors duration-300 p-6 flex flex-col justify-center items-center min-h-[180px]">
+              <div className="flex flex-col items-center gap-3 w-full">
+                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
+                  <stat.icon className="h-8 w-8" style={{ color: '#ff9c9c' }} />
+                </span>
+                <span className="text-lg font-semibold text-foreground text-center">{stat.title}</span>
+                <span className="text-3xl font-bold text-[#ff9c9c] text-center">{stat.value}</span>
+                {/* Barra de progreso visual minimalista */}
+                <div className="w-full mt-4">
+                  <div className="relative h-2 w-full rounded-full bg-[#ff9c9c]/20">
+                    <div className="absolute top-0 left-0 h-2 rounded-full bg-[#ff9c9c] transition-all" style={{ width: `${Math.min(parseInt(stat.value.replace(/\D/g, '')) || 0, 100)}%` }} />
                   </div>
-                  <div className="text-lg font-bold text-muted-foreground">{stat.value}</div>
                 </div>
-                <div className="flex items-center justify-between mt-1">
-                  <p className={`text-xs text-muted-foreground ${stat.change.startsWith('+') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>{stat.change} vs mes pasado</p>
-                  <button
-                    className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
-                    onClick={() => {
-                      if (stat.title.includes('Conversaciones')) navigate('/messages');
-                      else if (stat.title.includes('Tickets')) navigate('/messages');
-                      else if (stat.title.includes('Leads')) navigate('/messages');
-                    }}
-                  >
-                    Ver todas
-                  </button>
-                </div>
-              </Card>
-            ))}
-          </div>
+              </div>
+            </Card>
+          ))}
         </div>
 
-        {/* Próximas citas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Próximas citas, tareas y documentos, reservas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Columna 1: Tareas Pendientes y Documentos Creados */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             {/* Tareas Pendientes */}
-            <Card className="bg-card/50 backdrop-blur-sm">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-lg font-semibold">Tareas Pendientes</CardTitle>
-                <button
-                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
-                  onClick={() => navigate('/tareas')}
-                >
+            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+              <div className="flex flex-col items-center gap-3 w-full">
+                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
+                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg>
+                </span>
+                <span className="text-lg font-semibold text-foreground text-center">Tareas Pendientes</span>
+                <span className="text-sm text-muted-foreground text-center">No hay tareas pendientes.</span>
+                <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/tareas')}>
                   Ver todas
+                  <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
-              </CardHeader>
-              <CardContent>
-                {/* Aquí se mostrarán las tareas pendientes cuando se conecte la funcionalidad */}
-                <div className="text-sm text-muted-foreground">No hay tareas pendientes.</div>
-              </CardContent>
+              </div>
             </Card>
             {/* Documentos Creados */}
-            <Card className="bg-card/50 backdrop-blur-sm">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-lg font-semibold">Documentos Creados</CardTitle>
-                <button
-                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
-                  onClick={() => navigate('/documents')}
-                >
+            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+              <div className="flex flex-col items-center gap-3 w-full">
+                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
+                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
+                </span>
+                <span className="text-lg font-semibold text-foreground text-center">Documentos Creados</span>
+                <span className="text-sm text-muted-foreground text-center">No hay documentos creados.</span>
+                <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/documents')}>
                   Ver todas
+                  <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
-              </CardHeader>
-              <CardContent>
-                {/* Aquí se mostrarán los documentos creados cuando se conecte la funcionalidad */}
-                <div className="text-sm text-muted-foreground">No hay documentos creados.</div>
-              </CardContent>
+              </div>
             </Card>
           </div>
           {/* Columna 2: Próximas citas y Próximas reservas */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             {/* Próximas citas */}
-            <Card className="bg-card/50 backdrop-blur-sm">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-lg font-semibold">Próximas citas</CardTitle>
-                <button
-                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
-                  onClick={() => navigate('/citas')}
-                >
-                  Ver todas
-                </button>
-              </CardHeader>
-              <CardContent>
+            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+              <div className="flex flex-col items-center gap-3 w-full">
+                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
+                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </span>
+                <span className="text-lg font-semibold text-foreground text-center">Próximas Citas</span>
                 {nextAppointments.length === 0 ? (
-                  <div className="text-sm text-muted-foreground">No hay citas próximas.</div>
+                  <span className="text-sm text-muted-foreground text-center flex flex-col items-center gap-2 mt-2">
+                    <svg width="40" height="40" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h4l2 2"/></svg>
+                    No hay citas próximas.
+                  </span>
                 ) : (
-                  <ul className="divide-y divide-border">
+                  <ul className="divide-y divide-border w-full mt-2">
                     {nextAppointments.map((appt, idx) => (
                       <li key={appt.id || idx} className="py-3 flex flex-col gap-1">
                         <div className="font-medium text-sm">{appt.name} ({appt.email})</div>
@@ -291,23 +250,28 @@ const Dashboard = () => {
                     ))}
                   </ul>
                 )}
-              </CardContent>
+                <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/citas')}>
+                  Ver todas
+                  <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
+                </button>
+              </div>
             </Card>
             {/* Próximas Reservas */}
-            <Card className="bg-card/50 backdrop-blur-sm">
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-lg font-semibold">Próximas Reservas</CardTitle>
-                <button
-                  className="text-xs text-[#ff9c9c] hover:underline bg-transparent border-none p-0 cursor-pointer"
-                  onClick={() => navigate('/reservas')}
-                >
+            <Card className="bg-card/50 backdrop-blur-sm p-6 flex flex-col justify-center items-center min-h-[180px] transition-shadow hover:shadow-lg border border-[#ff9c9c]/20">
+              <div className="flex flex-col items-center gap-3 w-full">
+                <span className="rounded-full bg-[#ff9c9c]/10 p-4 mb-2 flex items-center justify-center">
+                  <svg width="32" height="32" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
+                </span>
+                <span className="text-lg font-semibold text-foreground text-center">Próximas Reservas</span>
+                <span className="text-sm text-muted-foreground text-center flex flex-col items-center gap-2 mt-2">
+                  <svg width="40" height="40" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h4l2 2"/></svg>
+                  No hay reservas próximas.
+                </span>
+                <button className="mt-4 flex items-center gap-2 text-[#ff9c9c] text-xs font-medium transition hover:underline hover:scale-105" onClick={() => navigate('/reservas')}>
                   Ver todas
+                  <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
-              </CardHeader>
-              <CardContent>
-                {/* Aquí se mostrarán las próximas reservas cuando se conecte la funcionalidad */}
-                <div className="text-sm text-muted-foreground">No hay reservas próximas.</div>
-              </CardContent>
+              </div>
             </Card>
           </div>
         </div>
