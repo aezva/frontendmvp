@@ -224,9 +224,9 @@ const Dashboard = () => {
         {/* NUEVA FILA DE ESTADÍSTICAS EN 3 COLUMNAS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {statsData.map((stat, index) => (
-            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-colors duration-300 px-4 py-4 flex flex-col justify-center items-start min-h-[180px]">
-              <div className="flex flex-col items-start gap-3 w-full">
-                <div className="flex items-center justify-start w-full gap-2 mb-2">
+            <Card key={index} className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-colors duration-300 p-4 flex flex-col justify-center items-start min-h-[180px]">
+              <div className="flex flex-col items-start gap-1 w-full h-full">
+                <div className="flex items-center justify-start w-full gap-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">{stat.title}</span>
                   <stat.icon className="h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
                 </div>
@@ -235,7 +235,7 @@ const Dashboard = () => {
                   <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{stat.change || '+0% hoy'}</span>
                 </div>
                 {/* Barra de progreso visual minimalista */}
-                <div className="w-full mt-4">
+                <div className="w-full mt-2">
                   <div className="relative h-2 w-full rounded-full bg-[#ff9c9c]/20">
                     <div className="absolute top-0 left-0 h-2 rounded-full bg-[#ff9c9c] transition-all" style={{ width: `${Math.min(parseInt(stat.value.replace(/\D/g, '')) || 0, 100)}%` }} />
                   </div>

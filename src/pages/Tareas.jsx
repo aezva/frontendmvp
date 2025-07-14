@@ -29,6 +29,7 @@ function Tareas() {
   const [editValue, setEditValue] = useState('');
   const [dragged, setDragged] = useState(null);
   const [error, setError] = useState(null);
+  const [renderError, setRenderError] = useState(null);
 
   useEffect(() => {
     if (!client) {
@@ -92,76 +93,81 @@ function Tareas() {
     e.preventDefault();
   };
 
-  return (
-    <div className="space-y-8">
-      <Helmet><title>Tareas - NNIA</title></Helmet>
-      <h1 className="text-xl font-semibold tracking-tight">Tareas</h1>
-      <form onSubmit={handleCreate} className="flex gap-2 mb-4">
-        <Input
-          value={newTask}
-          onChange={e => setNewTask(e.target.value)}
-          placeholder="Nueva tarea..."
-          className="flex-1"
-        />
-        <Button type="submit" variant="default">Crear</Button>
-      </form>
-      {loading ? (
-        <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
-      ) : error ? (
-        <div className="text-center text-red-500 py-8">{error}</div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {estados.map(({ key, label, color }) => (
-            <Card
-              key={key}
-              className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[300px]"
-              onDrop={e => onDrop(e, key)}
-              onDragOver={onDragOver}
-            >
-              <h2 className={`text-base font-semibold mb-2 ${color}`}>{label}</h2>
-              <div className="flex flex-col gap-2 min-h-[200px]">
-                <AnimatePresence>
-                  {tasks.filter(t => t.status === key).map(task => (
-                    <motion.div
-                      key={task.id}
-                      layout
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      draggable
-                      onDragStart={e => onDragStart(e, task.id)}
-                      className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
-                    >
-                      <GripVertical className="mr-2 h-4 w-4 text-gray-300 group-hover:text-gray-400" />
-                      {editId === task.id ? (
-                        <form onSubmit={e => { e.preventDefault(); handleEdit(task.id); }} className="flex-1 flex gap-2">
-                          <Input
-                            value={editValue}
-                            onChange={e => setEditValue(e.target.value)}
-                            className="flex-1 text-sm"
-                            autoFocus
-                          />
-                          <Button type="submit" size="icon" variant="ghost"><Check className="h-4 w-4" /></Button>
-                          <Button type="button" size="icon" variant="ghost" onClick={() => setEditId(null)}><X className="h-4 w-4" /></Button>
-                        </form>
-                      ) : (
-                        <>
-                          <span className="flex-1 text-sm font-normal text-black truncate">{task.name}</span>
-                          <span className={`ml-2 text-xs font-semibold ${estadoColor[task.status]}`}>{label}</span>
-                          <Button size="icon" variant="ghost" onClick={() => { setEditId(task.id); setEditValue(task.name); }}><Edit className="h-4 w-4" /></Button>
-                          <Button size="icon" variant="ghost" onClick={() => handleDelete(task.id)}><Trash2 className="h-4 w-4" /></Button>
-                        </>
-                      )}
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  // Try/catch visual para el render
+  try {
+    return (
+      <div className="space-y-8">
+        <Helmet><title>Tareas - NNIA</title></Helmet>
+        <h1 className="text-xl font-semibold tracking-tight">Tareas</h1>
+        <form onSubmit={handleCreate} className="flex gap-2 mb-4">
+          <Input
+            value={newTask}
+            onChange={e => setNewTask(e.target.value)}
+            placeholder="Nueva tarea..."
+            className="flex-1"
+          />
+          <Button type="submit" variant="default">Crear</Button>
+        </form>
+        {loading ? (
+          <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
+        ) : error ? (
+          <div className="text-center text-red-500 py-8">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {Array.isArray(estados) && estados.map(({ key, label, color }) => (
+              <Card
+                key={key}
+                className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[300px]"
+                onDrop={e => onDrop(e, key)}
+                onDragOver={onDragOver}
+              >
+                <h2 className={`text-base font-semibold mb-2 ${color}`}>{label}</h2>
+                <div className="flex flex-col gap-2 min-h-[200px]">
+                  <AnimatePresence>
+                    {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
+                      <motion.div
+                        key={task.id}
+                        layout
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        draggable
+                        onDragStart={e => onDragStart(e, task.id)}
+                        className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
+                      >
+                        <GripVertical className="mr-2 h-4 w-4 text-gray-300 group-hover:text-gray-400" />
+                        {editId === task.id ? (
+                          <form onSubmit={e => { e.preventDefault(); handleEdit(task.id); }} className="flex-1 flex gap-2">
+                            <Input
+                              value={editValue}
+                              onChange={e => setEditValue(e.target.value)}
+                              className="flex-1 text-sm"
+                              autoFocus
+                            />
+                            <Button type="submit" size="icon" variant="ghost"><Check className="h-4 w-4" /></Button>
+                            <Button type="button" size="icon" variant="ghost" onClick={() => setEditId(null)}><X className="h-4 w-4" /></Button>
+                          </form>
+                        ) : (
+                          <>
+                            <span className="flex-1 text-sm font-normal text-black truncate">{task.name}</span>
+                            <span className={`ml-2 text-xs font-semibold ${estadoColor[task.status]}`}>{label}</span>
+                            <Button size="icon" variant="ghost" onClick={() => { setEditId(task.id); setEditValue(task.name); }}><Edit className="h-4 w-4" /></Button>
+                            <Button size="icon" variant="ghost" onClick={() => handleDelete(task.id)}><Trash2 className="h-4 w-4" /></Button>
+                          </>
+                        )}
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  } catch (e) {
+    return <div className="text-center text-red-500 py-8">Error inesperado en el render: {e.message || String(e)}</div>;
+  }
 }
 
 export default Tareas; 
