@@ -35,7 +35,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
     return saved ? JSON.parse(saved) : [{
       id: 1,
       sender: 'assistant',
-      text: `${getGreetingByTime(userName)}\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
+      text: `${getGreetingByTime(userName)}\n\n¿En qué puedo ayudarte?`,
     }];
   });
   const [newMessage, setNewMessage] = useState('');
@@ -229,7 +229,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
       setMessages([{
         id: 1,
         sender: 'assistant',
-        text: `${getGreetingByTime(userName)}\n\nPregunta o encuentra lo que necesites desde tu espacio de trabajo.`,
+        text: `${getGreetingByTime(userName)}\n\n¿En qué puedo ayudarte?`,
       }]);
     }
   }, [client, userName]);
