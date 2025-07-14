@@ -306,7 +306,7 @@ const Dashboard = () => {
             <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
               <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-[#ff9c9c] mb-4 flex-1">Próximas Citas</h3>
+                  <h3 className="text-base font-light text-[#ff9c9c] mb-2 flex-1">Próximas Citas</h3>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                 </div>
                 {nextAppointments.length === 0 ? (
@@ -331,7 +331,7 @@ const Dashboard = () => {
             <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col items-center">
               <div className="flex flex-col items-start gap-1 w-full">
                 <div className="flex items-center justify-start w-full gap-2">
-                  <h3 className="text-base font-light text-[#ff9c9c] mb-4 flex-1">Próximas Reservas</h3>
+                  <h3 className="text-base font-light text-[#ff9c9c] mb-2 flex-1">Próximas Reservas</h3>
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
                 </div>
                 {lastReservations.length === 0 ? (
