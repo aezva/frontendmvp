@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FileText, Plus, Download, Edit, Trash2, Eye } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -58,63 +59,67 @@ const Documents = () => {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-5xl mx-auto py-8 px-4">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <FileText className="h-6 w-6 text-primary" /> Documentos
-        </h1>
+    <div className="flex flex-col flex-1 min-h-0 h-full w-full max-w-5xl mx-auto px-4 py-8">
+      <h1 className="text-xl font-semibold tracking-tight mb-6 flex items-center gap-2">
+        <FileText className="h-6 w-6 text-primary" /> Documentos
+      </h1>
+      <div className="flex items-center gap-2 mb-4">
         <Button variant="default" className="flex items-center gap-2" onClick={() => setShowNewDoc(true)}>
           <Plus className="h-4 w-4" /> Nuevo Documento
         </Button>
       </div>
-      <Card>
-        <CardContent className="p-0">
-          <table className="min-w-full divide-y divide-border">
-            <thead>
-              <tr className="bg-muted text-muted-foreground">
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Tipo</th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Fecha</th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="bg-card divide-y divide-border">
-              {loading ? (
-                <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
-              ) : documents.length === 0 ? (
-                <tr><td colSpan={4} className="text-center py-8" style={{ color: '#ff9c9c' }}>No hay documentos aún.</td></tr>
-              ) : (
-                documents.map(doc => (
-                  <tr key={doc.id}>
-                    <td className="px-6 py-4 whitespace-nowrap font-medium">{doc.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{doc.file_type || 'Texto'}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{new Date(doc.created_at).toLocaleString()}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right flex gap-2 justify-end">
-                      <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)}><Eye className="h-4 w-4" /></Button>
-                      <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)}><Edit className="h-4 w-4" /></Button>
-                      <Button size="icon" variant="ghost" title="Descargar" onClick={() => window.open(doc.file_url, '_blank')} disabled={!doc.file_url}><Download className="h-4 w-4" /></Button>
-                      <Button size="icon" variant="ghost" title="Eliminar"><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+      <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
+        <CardHeader className="pb-0">
+          <CardTitle className="text-base font-light text-black">Lista de documentos</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-border text-sm">
+              <thead>
+                <tr className="bg-muted text-muted-foreground">
+                  <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">Nombre</th>
+                  <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">Tipo</th>
+                  <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">Fecha</th>
+                  <th className="px-6 py-3 text-right font-medium uppercase tracking-wider">Acciones</th>
+                </tr>
+              </thead>
+              <tbody className="bg-card divide-y divide-border">
+                {loading ? (
+                  <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
+                ) : documents.length === 0 ? (
+                  <tr><td colSpan={4} className="text-center py-8 text-[#ff9c9c]">No hay documentos aún.</td></tr>
+                ) : (
+                  documents.map(doc => (
+                    <tr key={doc.id}>
+                      <td className="px-6 py-4 whitespace-nowrap font-medium">{doc.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{doc.file_type || 'Texto'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{new Date(doc.created_at).toLocaleString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right flex gap-2 justify-end">
+                        <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)}><Eye className="h-4 w-4" /></Button>
+                        <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)}><Edit className="h-4 w-4" /></Button>
+                        <Button size="icon" variant="ghost" title="Descargar" onClick={() => window.open(doc.file_url, '_blank')} disabled={!doc.file_url}><Download className="h-4 w-4" /></Button>
+                        <Button size="icon" variant="ghost" title="Eliminar"><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </CardContent>
       </Card>
       <Dialog open={showNewDoc} onOpenChange={setShowNewDoc}>
         <DialogContent>
           <DialogTitle>Nuevo Documento</DialogTitle>
           <div className="space-y-2">
-            <input
-              className="w-full border rounded p-2"
+            <Input
               placeholder="Nombre del documento"
               value={newDocName}
               onChange={e => setNewDocName(e.target.value)}
               disabled={saving}
             />
             <textarea
-              className="w-full border rounded p-2 min-h-[120px]"
+              className="w-full border rounded p-2 min-h-[120px] text-sm"
               placeholder="Contenido..."
               value={newDocContent}
               onChange={e => setNewDocContent(e.target.value)}
