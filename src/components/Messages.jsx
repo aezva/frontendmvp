@@ -346,7 +346,6 @@ const Messages = () => {
               )}
               {activeTab === 'leads' && (
                 <>
-                  <div className="font-semibold text-base mb-2 text-gray-700">Leads</div>
                   {leads.length === 0 ? (
                     <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
                       <span className="mx-0 my-auto">Sin leads</span>
@@ -364,7 +363,6 @@ const Messages = () => {
               )}
               {activeTab === 'tickets' && (
                 <>
-                  <div className="font-semibold text-base mb-2 text-gray-700">Tickets</div>
                   {tickets.length === 0 ? (
                     <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
                       <span className="mx-0 my-auto">Sin tickets</span>
@@ -382,7 +380,6 @@ const Messages = () => {
               )}
               {activeTab === 'archived' && (
                 <>
-                  <div className="font-semibold text-base mb-2 text-gray-700">Archivados</div>
                   {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
                     <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm" style={{minHeight: '100%'}}>
                       <span className="mx-0 my-auto">Sin archivados</span>
