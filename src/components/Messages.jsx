@@ -296,7 +296,7 @@ const Messages = () => {
         <div className="flex-1 min-h-0 h-full">
           <Card className="rounded-b-xl border bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full min-h-0">
           {/* Pestañas dentro de la tarjeta */}
-          <div className="relative mb-4">
+          <div className="relative">
             <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{alignItems: 'center'}}>
               {TABS.map(tab => (
                 <span
