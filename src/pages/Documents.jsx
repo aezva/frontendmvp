@@ -73,17 +73,17 @@ const Documents = () => {
             <div className="grid grid-cols-4 w-full h-12 min-h-[48px] items-center px-4">
               <span className="text-base font-light text-black">Nombre</span>
               <span className="text-base font-light text-black pl-1">Tipo</span>
-              <span className="text-base font-light text-black pl-2">Fecha</span>
-              <span className="text-base font-light text-black pl-3">Acciones</span>
+              <span className="text-base font-light text-black pl-3">Fecha</span>
+              <span className="text-base font-light text-black pl-6">Acciones</span>
             </div>
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
           {/* Contenido de la tabla con scroll interno */}
           <div className="flex-1 min-h-0 h-full overflow-y-auto relative">
             {/* Líneas divisorias verticales */}
-            <div className="absolute top-0 left-1/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
-            <div className="absolute top-0 left-1/2 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
-            <div className="absolute top-0 left-3/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+            <div className="absolute top-0 left-1/4 bottom-0 w-px z-20 bg-border" />
+            <div className="absolute top-0 left-1/2 bottom-0 w-px z-20 bg-border" />
+            <div className="absolute top-0 left-3/4 bottom-0 w-px z-20 bg-border" />
             <div className="p-4">
               {loading ? (
                 <div className="text-center py-8">Cargando...</div>
