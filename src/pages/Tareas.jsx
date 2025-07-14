@@ -121,7 +121,11 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className={`text-base font-semibold mb-2 ${color}`}>{label}</h2>
+                <h2 className={`text-base font-light mb-2 ${
+  key === 'pending' ? 'text-pink-400' :
+  key === 'in_progress' ? 'text-blue-400' :
+  key === 'completed' ? 'text-green-400' : ''
+}`}>{label}</h2>
                 <div className="flex flex-col gap-2 min-h-[200px]">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
@@ -150,9 +154,12 @@ function Tareas() {
                         ) : (
                           <>
                             <span className="flex-1 text-sm font-normal text-black truncate">{task.name}</span>
-                            <span className={`ml-2 text-xs font-semibold ${estadoColor[task.status]}`}>{label}</span>
-                            <Button size="icon" variant="ghost" onClick={() => { setEditId(task.id); setEditValue(task.name); }}><Edit className="h-4 w-4" /></Button>
-                            <Button size="icon" variant="ghost" onClick={() => handleDelete(task.id)}><Trash2 className="h-4 w-4" /></Button>
+                            <button onClick={() => { setEditId(task.id); setEditValue(task.name); }} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                              <Edit className="h-4 w-4 text-gray-400" />
+                            </button>
+                            <button onClick={() => handleDelete(task.id)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                              <Trash2 className="h-4 w-4 text-gray-400" />
+                            </button>
                           </>
                         )}
                       </motion.div>
