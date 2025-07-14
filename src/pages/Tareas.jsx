@@ -122,9 +122,9 @@ function Tareas() {
                 onDragOver={onDragOver}
               >
                 <h2 className={`text-base font-light mb-2 ${
-  key === 'pending' ? 'text-pink-400' :
-  key === 'in_progress' ? 'text-blue-400' :
-  key === 'completed' ? 'text-green-400' : ''
+  key === 'completed' ? 'text-[#ff9c9c]' :
+  key === 'in_progress' ? 'text-[#fca5a5]' :
+  key === 'pending' ? 'text-[#fecaca]' : ''
 }`}>{label}</h2>
                 <div className="flex flex-col gap-2 min-h-[200px]">
                   <AnimatePresence>
@@ -148,18 +148,26 @@ function Tareas() {
                               className="flex-1 text-sm"
                               autoFocus
                             />
-                            <Button type="submit" size="icon" variant="ghost"><Check className="h-4 w-4" /></Button>
-                            <Button type="button" size="icon" variant="ghost" onClick={() => setEditId(null)}><X className="h-4 w-4" /></Button>
+                            <div className="flex gap-2 ml-2">
+                              <button type="submit" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                                <Check className="h-4 w-4 text-gray-400" />
+                              </button>
+                              <button type="button" onClick={() => setEditId(null)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                                <X className="h-4 w-4 text-gray-400" />
+                              </button>
+                            </div>
                           </form>
                         ) : (
                           <>
                             <span className="flex-1 text-sm font-normal text-black truncate">{task.name}</span>
-                            <button onClick={() => { setEditId(task.id); setEditValue(task.name); }} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                              <Edit className="h-4 w-4 text-gray-400" />
-                            </button>
-                            <button onClick={() => handleDelete(task.id)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                              <Trash2 className="h-4 w-4 text-gray-400" />
-                            </button>
+                            <div className="flex gap-2 ml-2">
+                              <button onClick={() => { setEditId(task.id); setEditValue(task.name); }} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                                <Edit className="h-4 w-4 text-gray-400" />
+                              </button>
+                              <button onClick={() => handleDelete(task.id)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                                <Trash2 className="h-4 w-4 text-gray-400" />
+                              </button>
+                            </div>
                           </>
                         )}
                       </motion.div>
