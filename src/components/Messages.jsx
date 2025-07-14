@@ -315,14 +315,14 @@ const Messages = () => {
           <div className="flex flex-row min-h-[400px] h-full w-full">
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
             <div className="w-full md:w-1/3 flex flex-col overflow-y-auto py-2 pl-0 pr-0 h-full min-h-0">
-              <div className="px-4">
+              <div className="flex-1 flex flex-col px-4">
               {activeTab === 'messages' && (
                 <>
                   <div className="font-semibold text-base mb-2 text-gray-700">Conversaciones</div>
                   {convLoading ? (
                     <div className="flex-1 flex items-center justify-center"><Loader2 className="h-6 w-6 animate-spin" /></div>
                   ) : conversations.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center px-4 text-muted-foreground min-h-[200px]">
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">
                       <span className="mx-0 my-auto">Sin conversaciones</span>
                     </div>
                   ) : (
@@ -349,7 +349,7 @@ const Messages = () => {
                 <>
                   <div className="font-semibold text-base mb-2 text-gray-700">Leads</div>
                   {leads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center px-4 text-muted-foreground min-h-[200px]">
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">
                       <span className="mx-0 my-auto">Sin leads</span>
                     </div>
                   ) : (
@@ -367,7 +367,7 @@ const Messages = () => {
                 <>
                   <div className="font-semibold text-base mb-2 text-gray-700">Tickets</div>
                   {tickets.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center px-4 text-muted-foreground min-h-[200px]">
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">
                       <span className="mx-0 my-auto">Sin tickets</span>
                     </div>
                   ) : (
@@ -385,7 +385,7 @@ const Messages = () => {
                 <>
                   <div className="font-semibold text-base mb-2 text-gray-700">Archivados</div>
                   {archivedTickets.length === 0 && archivedLeads.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center px-4 text-muted-foreground min-h-[200px]">
+                    <div className="flex-1 flex items-center justify-center text-muted-foreground">
                       <span className="mx-0 my-auto">Sin archivados</span>
                     </div>
                   ) : (
