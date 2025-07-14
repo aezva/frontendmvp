@@ -58,8 +58,8 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
       // para ocultar el sidebar, simplemente eliminar esta clase y funcionará correctamente.
       className={cn(
         "fixed top-[52px] left-0 h-[calc(100vh-52px)] bg-background border-r border-border z-40 transition-transform duration-300 ease-in-out",
-        isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full w-64",
-        "md:translate-x-0 md:w-64"
+        isSidebarOpen ? "translate-x-0 w-48" : "-translate-x-full w-48",
+        "md:translate-x-0 md:w-48"
       )}
     >
       <div className="flex flex-col h-full">
