@@ -291,9 +291,10 @@ const Messages = () => {
       <Helmet>
         <title>Mensajes - Asistente IA</title>
       </Helmet>
-      <div className="space-y-6">
-        <h1 className="text-xl font-semibold tracking-tight">Mensajes</h1>
-        <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-[500px]">
+      <div className="flex flex-col flex-1 min-h-0 h-full justify-center">
+        <h1 className="text-xl font-semibold tracking-tight mb-6">Mensajes</h1>
+        <div className="flex-1 min-h-0 h-full">
+          <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full min-h-0">
           {/* Pestañas dentro de la tarjeta */}
           <div className="relative mb-4">
             <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{alignItems: 'center'}}>
@@ -444,7 +445,8 @@ const Messages = () => {
               </div>
             </div>
           </div>
-        </Card>
+          </Card>
+        </div>
       </div>
     </>
   );
