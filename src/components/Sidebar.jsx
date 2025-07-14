@@ -64,7 +64,7 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
     >
       <div className="flex flex-col h-full">
         {/* Elimino el botón para expandir/colapsar sidebar y el divisor superior */}
-        <nav className="flex-1 px-6 py-6 space-y-2">
+        <nav className="flex-1 pl-6 pr-6 py-6 space-y-2">
           {navItems.map(item => (
             <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2.5 text-sm font-medium rounded-lg transition-colors', isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground')}>
               <item.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
@@ -77,8 +77,8 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
             </NavLink>
           ))}
         </nav>
-        <div className="p-4 border-t border-border mt-auto">
-          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-medium rounded-lg text-muted-foreground transition-colors pl-[5px]">
+        <div className="pl-6 pr-6 border-t border-border mt-auto">
+          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-medium rounded-lg text-muted-foreground transition-colors pl-0 pr-0">
             <LogOut className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} />
             <span>Cerrar Sesión</span>
           </button>
