@@ -87,7 +87,7 @@ export default function Topbar({ onToggleSidebar, onToggleChat, isSidebarOpen, i
             )}
           </button>
           {notifOpen && (
-            <div className="absolute right-0 top-[54px] w-80 bg-popover border border-border/50 border-t-0 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
+            <div className="absolute right-0 top-[54px] w-72 bg-popover border border-border/50 border-t-0 rounded-lg shadow-xl max-h-96 overflow-y-auto z-50 backdrop-blur-sm">
               <div className="p-3 border-b border-border/30 font-semibold text-popover-foreground text-sm">Notificaciones</div>
               {notifications.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">Sin notificaciones recientes.</div>

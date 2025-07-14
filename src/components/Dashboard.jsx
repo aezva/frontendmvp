@@ -254,7 +254,7 @@ const Dashboard = () => {
           {/* Columna 1: Tareas Pendientes y Documentos Creados */}
           <div className="flex flex-col gap-6">
             {/* Tareas Pendientes */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-start gap-3 w-full">
                 <div className="flex items-center justify-start w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">Tareas Pendientes</span>
@@ -279,7 +279,7 @@ const Dashboard = () => {
               </div>
             </Card>
             {/* Documentos Creados */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-start gap-3 w-full">
                 <div className="flex items-center justify-start w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">Documentos Creados</span>
@@ -307,7 +307,7 @@ const Dashboard = () => {
           {/* Columna 2: Próximas citas y Próximas reservas */}
           <div className="flex flex-col gap-6">
             {/* Próximas citas */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-start gap-3 w-full">
                 <div className="flex items-center justify-start w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">Próximas Citas</span>
@@ -332,7 +332,7 @@ const Dashboard = () => {
               </div>
             </Card>
             {/* Próximas Reservas */}
-            <Card className="bg-card/50 backdrop-blur-sm hover:bg-[#ff9c9c]/5 hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
+            <Card className="bg-card/50 backdrop-blur-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-center items-center min-h-[180px]">
               <div className="flex flex-col items-start gap-3 w-full">
                 <div className="flex items-center justify-start w-full gap-2 mb-2">
                   <span className="font-semibold text-base text-foreground text-left flex-1">Próximas Reservas</span>
