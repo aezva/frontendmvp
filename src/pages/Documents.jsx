@@ -70,16 +70,20 @@ const Documents = () => {
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
           {/* Encabezados de tabla con estilo de pestañas */}
           <div className="relative">
-            <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{alignItems: 'center'}}>
+            <div className="grid grid-cols-4 w-full h-12 min-h-[48px] items-center px-4">
               <span className="text-base font-light text-black pb-2">Nombre</span>
               <span className="text-base font-light text-black pb-2">Tipo</span>
               <span className="text-base font-light text-black pb-2">Fecha</span>
-              <span className="text-base font-light text-black pb-2">Acciones</span>
+              <span className="text-base font-light text-black pb-2 text-right">Acciones</span>
             </div>
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
           {/* Contenido de la tabla con scroll interno */}
-          <div className="flex-1 min-h-0 h-full overflow-y-auto">
+          <div className="flex-1 min-h-0 h-full overflow-y-auto relative">
+            {/* Líneas divisorias verticales */}
+            <div className="absolute top-0 left-1/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+            <div className="absolute top-0 left-1/2 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
+            <div className="absolute top-0 left-3/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
             <div className="p-4">
               <table className="w-full text-sm">
                 <tbody className="bg-card">
