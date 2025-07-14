@@ -293,10 +293,10 @@ const Messages = () => {
       </Helmet>
       <div className="space-y-6">
         <h1 className="text-xl font-semibold tracking-tight">Mensajes</h1>
-        <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[500px]">
+        <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-[500px]">
           {/* Pestañas dentro de la tarjeta */}
           <div className="relative mb-4">
-            <div className="flex items-center gap-6 w-full">
+            <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start" style={{alignItems: 'center'}}>
               {TABS.map(tab => (
                 <span
                   key={tab.key}
@@ -313,7 +313,8 @@ const Messages = () => {
           {/* Cambia el layout de los paneles dentro de la tarjeta: */}
           <div className="flex flex-row gap-6 min-h-[400px] h-full">
             {/* Panel izquierdo: lista de conversaciones, leads o tickets */}
-            <div className="w-full md:w-1/3 flex flex-col gap-4 pr-4 overflow-y-auto">
+            <div className="w-full md:w-1/3 flex flex-col gap-4 overflow-y-auto py-2 pl-0 pr-0">
+              <div className="px-4">
               {activeTab === 'messages' && (
                 <>
                   <div className="font-semibold text-base mb-2 text-gray-700">Conversaciones</div>
@@ -390,12 +391,14 @@ const Messages = () => {
                   )}
                 </>
               )}
+              </div>
             </div>
             {/* Panel derecho: mensajes de la conversación seleccionada */}
-            <div className="flex-1 flex flex-col min-w-0 border-l border-border pl-6">
+            <div className="flex-1 flex flex-col min-w-0 border-l border-border py-2 pl-0 pr-0">
+              <div className="px-4 h-full flex flex-col">
               {activeTab === 'messages' && selectedConversation ? (
                 <>
-                  <div className="flex-1 p-4 overflow-y-auto space-y-4">
+                  <div className="flex-1 p-0 overflow-y-auto space-y-4">
                     {loading ? (
                       <div className="flex justify-center items-center h-full"><Loader2 className="h-8 w-8 animate-spin" /></div>
                     ) : (
@@ -414,7 +417,7 @@ const Messages = () => {
                     )}
                     <div ref={messagesEndRef} />
                   </div>
-                  <form onSubmit={handleSendMessage} className="p-4 border-t border-border mt-auto">
+                  <form onSubmit={handleSendMessage} className="p-0 border-t border-border mt-auto">
                     <div className="relative">
                       <Input
                         placeholder="Escribe un mensaje..."
@@ -436,6 +439,7 @@ const Messages = () => {
                     : 'Selecciona un ticket o lead para ver más detalles (próximamente).'}
                 </div>
               )}
+              </div>
             </div>
           </div>
         </Card>
