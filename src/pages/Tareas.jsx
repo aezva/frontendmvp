@@ -98,7 +98,7 @@ function Tareas() {
     return (
       <div className="flex flex-col flex-1 min-h-0 h-full">
         <Helmet><title>Tareas - NNIA</title></Helmet>
-        <h1 className="text-xl font-semibold tracking-tight">Tareas</h1>
+        <h1 className="text-xl font-semibold tracking-tight mb-6">Tareas</h1>
         <form onSubmit={handleCreate} className="flex gap-2 mb-4">
           <Input
             value={newTask}
