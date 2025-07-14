@@ -74,7 +74,7 @@ const Documents = () => {
               <span className="text-base font-light text-black">Nombre</span>
               <span className="text-base font-light text-black pl-1">Tipo</span>
               <span className="text-base font-light text-black pl-2">Fecha</span>
-              <span className="text-base font-light text-black pl-1">Acciones</span>
+              <span className="text-base font-light text-black pl-3">Acciones</span>
             </div>
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
           </div>
@@ -85,29 +85,39 @@ const Documents = () => {
             <div className="absolute top-0 left-1/2 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
             <div className="absolute top-0 left-3/4 bottom-0 w-px z-20" style={{ background: 'var(--border-color, #e5e7eb)' }} />
             <div className="p-4">
-              <table className="w-full text-sm">
-                <tbody className="bg-card">
-                  {loading ? (
-                    <tr><td colSpan={4} className="text-center py-8">Cargando...</td></tr>
-                  ) : documents.length === 0 ? (
-                    null
-                  ) : (
-                    documents.map(doc => (
-                      <tr key={doc.id} className="border-b border-border">
-                        <td className="px-6 py-4 whitespace-nowrap font-medium">{doc.name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{doc.file_type || 'Texto'}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{new Date(doc.created_at).toLocaleString()}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right flex gap-2 justify-end">
-                          <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)}><Eye className="h-4 w-4" /></Button>
-                          <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)}><Edit className="h-4 w-4" /></Button>
-                          <Button size="icon" variant="ghost" title="Descargar" onClick={() => window.open(doc.file_url, '_blank')} disabled={!doc.file_url}><Download className="h-4 w-4" /></Button>
-                          <Button size="icon" variant="ghost" title="Eliminar"><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+              {loading ? (
+                <div className="text-center py-8">Cargando...</div>
+              ) : documents.length === 0 ? (
+                null
+              ) : (
+                <div className="space-y-3">
+                  {documents.map(doc => (
+                    <div key={doc.id} className="flex items-center bg-white rounded-lg border px-6 py-4 shadow-sm group">
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-black truncate">{doc.name}</div>
+                        <div className="text-sm text-gray-500">{doc.file_type || 'Texto'}</div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-gray-500">{new Date(doc.created_at).toLocaleString()}</div>
+                      </div>
+                      <div className="flex gap-2 ml-4">
+                        <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                          <Eye className="h-4 w-4 text-[#ff9c9c]" />
+                        </Button>
+                        <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                          <Edit className="h-4 w-4 text-[#ff9c9c]" />
+                        </Button>
+                        <Button size="icon" variant="ghost" title="Descargar" onClick={() => window.open(doc.file_url, '_blank')} disabled={!doc.file_url} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                          <Download className="h-4 w-4 text-[#ff9c9c]" />
+                        </Button>
+                        <Button size="icon" variant="ghost" title="Eliminar" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
+                          <Trash2 className="h-4 w-4 text-[#ff9c9c]" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </Card>
