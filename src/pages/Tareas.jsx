@@ -1,0 +1,151 @@
+import React, { useEffect, useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useAuth } from '@/contexts/AuthContext';
+import { fetchTasks, createTask, updateTask, deleteTask } from '@/services/tasksService';
+import { Helmet } from 'react-helmet';
+import { Loader2, Edit, Trash2, Check, X, GripVertical } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const estados = [
+  { key: 'pending', label: 'Pendientes', color: 'text-[#ff9c9c]' },
+  { key: 'in_progress', label: 'En Progreso', color: 'text-blue-500' },
+  { key: 'completed', label: 'Completadas', color: 'text-green-500' },
+];
+
+const estadoColor = {
+  pending: 'text-[#ff9c9c]',
+  in_progress: 'text-blue-500',
+  completed: 'text-green-500',
+};
+
+function Tareas() {
+  const { client } = useAuth();
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [newTask, setNewTask] = useState('');
+  const [editId, setEditId] = useState(null);
+  const [editValue, setEditValue] = useState('');
+  const [dragged, setDragged] = useState(null);
+
+  useEffect(() => {
+    if (!client) return;
+    setLoading(true);
+    fetchTasks(client.id)
+      .then(setTasks)
+      .finally(() => setLoading(false));
+  }, [client]);
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    if (!newTask.trim()) return;
+    const task = await createTask(client.id, { name: newTask, status: 'pending' });
+    setTasks((prev) => [...prev, task]);
+    setNewTask('');
+  };
+
+  const handleEdit = async (id) => {
+    if (!editValue.trim()) return;
+    const updated = await updateTask(id, { name: editValue });
+    setTasks((prev) => prev.map(t => t.id === id ? updated : t));
+    setEditId(null);
+    setEditValue('');
+  };
+
+  const handleDelete = async (id) => {
+    await deleteTask(id);
+    setTasks((prev) => prev.filter(t => t.id !== id));
+  };
+
+  const onDragStart = (e, id) => {
+    setDragged(id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const onDrop = async (e, estado) => {
+    e.preventDefault();
+    if (!dragged) return;
+    const task = tasks.find(t => t.id === dragged);
+    if (task.status !== estado) {
+      const updated = await updateTask(dragged, { status: estado });
+      setTasks((prev) => prev.map(t => t.id === dragged ? updated : t));
+    }
+    setDragged(null);
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div className="space-y-8">
+      <Helmet><title>Tareas - NNIA</title></Helmet>
+      <h1 className="text-xl font-semibold tracking-tight">Tareas</h1>
+      <form onSubmit={handleCreate} className="flex gap-2 mb-4">
+        <Input
+          value={newTask}
+          onChange={e => setNewTask(e.target.value)}
+          placeholder="Nueva tarea..."
+          className="flex-1"
+        />
+        <Button type="submit" variant="default">Crear</Button>
+      </form>
+      {loading ? (
+        <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {estados.map(({ key, label, color }) => (
+            <Card
+              key={key}
+              className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-[300px]"
+              onDrop={e => onDrop(e, key)}
+              onDragOver={onDragOver}
+            >
+              <h2 className={`text-base font-semibold mb-2 ${color}`}>{label}</h2>
+              <div className="flex flex-col gap-2 min-h-[200px]">
+                <AnimatePresence>
+                  {tasks.filter(t => t.status === key).map(task => (
+                    <motion.div
+                      key={task.id}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      draggable
+                      onDragStart={e => onDragStart(e, task.id)}
+                      className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
+                    >
+                      <GripVertical className="mr-2 h-4 w-4 text-gray-300 group-hover:text-gray-400" />
+                      {editId === task.id ? (
+                        <form onSubmit={e => { e.preventDefault(); handleEdit(task.id); }} className="flex-1 flex gap-2">
+                          <Input
+                            value={editValue}
+                            onChange={e => setEditValue(e.target.value)}
+                            className="flex-1 text-sm"
+                            autoFocus
+                          />
+                          <Button type="submit" size="icon" variant="ghost"><Check className="h-4 w-4" /></Button>
+                          <Button type="button" size="icon" variant="ghost" onClick={() => setEditId(null)}><X className="h-4 w-4" /></Button>
+                        </form>
+                      ) : (
+                        <>
+                          <span className="flex-1 text-sm font-normal text-black truncate">{task.name}</span>
+                          <span className={`ml-2 text-xs font-semibold ${estadoColor[task.status]}`}>{label}</span>
+                          <Button size="icon" variant="ghost" onClick={() => { setEditId(task.id); setEditValue(task.name); }}><Edit className="h-4 w-4" /></Button>
+                          <Button size="icon" variant="ghost" onClick={() => handleDelete(task.id)}><Trash2 className="h-4 w-4" /></Button>
+                        </>
+                      )}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Tareas; 

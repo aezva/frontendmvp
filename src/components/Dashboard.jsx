@@ -9,6 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { fetchAppointments } from '@/services/appointmentsService';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { fetchTasks } from '@/services/tasksService';
 
 const Dashboard = () => {
   const { client } = useAuth();
@@ -129,13 +130,8 @@ const Dashboard = () => {
     async function fetchLastTasks() {
       if (!client) return;
       try {
-        const { data, error } = await supabase
-          .from('tasks')
-          .select('*')
-          .eq('client_id', client.id)
-          .order('updated_at', { ascending: false })
-          .limit(2);
-        setLastTasks(data || []);
+        const data = await fetchTasks(client.id);
+        setLastTasks(data.slice(-2));
       } catch {
         setLastTasks([]);
       }
@@ -261,13 +257,13 @@ const Dashboard = () => {
                   <svg width="20" height="20" fill="none" stroke="#ff9c9c" strokeWidth="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2l4 -4"/><circle cx="12" cy="12" r="9"/></svg>
                 </div>
                 {lastTasks.length === 0 ? (
-                  <span className="text-sm text-gray-500 font-normal text-left">No hay tareas pendientes.</span>
+                  <span className="text-sm text-gray-500 font-normal text-left">No hay tareas.</span>
                 ) : (
                   <ul className="w-full mt-2">
                     {lastTasks.map(task => (
-                      <li key={task.id} className="py-1 flex flex-col gap-0.5">
-                        <span className="text-sm font-normal text-black">{task.name || task.title || 'Tarea'}</span>
-                        <span className="text-xs font-normal" style={{ color: '#ff9c9c' }}>{task.updated_at ? new Date(task.updated_at).toLocaleString() : ''}</span>
+                      <li key={task.id} className="py-1 flex flex-row items-center gap-2">
+                        <span className="text-sm font-normal text-black flex-1 truncate">{task.name || task.title || 'Tarea'}</span>
+                        <span className={`text-xs font-semibold ${task.status === 'completed' ? 'text-green-500' : task.status === 'in_progress' ? 'text-blue-500' : 'text-[#ff9c9c]'}`}>{task.status === 'completed' ? 'Completada' : task.status === 'in_progress' ? 'En Progreso' : 'Pendiente'}</span>
                       </li>
                     ))}
                   </ul>
