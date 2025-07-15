@@ -91,7 +91,7 @@ const Documents = () => {
             <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" style={{ marginTop: 0 }} />
           </div>
           {/* Contenido separado del borde superior igual que en otras páginas */}
-          <div className="flex-1 min-h-0 h-full flex flex-col" style={{ paddingTop: 24 }}>
+          <div className="flex-1 min-h-0 h-full flex flex-col">
             {activeTab === 'all' && (
               <DocumentsTable 
                 documents={documents} 
