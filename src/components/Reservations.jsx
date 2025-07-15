@@ -289,11 +289,9 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
     { value: 'sunday', label: 'Domingo' }
   ];
 
-  // Solo actualiza el estado local si la disponibilidad realmente cambia
   useEffect(() => {
     if (!availability) return;
     setConfig(prev => {
-      // Compara si hay cambios reales
       const daysEqual = Array.isArray(availability.days) && Array.isArray(prev.days) &&
         availability.days.length === prev.days.length &&
         availability.days.every((d, i) => d === prev.days[i]);
@@ -320,7 +318,6 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
         hours: config.hours,
         advance_booking_days: config.advance_booking_days
       });
-      // Actualiza el estado local con lo que devuelve el backend
       setConfig({
         days: saved.days || [],
         hours: saved.hours || '',
@@ -342,7 +339,7 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
     }
   };
 
-  const toggleDay = (day) => {
+  const handleToggleDay = (day) => {
     setConfig(prev => ({
       ...prev,
       days: prev.days.includes(day)
@@ -352,67 +349,57 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Configurar Disponibilidad de Reservas</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Días de la semana */}
-        <div>
-          <h3 className="font-semibold mb-3">Días disponibles</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {daysOfWeek.map((day) => (
-              <label key={day.value} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={config.days.includes(day.value)}
-                  onChange={() => toggleDay(day.value)}
-                  className="rounded"
-                  disabled={isSaving}
-                />
-                <span>{day.label}</span>
-              </label>
-            ))}
-          </div>
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <label className="text-black text-sm font-normal">Días disponibles</label>
+        <div className="flex flex-wrap gap-3 mt-1">
+          {daysOfWeek.map(day => (
+            <button
+              key={day.value}
+              type="button"
+              className={`text-sm font-normal select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${config.days.includes(day.value) ? 'text-[#ff9c9c]' : 'text-gray-500'} hover:text-[#ff9c9c]`}
+              style={{ minWidth: 'unset' }}
+              onClick={() => handleToggleDay(day.value)}
+              disabled={isSaving}
+            >
+              {day.label}
+            </button>
+          ))}
         </div>
-
-        {/* Horarios */}
-        <div>
-          <h3 className="font-semibold mb-3">Horarios disponibles</h3>
-          <textarea
-            value={config.hours}
-            onChange={(e) => setConfig({ ...config, hours: e.target.value })}
-            placeholder="Ej: 12:00-15:00, 19:00-23:00"
-            className="w-full border rounded-md p-2 h-20 focus:ring-0 focus:outline-none"
-            disabled={isSaving}
-          />
-          <p className="text-sm text-gray-500 mt-1">
-            Formato: HH:MM-HH:MM, HH:MM-HH:MM (separar múltiples horarios con comas)
-          </p>
-        </div>
-
-        {/* Días de anticipación */}
-        <div>
-          <h3 className="font-semibold mb-3">Días de anticipación para reservas</h3>
-          <input
-            type="number"
-            value={config.advance_booking_days}
-            onChange={(e) => setConfig({ ...config, advance_booking_days: parseInt(e.target.value) || 30 })}
-            className="border rounded-md p-2 w-32 focus:ring-0 focus:outline-none"
-            min="1"
-            max="365"
-            disabled={isSaving}
-          />
-          <p className="text-sm text-gray-500 mt-1">
-            Número de días con anticipación que se pueden hacer reservas
-          </p>
-        </div>
-
-        <Button onClick={handleSave} className="w-full" disabled={isSaving}>
-          {isSaving ? 'Guardando...' : 'Guardar Configuración'}
-        </Button>
-      </CardContent>
-    </Card>
+      </div>
+      <div className="space-y-2">
+        <label className="text-black text-sm font-normal">Horarios disponibles</label>
+        <input
+          type="text"
+          placeholder="Ej: 12:00-15:00, 19:00-23:00"
+          value={config.hours}
+          onChange={e => setConfig({ ...config, hours: e.target.value })}
+          className="text-sm font-normal text-gray-500 placeholder-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+          disabled={isSaving}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-black text-sm font-normal">Días de anticipación para reservas</label>
+        <input
+          type="number"
+          value={config.advance_booking_days}
+          onChange={e => setConfig({ ...config, advance_booking_days: parseInt(e.target.value) || 30 })}
+          className="text-sm font-normal text-gray-500 w-32 border rounded-md p-2 focus:ring-0 focus:outline-none"
+          min="1"
+          max="365"
+          disabled={isSaving}
+        />
+      </div>
+      <button
+        type="button"
+        onClick={handleSave}
+        disabled={isSaving}
+        className="w-full mt-4 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+        style={{ background: '#ff9c9c' }}
+      >
+        {isSaving ? 'Guardando...' : 'Guardar'}
+      </button>
+    </div>
   );
 }
 
