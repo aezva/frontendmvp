@@ -187,8 +187,8 @@ const WidgetSettings = () => {
           </div>
           <div className="h-px w-full bg-border" style={{margin: 0, borderRadius: 0}} />
           <div className="flex-1 flex flex-col w-full px-6">
-            <TabsContent value="appearance" className="flex flex-col h-full">
-              <form className="flex flex-col space-y-6 mt-4 h-full" onSubmit={e => { e.preventDefault(); saveWidgetConfig(); }}>
+            <TabsContent value="appearance" className="flex flex-col">
+              <form className="flex flex-col space-y-6 mt-4" onSubmit={e => { e.preventDefault(); saveWidgetConfig(); }}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-0">
                   {/* Elimino el campo de posición del widget */}
                   <div className="space-y-2">
