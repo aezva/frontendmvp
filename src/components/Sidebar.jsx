@@ -15,7 +15,7 @@ const navItems = [
   { href: '/tareas', label: 'Tareas', icon: ListChecks },
   { href: '/documents', label: 'Documentos', icon: FileText },
   { href: '/citas', label: 'Citas', icon: Calendar },
-  { href: '/reservas', label: 'Reservas', icon: Calendar },
+  // { href: '/reservas', label: 'Reservas', icon: Calendar }, // Oculto temporalmente
   { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
   { href: '/widget', label: 'Widget', icon: MessageCircle },
   { href: '/subscription', label: 'Suscripción', icon: CreditCard },

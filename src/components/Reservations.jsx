@@ -255,7 +255,7 @@ function ReservationTypes({ clientId, types, onRefresh }) {
 }
 
 // Componente para configurar disponibilidad
-function ReservationAvailability({ clientId, availability, onRefresh }) {
+function ReservationAvailability({ clientId, availability, onRefresh, hideSaveButton }) {
   const [config, setConfig] = useState({
     days: [],
     hours: '',
@@ -375,15 +375,28 @@ function ReservationAvailability({ clientId, availability, onRefresh }) {
           disabled={isSaving}
         />
       </div>
-      <button
-        type="button"
-        onClick={handleSave}
-        disabled={isSaving}
-        className="w-full mt-4 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-        style={{ background: '#ff9c9c' }}
-      >
-        {isSaving ? 'Guardando...' : 'Guardar'}
-      </button>
+      {!hideSaveButton && (
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={isSaving}
+          className="w-full mt-4 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+          style={{ background: '#ff9c9c' }}
+        >
+          {isSaving ? 'Guardando...' : 'Guardar'}
+        </button>
+      )}
+      {hideSaveButton && (
+        <button
+          type="button"
+          id="save-reservation-availability"
+          onClick={handleSave}
+          disabled={isSaving}
+          style={{ display: 'none' }}
+        >
+          Guardar
+        </button>
+      )}
     </div>
   );
 }
@@ -496,11 +509,20 @@ export default function Reservations() {
               clientId={clientId}
               availability={availability}
               onRefresh={loadData}
+              hideSaveButton={true}
             />
             <div className="mt-8">
               <h2 className="text-base font-medium text-black mb-4">Tipos de Reserva</h2>
               <ReservationTypes clientId={clientId} types={types} onRefresh={loadData} />
             </div>
+            <button
+              type="button"
+              onClick={() => document.getElementById('save-reservation-availability').click()}
+              className="w-full mt-8 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+              style={{ background: '#ff9c9c' }}
+            >
+              Guardar
+            </button>
           </section>
         </div>
         {/* Columna de reservas agendadas */}
