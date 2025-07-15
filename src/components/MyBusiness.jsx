@@ -289,9 +289,6 @@ const MyBusiness = () => {
               <TabsTrigger value="content" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
                 <FileText className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Contenido
               </TabsTrigger>
-              <TabsTrigger value="social" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
-                <Users className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Social
-              </TabsTrigger>
             </TabsList>
           </div>
           <div className="h-px w-full bg-border" style={{margin: 0, borderRadius: 0}} />
@@ -415,6 +412,18 @@ const MyBusiness = () => {
                       value={businessInfo.business_website} 
                       onChange={(e) => handleInputChange('business_website', e.target.value)}
                       placeholder="Ej: www.miempresa.com"
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="business_social_media">Redes Sociales</Label>
+                    <Textarea 
+                      id="business_social_media" 
+                      rows={4} 
+                      value={businessInfo.business_social_media} 
+                      onChange={(e) => handleInputChange('business_social_media', e.target.value)}
+                      placeholder="Enlaces a redes sociales: Facebook, Instagram, LinkedIn, Twitter, etc."
                       className="text-sm font-normal text-gray-500 placeholder-gray-500"
                     />
                   </div>
@@ -559,75 +568,6 @@ const MyBusiness = () => {
                       placeholder="Políticas de la empresa, garantías, términos de servicio"
                       className="text-sm font-normal text-gray-500 placeholder-gray-500"
                     />
-                  </div>
-                </form>
-              </TabsContent>
-              {/* Social */}
-              <TabsContent value="social" className="flex flex-col">
-                <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-4">
-                  <div className="grid grid-cols-1 gap-6 mt-0">
-                    <div className="space-y-2">
-                      <Label htmlFor="business_social_media">Redes Sociales</Label>
-                      <Textarea 
-                        id="business_social_media" 
-                        rows={4} 
-                        value={businessInfo.business_social_media} 
-                        onChange={(e) => handleInputChange('business_social_media', e.target.value)}
-                        placeholder="Enlaces a redes sociales: Facebook, Instagram, LinkedIn, Twitter, etc."
-                        className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="business_website">Sitio Web</Label>
-                      <Input 
-                        id="business_website" 
-                        value={businessInfo.business_website} 
-                        onChange={(e) => handleInputChange('business_website', e.target.value)}
-                        placeholder="Ej: www.miempresa.com"
-                        className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="business_logo_url">URL del Logo</Label>
-                      <Input 
-                        id="business_logo_url" 
-                        value={businessInfo.business_logo_url} 
-                        onChange={(e) => handleInputChange('business_logo_url', e.target.value)}
-                        placeholder="https://ejemplo.com/logo.png"
-                        className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                      />
-                      <div className="flex flex-col gap-2 mt-2">
-                        <label htmlFor="logo-upload">
-                          <Button type="button" variant="outline" asChild disabled={uploadingLogo}>
-                            <span>{uploadingLogo ? 'Subiendo...' : 'Subir Logo'}</span>
-                          </Button>
-                        </label>
-                        <input id="logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleLogoChange} />
-                        <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
-                        {businessInfo.business_logo_url && (
-                          <div className="mt-2">
-                            <img 
-                              src={businessInfo.business_logo_url} 
-                              alt="Logo del negocio" 
-                              className="max-w-32 max-h-32 w-auto h-auto rounded-lg object-contain border border-gray-200" 
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="business_banner_url">URL del Banner</Label>
-                      <Input 
-                        id="business_banner_url" 
-                        value={businessInfo.business_banner_url} 
-                        onChange={(e) => handleInputChange('business_banner_url', e.target.value)}
-                        placeholder="https://ejemplo.com/banner.png"
-                        className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                      />
-                    </div>
                   </div>
                 </form>
               </TabsContent>
