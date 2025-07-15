@@ -44,7 +44,7 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
             <button
               key={day}
               type="button"
-              className={`text-sm font-normal select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${availability.days.includes(day) ? 'text-[#ff9c9c]' : 'text-gray-500'}`}
+              className={`text-sm font-normal select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${availability.days.includes(day) ? 'text-[#ff9c9c]' : 'text-gray-500'} hover:text-[#ff9c9c]`}
               style={{ minWidth: 'unset' }}
               onClick={() => handleToggleDay(day)}
             >
@@ -70,7 +70,7 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
             <button
               key={type.value}
               type="button"
-              className={`text-sm font-normal select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${availability.types.includes(type.value) ? 'text-[#ff9c9c]' : 'text-gray-500'}`}
+              className={`text-sm font-normal select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${availability.types.includes(type.value) ? 'text-[#ff9c9c]' : 'text-gray-500'} hover:text-[#ff9c9c]`}
               style={{ minWidth: 'unset' }}
               onClick={() => handleToggleType(type.value)}
             >

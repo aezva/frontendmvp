@@ -64,13 +64,8 @@ const DocumentsTable = ({ documents, loading, onView, onEdit, onDownload, onDele
       <div className="grid grid-cols-4 w-full h-12 min-h-[48px] items-center px-4">
         {table.getHeaderGroups().map(headerGroup =>
           headerGroup.headers.map(header => (
-            <div key={header.id} className="flex items-center select-none cursor-pointer" onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}>
+            <div key={header.id} className="flex items-center select-none">
               {flexRender(header.column.columnDef.header, header.getContext())}
-              {header.column.getCanSort() && (
-                <span className="ml-1 text-xs">
-                  {header.column.getIsSorted() === 'asc' ? '▲' : header.column.getIsSorted() === 'desc' ? '▼' : ''}
-                </span>
-              )}
             </div>
           ))
         )}
