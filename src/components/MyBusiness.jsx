@@ -293,8 +293,8 @@ const MyBusiness = () => {
               </TabsTrigger>
             </TabsList>
             {/* General */}
-            <TabsContent value="general" className="pt-6 flex-1 flex flex-col min-h-0">
-              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col min-h-0 h-full">
+            <TabsContent value="general" className="pt-6 flex flex-col">
+              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label className="text-black text-sm font-normal">Nombre del Negocio *</Label>
@@ -377,8 +377,8 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Contacto */}
-            <TabsContent value="contact" className="pt-6 flex-1 flex flex-col min-h-0">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <TabsContent value="contact" className="pt-6 flex flex-col">
+              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="business_phone">Teléfono</Label>
@@ -451,8 +451,8 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Servicios */}
-            <TabsContent value="services" className="pt-6 flex-1 flex flex-col min-h-0">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <TabsContent value="services" className="pt-6 flex flex-col">
+              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                 <div className="space-y-2">
                   <Label htmlFor="business_services">Servicios Ofrecidos</Label>
                   <Textarea 
@@ -479,8 +479,8 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Contenido */}
-            <TabsContent value="content" className="pt-6 flex-1 flex flex-col min-h-0">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <TabsContent value="content" className="pt-6 flex flex-col">
+              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                 <div className="space-y-2">
                   <Label htmlFor="business_about">Sobre Nosotros</Label>
                   <Textarea 
@@ -568,8 +568,8 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Social */}
-            <TabsContent value="social" className="pt-6 flex-1 flex flex-col min-h-0">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <TabsContent value="social" className="pt-6 flex flex-col">
+              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                 <div className="space-y-2">
                   <Label htmlFor="business_social_media">Redes Sociales</Label>
                   <Textarea 
