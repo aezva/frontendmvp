@@ -160,7 +160,7 @@ export default function Citas() {
             <div className="flex flex-col gap-6 min-h-0 flex-1">
               {estadosCita.map(({ key, label, color }) => (
                 <div key={key} className="flex-1 flex flex-col min-h-[120px]">
-                  <div className={`mb-2 text-sm font-medium ${color}`}>{label}</div>
+                  <div className="mb-2 text-black text-sm font-normal">{label}</div>
                   <div
                     className="flex flex-col gap-3 min-h-[60px] flex-1"
                     onDrop={e => onDropCita(e, key)}
