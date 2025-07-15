@@ -168,101 +168,86 @@ function ReservationTypes({ clientId, types, onRefresh }) {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Crear nuevo tipo */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Añadir Nuevo Tipo de Reserva</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <input
-              type="text"
-              placeholder="Nombre (ej: Mesa para 4)"
-              value={newType.name}
-              onChange={(e) => setNewType({ ...newType, name: e.target.value })}
-              className="border rounded-md p-2 focus:ring-0 focus:outline-none"
-            />
-            <input
-              type="text"
-              placeholder="Descripción"
-              value={newType.description}
-              onChange={(e) => setNewType({ ...newType, description: e.target.value })}
-              className="border rounded-md p-2 focus:ring-0 focus:outline-none"
-            />
-            <input
-              type="number"
-              placeholder="Capacidad"
-              value={newType.capacity}
-              onChange={(e) => setNewType({ ...newType, capacity: parseInt(e.target.value) || 1 })}
-              className="border rounded-md p-2 focus:ring-0 focus:outline-none"
-            />
-          </div>
-          <Button 
-            onClick={handleCreateType}
-            disabled={!newType.name}
-            className="mt-4"
-          >
-            Añadir Tipo
-          </Button>
-        </CardContent>
-      </Card>
-
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <label className="text-black text-sm font-normal">Añadir tipo de reserva</label>
+        <div className="flex flex-col gap-2">
+          <input
+            type="text"
+            placeholder="Nombre (ej: Mesa para 4)"
+            value={newType.name}
+            onChange={e => setNewType({ ...newType, name: e.target.value })}
+            className="text-sm font-normal text-gray-500 placeholder-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+          />
+          <input
+            type="text"
+            placeholder="Descripción"
+            value={newType.description}
+            onChange={e => setNewType({ ...newType, description: e.target.value })}
+            className="text-sm font-normal text-gray-500 placeholder-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+          />
+          <input
+            type="number"
+            placeholder="Capacidad"
+            value={newType.capacity}
+            onChange={e => setNewType({ ...newType, capacity: parseInt(e.target.value) || 1 })}
+            className="text-sm font-normal text-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+            min={1}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleCreateType}
+          disabled={!newType.name}
+          className="w-full mt-2 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+          style={{ background: '#ff9c9c' }}
+        >
+          Añadir tipo
+        </button>
+      </div>
       {/* Lista de tipos existentes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="space-y-2">
         {types.map((type) => (
-          <Card key={type.id}>
-            <CardContent className="p-4">
-              {editingType?.id === type.id ? (
-                <div className="space-y-2">
-                  <input
-                    type="text"
-                    value={editingType.name}
-                    onChange={(e) => setEditingType({ ...editingType, name: e.target.value })}
-                    className="border rounded-md p-2 w-full focus:ring-0 focus:outline-none"
-                  />
-                  <input
-                    type="text"
-                    value={editingType.description}
-                    onChange={(e) => setEditingType({ ...editingType, description: e.target.value })}
-                    className="border rounded-md p-2 w-full focus:ring-0 focus:outline-none"
-                  />
-                  <input
-                    type="number"
-                    value={editingType.capacity}
-                    onChange={(e) => setEditingType({ ...editingType, capacity: parseInt(e.target.value) || 1 })}
-                    className="border rounded-md p-2 w-full focus:ring-0 focus:outline-none"
-                  />
-                  <div className="flex gap-2">
-                    <Button size="sm" onClick={handleUpdateType}>Guardar</Button>
-                    <Button size="sm" variant="outline" onClick={() => setEditingType(null)}>Cancelar</Button>
-                  </div>
+          <div key={type.id} className="flex flex-col border rounded-md p-2 bg-white">
+            {editingType?.id === type.id ? (
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={editingType.name}
+                  onChange={e => setEditingType({ ...editingType, name: e.target.value })}
+                  className="text-sm font-normal text-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+                />
+                <input
+                  type="text"
+                  value={editingType.description}
+                  onChange={e => setEditingType({ ...editingType, description: e.target.value })}
+                  className="text-sm font-normal text-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+                />
+                <input
+                  type="number"
+                  value={editingType.capacity}
+                  onChange={e => setEditingType({ ...editingType, capacity: parseInt(e.target.value) || 1 })}
+                  className="text-sm font-normal text-gray-500 w-full border rounded-md p-2 focus:ring-0 focus:outline-none"
+                />
+                <div className="flex gap-2">
+                  <button className="px-3 py-1 bg-green-600 text-white rounded text-sm" onClick={handleUpdateType}>Guardar</button>
+                  <button className="px-3 py-1 bg-gray-300 rounded text-sm" onClick={() => setEditingType(null)}>Cancelar</button>
                 </div>
-              ) : (
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold">{type.name}</h3>
-                  <p className="text-sm text-gray-600">{type.description}</p>
-                  <p className="text-sm text-gray-500">Capacidad: {type.capacity}</p>
-                  <div className="flex gap-2 mt-3">
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={() => setEditingType(type)}
-                    >
-                      Editar
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="destructive"
-                      onClick={() => handleDeleteType(type.id)}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
+                  <div className="font-semibold text-sm">{type.name}</div>
+                  <div className="text-xs text-gray-600">{type.description}</div>
+                  <div className="text-xs text-gray-500">Capacidad: {type.capacity}</div>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+                <div className="flex gap-2 mt-0">
+                  <button className="p-1 text-blue-600 hover:bg-blue-100 rounded text-xs" onClick={() => setEditingType(type)}>Editar</button>
+                  <button className="p-1 text-red-600 hover:bg-red-100 rounded text-xs" onClick={() => handleDeleteType(type.id)}>Eliminar</button>
+                </div>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>
