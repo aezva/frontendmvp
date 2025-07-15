@@ -46,6 +46,7 @@ const WidgetSettings = () => {
 
   const [embedCode, setEmbedCode] = useState('')
   const [uploadingWidgetLogo, setUploadingWidgetLogo] = useState(false)
+  const [activeTab, setActiveTab] = useState('appearance');
 
   useEffect(() => {
     loadWidgetConfig()
@@ -173,7 +174,7 @@ const WidgetSettings = () => {
       <h1 className="text-xl font-semibold tracking-tight mb-1">Configuración del Widget</h1>
       <p className="text-muted-foreground mb-6">Personaliza la apariencia y comportamiento del widget de chat en tu sitio web.</p>
       <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full pt-0 pb-6">
-        <Tabs defaultValue="appearance" className="flex-1 flex flex-col h-full w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col h-full w-full">
           <div className="w-full flex px-6">
             <TabsList className="flex items-center gap-6 h-12 min-h-[48px] justify-start bg-transparent rounded-none border-none shadow-none w-full" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none', borderBottom: 'none' }}>
               <TabsTrigger value="appearance" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
@@ -263,65 +264,66 @@ const WidgetSettings = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex justify-end w-full mt-auto pt-6 pr-6">
-                  <button
-                    type="submit"
-                    className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-                    style={{ background: '#ff9c9c' }}
-                    disabled={isLoading}
-                  >
-                    Guardar
-                  </button>
-                </div>
               </form>
             </TabsContent>
             <TabsContent value="embed" className="flex flex-col">
-              <form className="flex flex-col space-y-6 mt-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Columna izquierda: Código HTML */}
-                  <div className="flex flex-col">
-                    <Label className="mb-2">Código HTML</Label>
-                    <div className="flex flex-col items-start w-full">
-                      <div className="w-full flex flex-row items-start justify-start gap-4">
-                        <pre className="flex-1 bg-gray-100 rounded-md p-4 text-xs overflow-x-auto select-all border border-gray-200" style={{ fontFamily: 'monospace', margin: 0 }}>{embedCode}</pre>
-                        <button
-                          type="button"
-                          onClick={copyEmbedCode}
-                          className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
-                          style={{ background: '#ff9c9c' }}
-                        >
-                          Copiar código
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Columna derecha: Video tutorial e instrucciones */}
-                  <div className="flex flex-col space-y-6">
-                    {/* Espacio para video tutorial */}
-                    <div className="space-y-2">
-                      <Label>Video Tutorial</Label>
-                      <div className="bg-gray-100 rounded-md p-8 border border-gray-200 flex items-center justify-center">
-                        <p className="text-gray-500 text-sm">Video tutorial próximamente</p>
-                      </div>
-                    </div>
-                    
-                    {/* Instrucciones rápidas */}
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                      <h3 className="font-medium text-blue-900 mb-2">Instrucciones Rápidas</h3>
-                      <ol className="text-sm text-blue-800 space-y-1">
-                        <li>1. Copia el código HTML de la izquierda</li>
-                        <li>2. Pega el código en tu sitio web antes del cierre de &lt;/body&gt;</li>
-                        <li>3. El widget aparecerá automáticamente en tu página</li>
-                        <li>4. Los visitantes podrán chatear con tu asistente NNIA</li>
-                      </ol>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+                {/* Columna izquierda: Código HTML */}
+                <div className="flex flex-col">
+                  <Label className="mb-2">Código HTML</Label>
+                  <div className="flex flex-col items-start w-full">
+                    <div className="w-full flex flex-row items-start justify-start gap-4">
+                      <pre className="flex-1 bg-gray-100 rounded-md p-4 text-xs overflow-x-auto select-all border border-gray-200" style={{ fontFamily: 'monospace', margin: 0 }}>{embedCode}</pre>
+                      <button
+                        type="button"
+                        onClick={copyEmbedCode}
+                        className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
+                        style={{ background: '#ff9c9c' }}
+                      >
+                        Copiar código
+                      </button>
                     </div>
                   </div>
                 </div>
-              </form>
+                
+                {/* Columna derecha: Video tutorial e instrucciones */}
+                <div className="flex flex-col space-y-6">
+                  {/* Espacio para video tutorial */}
+                  <div className="space-y-2">
+                    <Label>Video Tutorial</Label>
+                    <div className="bg-gray-100 rounded-md p-8 border border-gray-200 flex items-center justify-center">
+                      <p className="text-gray-500 text-sm">Video tutorial próximamente</p>
+                    </div>
+                  </div>
+                  
+                  {/* Instrucciones rápidas */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 className="font-medium text-blue-900 mb-2">Instrucciones Rápidas</h3>
+                    <ol className="text-sm text-blue-800 space-y-1">
+                      <li>1. Copia el código HTML de la izquierda</li>
+                      <li>2. Pega el código en tu sitio web antes del cierre de &lt;/body&gt;</li>
+                      <li>3. El widget aparecerá automáticamente en tu página</li>
+                      <li>4. Los visitantes podrán chatear con tu asistente NNIA</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
             </TabsContent>
           </div>
         </Tabs>
+        {activeTab === 'appearance' && (
+          <div className="flex justify-end w-full mt-auto pt-6 pr-6">
+            <button
+              type="button"
+              onClick={saveWidgetConfig}
+              className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+              style={{ background: '#ff9c9c' }}
+              disabled={isLoading}
+            >
+              Guardar
+            </button>
+          </div>
+        )}
       </Card>
     </div>
   )
