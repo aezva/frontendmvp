@@ -322,14 +322,6 @@ const WidgetSettings = () => {
             </TabsContent>
           </div>
         </Tabs>
-        <div className="flex justify-end w-full mt-auto pt-6 pr-6">
-          <Button variant="outline" onClick={loadWidgetConfig}>
-            Restaurar
-          </Button>
-          <Button onClick={saveWidgetConfig} disabled={isLoading}>
-            {isLoading ? 'Guardando...' : 'Guardar Configuración'}
-          </Button>
-        </div>
       </Card>
     </div>
   )
