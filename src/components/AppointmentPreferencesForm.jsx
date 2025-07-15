@@ -85,7 +85,7 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
           onClick={onSave}
           disabled={saving}
           className="w-full mt-4 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-          style={{ fontSize: '1.1rem', background: '#ff9c9c' }}
+          style={{ background: '#ff9c9c' }}
         >
           {saving ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Guardar'}
         </button>
