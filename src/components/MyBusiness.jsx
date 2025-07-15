@@ -293,8 +293,8 @@ const MyBusiness = () => {
               </TabsTrigger>
             </TabsList>
             {/* General */}
-            <TabsContent value="general" className="flex-1 flex flex-col justify-start pt-6 px-0">
-              <div className="flex flex-col justify-start h-full">
+            <TabsContent value="general" className="pt-6 px-0 flex flex-col">
+              <div className="flex flex-col">
                 <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
                     <div className="space-y-2">
@@ -369,8 +369,8 @@ const MyBusiness = () => {
               </div>
             </TabsContent>
             {/* Contacto */}
-            <TabsContent value="contact" className="flex-1 flex flex-col justify-start pt-6 px-0">
-              <div className="flex flex-col justify-start h-full">
+            <TabsContent value="contact" className="pt-6 px-0 flex flex-col">
+              <div className="flex flex-col">
                 <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
                     <div className="space-y-2">
@@ -444,8 +444,8 @@ const MyBusiness = () => {
               </div>
             </TabsContent>
             {/* Servicios */}
-            <TabsContent value="services" className="flex-1 flex flex-col justify-start pt-6 px-0">
-              <div className="flex flex-col justify-start h-full">
+            <TabsContent value="services" className="pt-6 px-0 flex flex-col">
+              <div className="flex flex-col">
                 <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
                     <div className="space-y-2">
@@ -475,8 +475,8 @@ const MyBusiness = () => {
               </div>
             </TabsContent>
             {/* Contenido */}
-            <TabsContent value="content" className="flex-1 flex flex-col justify-start pt-6 px-0">
-              <div className="flex flex-col justify-start h-full">
+            <TabsContent value="content" className="pt-6 px-0 flex flex-col">
+              <div className="flex flex-col">
                 <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
                     <div className="space-y-2">
@@ -567,8 +567,8 @@ const MyBusiness = () => {
               </div>
             </TabsContent>
             {/* Social */}
-            <TabsContent value="social" className="flex-1 flex flex-col justify-start pt-6 px-0">
-              <div className="flex flex-col justify-start h-full">
+            <TabsContent value="social" className="pt-6 px-0 flex flex-col">
+              <div className="flex flex-col">
                 <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
                     <div className="space-y-2">
