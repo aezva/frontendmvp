@@ -8,6 +8,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import DocumentsTable from '../components/DocumentsTable';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 const Documents = () => {
   const { client } = useAuth();
@@ -19,6 +20,7 @@ const Documents = () => {
   const [newDocName, setNewDocName] = useState('');
   const [newDocContent, setNewDocContent] = useState('');
   const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
     if (!client) return;
@@ -74,15 +76,33 @@ const Documents = () => {
           </button>
         </div>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
-          {/* Encabezados y contenido de la tabla ahora en DocumentsTable */}
-          <DocumentsTable 
-            documents={documents} 
-            loading={loading} 
-            onView={id => navigate(`/documents/${id}`)}
-            onEdit={id => navigate(`/documents/${id}`)}
-            onDownload={url => window.open(url, '_blank')}
-            // onDelete pendiente de implementar
-          />
+          {/* Pestañas arriba, igual que en mensajes */}
+          <div className="relative">
+            <div className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4" style={{ alignItems: 'center', paddingTop: 0 }}>
+              <span
+                className={`text-base font-light cursor-pointer pb-2 transition-colors select-none ${activeTab === 'all' ? 'text-[#ff9c9c]' : 'text-black hover:text-[#ff9c9c]'}`}
+                onClick={() => setActiveTab('all')}
+                style={{ padding: 0, margin: 0 }}
+              >
+                Todos los Documentos
+              </span>
+              {/* Aquí puedes agregar más pestañas si lo deseas */}
+            </div>
+            <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" style={{ marginTop: 0 }} />
+          </div>
+          {/* Contenido separado del borde superior igual que en otras páginas */}
+          <div className="flex-1 min-h-0 h-full flex flex-col" style={{ paddingTop: 24 }}>
+            {activeTab === 'all' && (
+              <DocumentsTable 
+                documents={documents} 
+                loading={loading} 
+                onView={id => navigate(`/documents/${id}`)}
+                onEdit={id => navigate(`/documents/${id}`)}
+                onDownload={url => window.open(url, '_blank')}
+                // onDelete pendiente de implementar
+              />
+            )}
+          </div>
         </Card>
       </div>
       <Dialog open={showNewDoc} onOpenChange={setShowNewDoc}>

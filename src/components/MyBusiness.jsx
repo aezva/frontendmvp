@@ -286,7 +286,7 @@ const MyBusiness = () => {
           </div>
           {/* Aquí va el contenido de cada pestaña, renderizado según activeTab */}
           {activeTab === 'general' && (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 flex flex-col min-h-0 h-full">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label className="text-black text-sm font-normal">Nombre del Negocio *</Label>
@@ -355,6 +355,16 @@ const MyBusiness = () => {
                   placeholder="¿Cuáles son los valores fundamentales de tu empresa?"
                   className="text-sm font-normal text-gray-500 placeholder-gray-500"
                 />
+              </div>
+              <div className="flex justify-end mt-8">
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                  style={{ background: '#ff9c9c' }}
+                >
+                  {saving ? 'Guardando...' : 'Guardar cambios'}
+                </button>
               </div>
             </form>
           )}
@@ -607,23 +617,6 @@ const MyBusiness = () => {
             </form>
           )}
         </Card>
-
-        {/* Botón de Guardar */}
-        <div className="flex justify-end pt-6">
-          <Button type="submit" disabled={saving} size="lg">
-            {saving ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Guardando...
-              </>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                Guardar Cambios
-              </>
-            )}
-          </Button>
-        </div>
       </div>
     </>
   );
