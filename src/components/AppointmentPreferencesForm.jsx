@@ -80,13 +80,15 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
         </div>
       </div>
       {onSave && (
-        <Button
+        <button
+          type="button"
           onClick={onSave}
           disabled={saving}
-          className="w-full mt-4 py-3 text-lg font-bold bg-primary text-white hover:bg-primary/90"
+          className="w-full mt-4 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+          style={{ fontSize: '1.1rem', background: '#ff9c9c' }}
         >
-          {saving ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Guardar cambios de disponibilidad'}
-        </Button>
+          {saving ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Guardar'}
+        </button>
       )}
     </div>
   );
