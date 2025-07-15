@@ -273,9 +273,9 @@ const MyBusiness = () => {
           <title>Mi Negocio - NNIA</title>
         </Helmet>
         <h1 className="text-xl font-semibold tracking-tight mb-6">Mi Negocio</h1>
-        <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full p-6">
+        <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full pt-0 px-6 pb-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col h-full w-full">
-            <TabsList className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-0 bg-transparent border-b border-border" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none', borderBottom: '1px solid #e5e7eb' }}>
+            <TabsList className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4 bg-transparent border-b border-border" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none', borderBottom: '1px solid #e5e7eb' }}>
               <TabsTrigger value="general" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
                 <Building className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />General
               </TabsTrigger>
@@ -294,7 +294,7 @@ const MyBusiness = () => {
             </TabsList>
             {/* General */}
             <TabsContent value="general" className="flex flex-col">
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+              <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-4">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
                     <Label className="text-black text-sm font-normal">Nombre del Negocio *</Label>
@@ -368,7 +368,7 @@ const MyBusiness = () => {
             </TabsContent>
             {/* Contacto */}
             <TabsContent value="contact" className="flex flex-col">
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+              <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-4">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
                     <Label htmlFor="business_phone">Teléfono</Label>
@@ -441,7 +441,7 @@ const MyBusiness = () => {
             </TabsContent>
             {/* Servicios */}
             <TabsContent value="services" className="flex flex-col">
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+              <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-4">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
                     <Label htmlFor="business_services">Servicios Ofrecidos</Label>
@@ -470,7 +470,7 @@ const MyBusiness = () => {
             </TabsContent>
             {/* Contenido */}
             <TabsContent value="content" className="flex flex-col">
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+              <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-4">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
                     <Label htmlFor="business_about">Sobre Nosotros</Label>
@@ -560,7 +560,7 @@ const MyBusiness = () => {
             </TabsContent>
             {/* Social */}
             <TabsContent value="social" className="flex flex-col">
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+              <form onSubmit={handleSubmit} className="flex flex-col space-y-6 mt-4">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
                     <Label htmlFor="business_social_media">Redes Sociales</Label>
