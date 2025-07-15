@@ -275,7 +275,7 @@ const MyBusiness = () => {
         <h1 className="text-xl font-semibold tracking-tight mb-6">Mi Negocio</h1>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full pt-0 pb-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col h-full w-full">
-            <TabsList className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-4 bg-transparent" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none' }}>
+            <TabsList className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-6 bg-transparent" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none' }}>
               <TabsTrigger value="general" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
                 <Building className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />General
               </TabsTrigger>
@@ -631,7 +631,7 @@ const MyBusiness = () => {
               </TabsContent>
             </div>
           </Tabs>
-          <div className="flex justify-end w-full mt-auto pt-6">
+          <div className="flex justify-end w-full mt-auto pt-6 pr-6">
             <button
               type="button"
               onClick={handleSubmit}
