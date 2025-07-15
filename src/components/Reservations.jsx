@@ -425,12 +425,33 @@ export default function Reservations() {
   const [loading, setLoading] = useState(true);
   const [editingReservation, setEditingReservation] = useState(null);
   const { toast } = useToast();
-
   const clientId = client?.id;
+
+  // Estados de reserva para secciones
+  const estadosReserva = [
+    { key: 'pending', label: 'Próximas', color: 'text-[#ff9c9c]' },
+    { key: 'cancelled', label: 'Canceladas', color: 'text-yellow-500' },
+    { key: 'confirmed', label: 'Confirmadas', color: 'text-green-500' },
+  ];
+  const [draggedReserva, setDraggedReserva] = useState(null);
+  const onDragStartReserva = (e, id) => {
+    setDraggedReserva(id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  const onDropReserva = async (e, estado) => {
+    e.preventDefault();
+    if (!draggedReserva) return;
+    const reserva = reservations.find(r => r.id === draggedReserva);
+    if (reserva.status !== estado) {
+      // Aquí deberías llamar a tu servicio para actualizar el estado de la reserva
+      // await updateReservation(draggedReserva, { status: estado });
+      setReservations(prev => prev.map(r => r.id === draggedReserva ? { ...r, status: estado } : r));
+    }
+    setDraggedReserva(null);
+  };
 
   const loadData = async () => {
     if (!clientId) return;
-    
     try {
       setLoading(true);
       const [reservationsData, typesData, availabilityData] = await Promise.all([
@@ -438,12 +459,10 @@ export default function Reservations() {
         getReservationTypes(clientId).catch(() => []),
         getReservationAvailability(clientId).catch(() => ({ days: [], hours: '', advance_booking_days: 30 }))
       ]);
-      
       setReservations(Array.isArray(reservationsData) ? reservationsData : []);
       setTypes(Array.isArray(typesData) ? typesData : []);
       setAvailability(availabilityData || { days: [], hours: '', advance_booking_days: 30 });
     } catch (error) {
-      console.error('Error loading data:', error);
       setReservations([]);
       setTypes([]);
       setAvailability({ days: [], hours: '', advance_booking_days: 30 });
@@ -496,52 +515,54 @@ export default function Reservations() {
   return (
     <div className="flex flex-col flex-1 min-h-0 h-full w-full">
       <h1 className="text-xl font-semibold tracking-tight mb-6">Reservas</h1>
-      <p className="text-gray-600">Gestiona las reservas de tu negocio</p>
-
-      <Tabs defaultValue="reservations" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="reservations">Reservas ({reservations.length})</TabsTrigger>
-          <TabsTrigger value="types">Tipos de Reserva ({types.length})</TabsTrigger>
-          <TabsTrigger value="availability">Disponibilidad</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="reservations" className="space-y-4">
-          {reservations.length === 0 ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <p style={{ color: '#ff9c9c' }}>No hay reservas pendientes</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {reservations.map((reservation) => (
-                <ReservationCard
-                  key={reservation.id}
-                  reservation={reservation}
-                  onEdit={handleEditReservation}
-                  onDelete={handleDeleteReservation}
-                />
+      <div className="flex flex-1 gap-6 min-h-0">
+        {/* Columna de preferencias/configuración */}
+        <div className="w-full md:w-1/3 flex flex-col min-h-0 h-full">
+          <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full">
+            <h2 className="text-base font-medium text-black mb-4">Configura tu Disponibilidad</h2>
+            <ReservationAvailability
+              clientId={clientId}
+              availability={availability}
+              onRefresh={loadData}
+            />
+            <div className="mt-8">
+              <h2 className="text-base font-medium text-black mb-4">Tipos de Reserva</h2>
+              <ReservationTypes clientId={clientId} types={types} onRefresh={loadData} />
+            </div>
+          </section>
+        </div>
+        {/* Columna de reservas agendadas */}
+        <div className="w-full md:w-2/3 flex flex-col min-h-0 h-full">
+          <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full min-h-0">
+            <h2 className="text-base font-medium text-black mb-4">Reservas Agendadas</h2>
+            <div className="flex flex-col gap-6 min-h-0 flex-1">
+              {estadosReserva.map(({ key, label }) => (
+                <div key={key} className="flex-1 flex flex-col min-h-[120px]">
+                  <div className="mb-2 text-black text-sm font-normal">{label}</div>
+                  <div
+                    className="flex flex-col gap-3 min-h-[60px] flex-1"
+                    onDrop={e => onDropReserva(e, key)}
+                    onDragOver={e => e.preventDefault()}
+                    style={{ minHeight: '60px' }}
+                  >
+                    {reservations.filter(r => r.status === key).map(reserva => (
+                      <div
+                        key={reserva.id}
+                        draggable
+                        onDragStart={e => onDragStartReserva(e, reserva.id)}
+                        className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
+                      >
+                        <span className="flex-1 text-sm font-normal text-black truncate">{reserva.name} - {reserva.date} {reserva.time}</span>
+                        <span className="ml-2 text-xs text-gray-400">{reserva.reservation_type}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="types">
-          <ReservationTypes 
-            clientId={clientId}
-            types={types}
-            onRefresh={loadData}
-          />
-        </TabsContent>
-
-        <TabsContent value="availability">
-          <ReservationAvailability
-            clientId={clientId}
-            availability={availability}
-            onRefresh={loadData}
-          />
-        </TabsContent>
-      </Tabs>
+          </section>
+        </div>
+      </div>
     </div>
   );
 } 

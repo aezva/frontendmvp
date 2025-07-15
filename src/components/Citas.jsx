@@ -167,21 +167,17 @@ export default function Citas() {
                     onDragOver={e => e.preventDefault()}
                     style={{ minHeight: '60px' }}
                   >
-                    {appointments.filter(c => c.status === key).length === 0 ? (
-                      <div className="text-xs text-gray-300 italic select-none">Sin citas</div>
-                    ) : (
-                      appointments.filter(c => c.status === key).map(cita => (
-                        <div
-                          key={cita.id}
-                          draggable
-                          onDragStart={e => onDragStartCita(e, cita.id)}
-                          className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
-                        >
-                          <span className="flex-1 text-sm font-normal text-black truncate">{cita.name} - {cita.date} {cita.time}</span>
-                          <span className="ml-2 text-xs text-gray-400">{cita.type}</span>
-                        </div>
-                      ))
-                    )}
+                    {appointments.filter(c => c.status === key).map(cita => (
+                      <div
+                        key={cita.id}
+                        draggable
+                        onDragStart={e => onDragStartCita(e, cita.id)}
+                        className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
+                      >
+                        <span className="flex-1 text-sm font-normal text-black truncate">{cita.name} - {cita.date} {cita.time}</span>
+                        <span className="ml-2 text-xs text-gray-400">{cita.type}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
