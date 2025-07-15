@@ -293,7 +293,7 @@ const MyBusiness = () => {
               </TabsTrigger>
             </TabsList>
             {/* General */}
-            <TabsContent value="general" className="flex-1 flex flex-col">
+            <TabsContent value="general" className="flex flex-col">
               <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
@@ -367,7 +367,7 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Contacto */}
-            <TabsContent value="contact" className="flex-1 flex flex-col">
+            <TabsContent value="contact" className="flex flex-col">
               <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
@@ -440,7 +440,7 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Servicios */}
-            <TabsContent value="services" className="flex-1 flex flex-col">
+            <TabsContent value="services" className="flex flex-col">
               <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
@@ -469,7 +469,7 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Contenido */}
-            <TabsContent value="content" className="flex-1 flex flex-col">
+            <TabsContent value="content" className="flex flex-col">
               <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
@@ -559,7 +559,7 @@ const MyBusiness = () => {
               </form>
             </TabsContent>
             {/* Social */}
-            <TabsContent value="social" className="flex-1 flex flex-col">
+            <TabsContent value="social" className="flex flex-col">
               <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
                 <div className="grid grid-cols-1 gap-6 mt-0">
                   <div className="space-y-2">
