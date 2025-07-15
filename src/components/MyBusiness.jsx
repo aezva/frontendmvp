@@ -369,26 +369,27 @@ const MyBusiness = () => {
             {/* Contacto */}
             <TabsContent value="contact" className="pt-6 px-0 flex flex-col">
               <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
-                <div className="space-y-2 mt-0">
-                  <Label htmlFor="business_phone">Teléfono</Label>
-                  <Input 
-                    id="business_phone" 
-                    value={businessInfo.business_phone} 
-                    onChange={(e) => handleInputChange('business_phone', e.target.value)}
-                    placeholder="+1 (555) 123-4567"
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="business_email">Email Público</Label>
-                  <Input 
-                    id="business_email" 
-                    type="email"
-                    value={businessInfo.business_email} 
-                    onChange={(e) => handleInputChange('business_email', e.target.value)}
-                    placeholder="contacto@tuempresa.com"
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
+                  <div className="space-y-2">
+                    <Label htmlFor="business_phone">Teléfono</Label>
+                    <Input 
+                      id="business_phone" 
+                      value={businessInfo.business_phone} 
+                      onChange={(e) => handleInputChange('business_phone', e.target.value)}
+                      placeholder="Ej: +34 600 000 000"
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="business_email">Email</Label>
+                    <Input 
+                      id="business_email" 
+                      value={businessInfo.business_email} 
+                      onChange={(e) => handleInputChange('business_email', e.target.value)}
+                      placeholder="Ej: contacto@empresa.com"
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -409,7 +410,7 @@ const MyBusiness = () => {
                     id="business_website" 
                     value={businessInfo.business_website} 
                     onChange={(e) => handleInputChange('business_website', e.target.value)}
-                    placeholder="https://www.tuempresa.com"
+                    placeholder="Ej: www.miempresa.com"
                     className="text-sm font-normal text-gray-500 placeholder-gray-500"
                   />
                 </div>
@@ -441,56 +442,58 @@ const MyBusiness = () => {
             {/* Servicios */}
             <TabsContent value="services" className="pt-6 px-0 flex flex-col">
               <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
-                <div className="space-y-2 mt-0">
-                  <Label htmlFor="business_services">Servicios Ofrecidos</Label>
-                  <Textarea 
-                    id="business_services" 
-                    rows={5} 
-                    value={businessInfo.business_services} 
-                    onChange={(e) => handleInputChange('business_services', e.target.value)}
-                    placeholder="Lista detallada de los servicios que ofreces. Uno por línea o separados por comas."
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="business_products">Productos</Label>
-                  <Textarea 
-                    id="business_products" 
-                    rows={4} 
-                    value={businessInfo.business_products} 
-                    onChange={(e) => handleInputChange('business_products', e.target.value)}
-                    placeholder="Lista de productos que vendes o fabricas"
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
+                  <div className="space-y-2">
+                    <Label htmlFor="business_services">Servicios Ofrecidos</Label>
+                    <Textarea 
+                      id="business_services" 
+                      rows={5} 
+                      value={businessInfo.business_services} 
+                      onChange={(e) => handleInputChange('business_services', e.target.value)}
+                      placeholder="Lista detallada de los servicios que ofreces. Uno por línea o separados por comas."
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="business_products">Productos</Label>
+                    <Textarea 
+                      id="business_products" 
+                      rows={4} 
+                      value={businessInfo.business_products} 
+                      onChange={(e) => handleInputChange('business_products', e.target.value)}
+                      placeholder="Lista de productos que vendes o fabricas"
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
                 </div>
               </form>
             </TabsContent>
             {/* Contenido */}
             <TabsContent value="content" className="pt-6 px-0 flex flex-col">
               <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
-                <div className="space-y-2 mt-0">
-                  <Label htmlFor="business_about">Sobre Nosotros</Label>
-                  <Textarea 
-                    id="business_about" 
-                    rows={4} 
-                    value={businessInfo.business_about} 
-                    onChange={(e) => handleInputChange('business_about', e.target.value)}
-                    placeholder="Historia de la empresa, experiencia, etc."
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="business_faq">Preguntas Frecuentes</Label>
-                  <Textarea 
-                    id="business_faq" 
-                    rows={6} 
-                    value={businessInfo.business_faq} 
-                    onChange={(e) => handleInputChange('business_faq', e.target.value)}
-                    placeholder="Preguntas frecuentes y sus respuestas. Formato: P: ¿Pregunta? R: Respuesta"
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
+                  <div className="space-y-2">
+                    <Label htmlFor="business_about">Sobre Nosotros</Label>
+                    <Textarea 
+                      id="business_about" 
+                      rows={4} 
+                      value={businessInfo.business_about} 
+                      onChange={(e) => handleInputChange('business_about', e.target.value)}
+                      placeholder="Historia de la empresa, experiencia, etc."
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="business_faq">Preguntas Frecuentes</Label>
+                    <Textarea 
+                      id="business_faq" 
+                      rows={6} 
+                      value={businessInfo.business_faq} 
+                      onChange={(e) => handleInputChange('business_faq', e.target.value)}
+                      placeholder="Preguntas frecuentes y sus respuestas. Formato: P: ¿Pregunta? R: Respuesta"
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -558,16 +561,28 @@ const MyBusiness = () => {
             {/* Social */}
             <TabsContent value="social" className="pt-6 px-0 flex flex-col">
               <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
-                <div className="space-y-2 mt-0">
-                  <Label htmlFor="business_social_media">Redes Sociales</Label>
-                  <Textarea 
-                    id="business_social_media" 
-                    rows={4} 
-                    value={businessInfo.business_social_media} 
-                    onChange={(e) => handleInputChange('business_social_media', e.target.value)}
-                    placeholder="Enlaces a redes sociales: Facebook, Instagram, LinkedIn, Twitter, etc."
-                    className="text-sm font-normal text-gray-500 placeholder-gray-500"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-0">
+                  <div className="space-y-2">
+                    <Label htmlFor="business_social_media">Redes Sociales</Label>
+                    <Textarea 
+                      id="business_social_media" 
+                      rows={4} 
+                      value={businessInfo.business_social_media} 
+                      onChange={(e) => handleInputChange('business_social_media', e.target.value)}
+                      placeholder="Enlaces a redes sociales: Facebook, Instagram, LinkedIn, Twitter, etc."
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="business_website">Sitio Web</Label>
+                    <Input 
+                      id="business_website" 
+                      value={businessInfo.business_website} 
+                      onChange={(e) => handleInputChange('business_website', e.target.value)}
+                      placeholder="Ej: www.miempresa.com"
+                      className="text-sm font-normal text-gray-500 placeholder-gray-500"
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
