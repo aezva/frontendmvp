@@ -187,7 +187,7 @@ const WidgetSettings = () => {
           <div className="h-px w-full bg-border" style={{margin: 0, borderRadius: 0}} />
           <div className="flex-1 flex flex-col w-full px-6">
             <TabsContent value="appearance" className="flex flex-col">
-              <form className="flex flex-col space-y-6 mt-4">
+              <form className="flex flex-col space-y-6 mt-4" onSubmit={e => { e.preventDefault(); saveWidgetConfig(); }}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-0">
                   {/* Elimino el campo de posición del widget */}
                   <div className="space-y-2">
@@ -263,35 +263,72 @@ const WidgetSettings = () => {
                     )}
                   </div>
                 </div>
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                    style={{ background: '#ff9c9c' }}
+                    disabled={isLoading}
+                  >
+                    Guardar
+                  </button>
+                </div>
               </form>
             </TabsContent>
             <TabsContent value="embed" className="flex flex-col">
-              <form className="flex flex-col space-y-6 mt-4">
-                <div className="space-y-2">
-                  <Label>Código HTML</Label>
-                  <div className="flex justify-between items-center">
-                    <Button onClick={copyEmbedCode} size="sm">
-                      Copiar Código
-                    </Button>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+                {/* Columna izquierda: Código y instrucciones */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className="text-lg font-medium">Código de Integración</Label>
+                      <p className="text-sm text-muted-foreground">Copia este código y pégalo en tu sitio web</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={copyEmbedCode}
+                      className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
+                      style={{ background: '#ff9c9c' }}
+                    >
+                      Copiar código
+                    </button>
                   </div>
                   <textarea
                     value={embedCode}
                     readOnly
-                    className="w-full p-3 border border-gray-300 rounded-md bg-gray-50 font-mono text-sm"
-                    rows="12"
-                    placeholder="Genera la configuración para ver el código de integración..."
+                    className="w-full h-32 p-3 bg-gray-100 border border-gray-300 rounded-md text-sm font-mono resize-none"
                   />
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <h4 className="font-medium text-blue-900 mb-1 text-sm">Instrucciones rápidas:</h4>
+                    <ol className="text-xs text-blue-800 space-y-0.5">
+                      <li>1. Copia el código HTML</li>
+                      <li>2. Pégalo antes de &lt;/body&gt; en tu sitio web</li>
+                      <li>3. ¡Listo! El widget aparecerá automáticamente</li>
+                    </ol>
+                  </div>
                 </div>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-800 mb-2">Instrucciones:</h4>
-                  <ol className="text-blue-700 text-sm space-y-1">
-                    <li>1. Copia el código de arriba</li>
-                    <li>2. Pégalo justo antes del cierre de la etiqueta &lt;/body&gt; en tu HTML</li>
-                    <li>3. El widget aparecerá automáticamente en tu sitio web</li>
-                    <li>4. Los cambios en la configuración se reflejarán automáticamente</li>
-                  </ol>
+                {/* Columna derecha: Video tutorial (wireframe) */}
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-lg font-medium">Video de Instrucciones</Label>
+                    <p className="text-sm text-muted-foreground">Aprende a integrar el widget paso a paso</p>
+                  </div>
+                  <div className="w-full h-48 bg-gray-200 border-2 border-dashed border-gray-400 rounded-lg flex items-center justify-center">
+                    <div className="text-center text-gray-500">
+                      <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <svg className="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-sm font-medium">Video de Instrucciones</p>
+                      <p className="text-xs">Próximamente</p>
+                    </div>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    <strong>Nota:</strong> Personaliza colores y logo en la pestaña "Apariencia".
+                  </div>
                 </div>
-              </form>
+              </div>
             </TabsContent>
           </div>
         </Tabs>
