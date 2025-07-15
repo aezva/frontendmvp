@@ -115,68 +115,76 @@ export default function Citas() {
       {error && (
         <div className="mb-4 p-2 bg-red-100 text-red-800 rounded">{error}</div>
       )}
-      <section className="space-y-6">
-        <h2 className="text-xl font-semibold">Citas Agendadas</h2>
-        {appointments.length === 0 ? (
-          <div className="text-muted-foreground text-center p-4 bg-yellow-50 rounded border border-yellow-200">
-            <strong style={{ color: '#ff9c9c' }}>No hay citas agendadas aún.</strong><br />
-            Cuando NNIA o tus clientes agenden una cita, aparecerá aquí.
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-6">
-            {Object.entries(STATUS_LABELS).map(([status, { label, icon }]) => (
-              <div key={status}>
-                <h3 className="text-lg font-bold mb-2 flex items-center gap-2">{icon} {label}</h3>
-                <div className="space-y-4">
-                  {(grouped[status] || []).map((appt) => (
-                    <div key={appt.id} className="border rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 bg-white/80">
-                      {editing === appt.id ? (
-                        <div className="flex flex-col gap-2 w-full">
-                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.name || ''} onChange={e => handleEditChange('name', e.target.value)} placeholder="Nombre" />
-                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.email || ''} onChange={e => handleEditChange('email', e.target.value)} placeholder="Email" />
-                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.date || ''} onChange={e => handleEditChange('date', e.target.value)} placeholder="Fecha" />
-                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.time || ''} onChange={e => handleEditChange('time', e.target.value)} placeholder="Hora" />
-                          <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.type || ''} onChange={e => handleEditChange('type', e.target.value)} placeholder="Tipo" />
-                          <div className="flex gap-2 mt-2">
-                            <button className="px-3 py-1 bg-green-600 text-white rounded" onClick={handleEditSave}>Guardar</button>
-                            <button className="px-3 py-1 bg-gray-300 rounded" onClick={() => setEditing(null)}>Cancelar</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <>
-                          <div>
-                            <div className="font-semibold">{appt.name} ({appt.email})</div>
-                            <div className="text-sm text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
-                            <div className="text-xs text-muted-foreground">Origen: {appt.origin}</div>
-                          </div>
-                          <div className="flex gap-2 items-center">
-                            <select value={appt.status || 'pending'} onChange={e => handleStatusChange(appt, e.target.value)} className="border rounded px-2 py-1">
-                              <option value="pending">Pendiente</option>
-                              <option value="completed">Completada</option>
-                              <option value="cancelled">No realizada</option>
-                            </select>
-                            <button className="p-1 text-blue-600 hover:bg-blue-100 rounded" title="Editar" onClick={() => handleEdit(appt)}><Pencil size={18} /></button>
-                            <button className="p-1 text-red-600 hover:bg-red-100 rounded" title="Eliminar" onClick={() => setDeleting(appt.id)}><Trash2 size={18} /></button>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  ))}
-                </div>
+      <div className="flex flex-1 gap-6 min-h-0">
+        {/* Columna izquierda: Preferencias/configuración */}
+        <div className="w-full md:w-1/3 flex flex-col min-h-0 h-full">
+          <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full">
+            <h2 className="text-xl font-semibold mb-4">Configura tu Disponibilidad</h2>
+            <AppointmentPreferencesForm
+              availability={availability}
+              setAvailability={setAvailability}
+              saving={saving}
+              onSave={handleSave}
+            />
+          </section>
+        </div>
+        {/* Columna derecha: Lista de citas */}
+        <div className="w-full md:w-2/3 flex flex-col min-h-0 h-full">
+          <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full min-h-0">
+            <h2 className="text-xl font-semibold mb-4">Citas Agendadas</h2>
+            {appointments.length === 0 ? (
+              <div className="text-muted-foreground text-center p-4 bg-yellow-50 rounded border border-yellow-200">
+                <strong style={{ color: '#ff9c9c' }}>No hay citas agendadas aún.</strong><br />
+                Cuando NNIA o tus clientes agenden una cita, aparecerá aquí.
               </div>
-            ))}
-          </div>
-        )}
-      </section>
-      <section className="space-y-6">
-        <h2 className="text-xl font-semibold">Configura tu Disponibilidad</h2>
-        <AppointmentPreferencesForm
-          availability={availability}
-          setAvailability={setAvailability}
-          saving={saving}
-          onSave={handleSave}
-        />
-      </section>
+            ) : (
+              <div className="flex-1 min-h-0 h-full overflow-y-auto space-y-6 pr-2">
+                {Object.entries(STATUS_LABELS).map(([status, { label, icon }]) => (
+                  <div key={status}>
+                    <h3 className="text-lg font-bold mb-2 flex items-center gap-2">{icon} {label}</h3>
+                    <div className="space-y-4">
+                      {(grouped[status] || []).map((appt) => (
+                        <div key={appt.id} className="border rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 bg-white/80">
+                          {editing === appt.id ? (
+                            <div className="flex flex-col gap-2 w-full">
+                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.name || ''} onChange={e => handleEditChange('name', e.target.value)} placeholder="Nombre" />
+                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.email || ''} onChange={e => handleEditChange('email', e.target.value)} placeholder="Email" />
+                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.date || ''} onChange={e => handleEditChange('date', e.target.value)} placeholder="Fecha" />
+                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.time || ''} onChange={e => handleEditChange('time', e.target.value)} placeholder="Hora" />
+                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.type || ''} onChange={e => handleEditChange('type', e.target.value)} placeholder="Tipo" />
+                              <div className="flex gap-2 mt-2">
+                                <button className="px-3 py-1 bg-green-600 text-white rounded" onClick={handleEditSave}>Guardar</button>
+                                <button className="px-3 py-1 bg-gray-300 rounded" onClick={() => setEditing(null)}>Cancelar</button>
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              <div>
+                                <div className="font-semibold">{appt.name} ({appt.email})</div>
+                                <div className="text-sm text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
+                                <div className="text-xs text-muted-foreground">Origen: {appt.origin}</div>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <select value={appt.status || 'pending'} onChange={e => handleStatusChange(appt, e.target.value)} className="border rounded px-2 py-1">
+                                  <option value="pending">Pendiente</option>
+                                  <option value="completed">Completada</option>
+                                  <option value="cancelled">No realizada</option>
+                                </select>
+                                <button className="p-1 text-blue-600 hover:bg-blue-100 rounded" title="Editar" onClick={() => handleEdit(appt)}><Pencil size={18} /></button>
+                                <button className="p-1 text-red-600 hover:bg-red-100 rounded" title="Eliminar" onClick={() => setDeleting(appt.id)}><Trash2 size={18} /></button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
       {/* Modal de confirmación de eliminación */}
       {deleting && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">

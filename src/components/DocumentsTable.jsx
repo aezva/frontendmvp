@@ -84,7 +84,7 @@ const DocumentsTable = ({ documents, loading, onView, onEdit, onDownload, onDele
         {loading ? (
           <div className="text-center py-8">Cargando...</div>
         ) : data.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">No hay documentos.</div>
+          null
         ) : (
           <div className="space-y-3">
             {table.getRowModel().rows.map(row => (
