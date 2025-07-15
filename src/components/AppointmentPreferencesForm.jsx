@@ -5,8 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 
 const APPOINTMENT_TYPES = [
-  { value: 'phone', label: 'Llamada Telefónica' },
   { value: 'office', label: 'Visita en Oficina' },
+  { value: 'phone', label: 'Llamada Telefónica' },
   { value: 'video', label: 'Videollamada' },
 ];
 
