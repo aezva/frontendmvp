@@ -20,6 +20,13 @@ function groupByStatus(appointments) {
   }, {});
 }
 
+// Definir los estados de las citas y sus etiquetas
+const estadosCita = [
+  { key: 'pending', label: 'Próximas', color: 'text-[#ff9c9c]' },
+  { key: 'no_show', label: 'No Realizadas', color: 'text-yellow-500' },
+  { key: 'completed', label: 'Exitosas', color: 'text-green-500' },
+];
+
 export default function Citas() {
   const { client, loading: authLoading } = useAuth();
   const [availability, setAvailability] = useState(DEFAULT_AVAILABILITY);
@@ -30,6 +37,24 @@ export default function Citas() {
   const [editing, setEditing] = useState(null); // cita en edición
   const [editData, setEditData] = useState({});
   const [deleting, setDeleting] = useState(null); // cita a eliminar
+
+  // Lógica de drag & drop para citas
+  const [draggedCita, setDraggedCita] = useState(null);
+  const onDragStartCita = (e, id) => {
+    setDraggedCita(id);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+  const onDropCita = async (e, estado) => {
+    e.preventDefault();
+    if (!draggedCita) return;
+    const cita = appointments.find(c => c.id === draggedCita);
+    if (cita.status !== estado) {
+      // Aquí deberías llamar a tu servicio para actualizar el estado de la cita
+      // await updateAppointmentStatus(draggedCita, estado);
+      setAppointments(prev => prev.map(c => c.id === draggedCita ? { ...c, status: estado } : c));
+    }
+    setDraggedCita(null);
+  };
 
   useEffect(() => {
     if (!client) return;
@@ -132,53 +157,35 @@ export default function Citas() {
         <div className="w-full md:w-2/3 flex flex-col min-h-0 h-full">
           <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full min-h-0">
             <h2 className="text-base font-medium text-black mb-4">Citas Agendadas</h2>
-            {appointments.length === 0 ? (
-              null
-            ) : (
-              <div className="flex-1 min-h-0 h-full overflow-y-auto space-y-6 pr-2">
-                {Object.entries(STATUS_LABELS).map(([status, { label, icon }]) => (
-                  <div key={status}>
-                    <h3 className="text-lg font-bold mb-2 flex items-center gap-2">{icon} {label}</h3>
-                    <div className="space-y-4">
-                      {(grouped[status] || []).map((appt) => (
-                        <div key={appt.id} className="border rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 bg-white/80">
-                          {editing === appt.id ? (
-                            <div className="flex flex-col gap-2 w-full">
-                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.name || ''} onChange={e => handleEditChange('name', e.target.value)} placeholder="Nombre" />
-                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.email || ''} onChange={e => handleEditChange('email', e.target.value)} placeholder="Email" />
-                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.date || ''} onChange={e => handleEditChange('date', e.target.value)} placeholder="Fecha" />
-                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.time || ''} onChange={e => handleEditChange('time', e.target.value)} placeholder="Hora" />
-                              <input className="border rounded px-2 py-1 focus:ring-0 focus:outline-none" value={editData.type || ''} onChange={e => handleEditChange('type', e.target.value)} placeholder="Tipo" />
-                              <div className="flex gap-2 mt-2">
-                                <button className="px-3 py-1 bg-green-600 text-white rounded" onClick={handleEditSave}>Guardar</button>
-                                <button className="px-3 py-1 bg-gray-300 rounded" onClick={() => setEditing(null)}>Cancelar</button>
-                              </div>
-                            </div>
-                          ) : (
-                            <>
-                              <div>
-                                <div className="font-semibold">{appt.name} ({appt.email})</div>
-                                <div className="text-sm text-muted-foreground">{appt.type} - {appt.date} {appt.time}</div>
-                                <div className="text-xs text-muted-foreground">Origen: {appt.origin}</div>
-                              </div>
-                              <div className="flex gap-2 items-center">
-                                <select value={appt.status || 'pending'} onChange={e => handleStatusChange(appt, e.target.value)} className="border rounded px-2 py-1">
-                                  <option value="pending">Pendiente</option>
-                                  <option value="completed">Completada</option>
-                                  <option value="cancelled">No realizada</option>
-                                </select>
-                                <button className="p-1 text-blue-600 hover:bg-blue-100 rounded" title="Editar" onClick={() => handleEdit(appt)}><Pencil size={18} /></button>
-                                <button className="p-1 text-red-600 hover:bg-red-100 rounded" title="Eliminar" onClick={() => setDeleting(appt.id)}><Trash2 size={18} /></button>
-                              </div>
-                            </>
-                          )}
+            <div className="flex flex-col gap-6 min-h-0 flex-1">
+              {estadosCita.map(({ key, label, color }) => (
+                <div key={key} className="flex-1 flex flex-col min-h-[120px]">
+                  <div className={`mb-2 text-sm font-medium ${color}`}>{label}</div>
+                  <div
+                    className="flex flex-col gap-3 min-h-[60px] flex-1"
+                    onDrop={e => onDropCita(e, key)}
+                    onDragOver={e => e.preventDefault()}
+                    style={{ minHeight: '60px' }}
+                  >
+                    {appointments.filter(c => c.status === key).length === 0 ? (
+                      <div className="text-xs text-gray-300 italic select-none">Sin citas</div>
+                    ) : (
+                      appointments.filter(c => c.status === key).map(cita => (
+                        <div
+                          key={cita.id}
+                          draggable
+                          onDragStart={e => onDragStartCita(e, cita.id)}
+                          className="flex items-center bg-white rounded-lg border px-3 py-2 shadow-sm cursor-move group"
+                        >
+                          <span className="flex-1 text-sm font-normal text-black truncate">{cita.name} - {cita.date} {cita.time}</span>
+                          <span className="ml-2 text-xs text-gray-400">{cita.type}</span>
                         </div>
-                      ))}
-                    </div>
+                      ))
+                    )}
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
           </section>
         </div>
       </div>
