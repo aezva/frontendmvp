@@ -65,17 +65,17 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
       </div>
       <div className="space-y-2">
         <Label>Tipos de cita disponibles</Label>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3 mt-1">
           {APPOINTMENT_TYPES.map(type => (
-            <Button
+            <button
               key={type.value}
               type="button"
-              variant="outline"
-              className={availability.types.includes(type.value) ? 'bg-muted text-foreground' : ''}
+              className={`text-sm font-normal select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${availability.types.includes(type.value) ? 'text-[#ff9c9c]' : 'text-gray-500'}`}
+              style={{ minWidth: 'unset' }}
               onClick={() => handleToggleType(type.value)}
             >
               {type.label}
-            </Button>
+            </button>
           ))}
         </div>
       </div>
