@@ -9,6 +9,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useToast } from './ui/use-toast'
 import imageCompression from 'browser-image-compression';
 import { supabase } from '../lib/supabaseClient';
+import { Palette, Settings, Clock, Code } from 'lucide-react';
 
 const WidgetSettings = () => {
   const { client } = useAuth()
@@ -169,20 +170,18 @@ const WidgetSettings = () => {
 
   return (
     <div className="flex flex-col flex-1 min-h-0 h-full w-full">
+      <h1 className="text-xl font-semibold tracking-tight mb-1">Configuración del Widget</h1>
+      <p className="text-muted-foreground mb-6">Personaliza la apariencia y comportamiento del widget de chat en tu sitio web.</p>
       <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col h-full pt-0 pb-6">
-        <div className="px-6 pt-6">
-          <h1 className="text-xl font-semibold tracking-tight mb-6">Configuración del Widget</h1>
-          <p className="text-muted-foreground mb-6">
-            Personaliza la apariencia y comportamiento del widget de chat en tu sitio web.
-          </p>
-        </div>
         <Tabs defaultValue="appearance" className="flex-1 flex flex-col h-full w-full">
           <div className="w-full flex px-6">
             <TabsList className="flex items-center gap-6 h-12 min-h-[48px] justify-start bg-transparent rounded-none border-none shadow-none w-full" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none', borderBottom: 'none' }}>
-              <TabsTrigger value="appearance">Apariencia</TabsTrigger>
-              <TabsTrigger value="behavior">Comportamiento</TabsTrigger>
-              <TabsTrigger value="schedule">Horarios</TabsTrigger>
-              <TabsTrigger value="embed">Integración</TabsTrigger>
+              <TabsTrigger value="appearance" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
+                <Palette className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Apariencia
+              </TabsTrigger>
+              <TabsTrigger value="embed" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
+                <Code className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Integración
+              </TabsTrigger>
             </TabsList>
           </div>
           <div className="h-px w-full bg-border" style={{margin: 0, borderRadius: 0}} />
@@ -190,21 +189,7 @@ const WidgetSettings = () => {
             <TabsContent value="appearance" className="flex flex-col">
               <form className="flex flex-col space-y-6 mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-0">
-                  <div className="space-y-2">
-                    <Label htmlFor="position">Posición del Widget</Label>
-                    <select
-                      id="position"
-                      value={config.position}
-                      onChange={(e) => setConfig(prev => ({ ...prev, position: e.target.value }))}
-                      className="w-full p-2 border border-gray-300 rounded-md mt-1"
-                    >
-                      {positions.map(pos => (
-                        <option key={pos.value} value={pos.value}>
-                          {pos.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  {/* Elimino el campo de posición del widget */}
                   <div className="space-y-2">
                     <Label htmlFor="primaryColor">Color Principal</Label>
                     <div className="flex items-center space-x-2 mt-1">
@@ -278,144 +263,6 @@ const WidgetSettings = () => {
                     )}
                   </div>
                 </div>
-              </form>
-            </TabsContent>
-            <TabsContent value="behavior" className="flex flex-col">
-              <form className="flex flex-col space-y-6 mt-4">
-                <div className="space-y-2">
-                  <Label htmlFor="welcomeMessage">Mensaje de Bienvenida</Label>
-                  <textarea
-                    id="welcomeMessage"
-                    value={config.welcomeMessage}
-                    onChange={(e) => setConfig(prev => ({ ...prev, welcomeMessage: e.target.value }))}
-                    className="w-full p-2 border border-gray-300 rounded-md mt-1"
-                    rows="3"
-                    placeholder="¡Hola! Soy NNIA, tu asistente virtual..."
-                  />
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id="autoOpen"
-                      checked={config.autoOpen}
-                      onChange={(e) => setConfig(prev => ({ ...prev, autoOpen: e.target.checked }))}
-                      className="rounded"
-                    />
-                    <Label htmlFor="autoOpen">Abrir automáticamente al cargar la página</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id="showTimestamp"
-                      checked={config.showTimestamp}
-                      onChange={(e) => setConfig(prev => ({ ...prev, showTimestamp: e.target.checked }))}
-                      className="rounded"
-                    />
-                    <Label htmlFor="showTimestamp">Mostrar timestamps en los mensajes</Label>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="maxMessages">Máximo de mensajes a mostrar</Label>
-                  <Slider
-                    value={[config.maxMessages]}
-                    onValueChange={([value]) => setConfig(prev => ({ ...prev, maxMessages: value }))}
-                    max={100}
-                    min={10}
-                    step={10}
-                    className="mt-2"
-                  />
-                  <p className="text-sm text-gray-500 mt-1">{config.maxMessages} mensajes</p>
-                </div>
-              </form>
-            </TabsContent>
-            <TabsContent value="schedule" className="flex flex-col">
-              <form className="flex flex-col space-y-6 mt-4">
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="scheduleEnabled"
-                    checked={config.scheduleEnabled}
-                    onChange={(e) => setConfig(prev => ({ ...prev, scheduleEnabled: e.target.checked }))}
-                    className="rounded"
-                  />
-                  <Label htmlFor="scheduleEnabled">Activar horarios de disponibilidad</Label>
-                </div>
-                {config.scheduleEnabled && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="offlineMessage">Mensaje fuera de horario</Label>
-                      <textarea
-                        id="offlineMessage"
-                        value={config.offlineMessage}
-                        onChange={(e) => setConfig(prev => ({ ...prev, offlineMessage: e.target.value }))}
-                        className="w-full p-2 border border-gray-300 rounded-md mt-1"
-                        rows="2"
-                        placeholder="Estamos fuera de horario. Te responderemos pronto."
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      {days.map(day => (
-                        <div key={day.key} className="flex items-center space-x-4 p-3 border rounded-lg">
-                          <div className="flex items-center space-x-2">
-                            <input
-                              type="checkbox"
-                              id={`${day.key}-enabled`}
-                              checked={config.hours[day.key].enabled}
-                              onChange={(e) => setConfig(prev => ({
-                                ...prev,
-                                hours: {
-                                  ...prev.hours,
-                                  [day.key]: {
-                                    ...prev.hours[day.key],
-                                    enabled: e.target.checked
-                                  }
-                                }
-                              }))}
-                              className="rounded"
-                            />
-                            <Label htmlFor={`${day.key}-enabled`} className="w-20">{day.label}</Label>
-                          </div>
-                          {config.hours[day.key].enabled && (
-                            <div className="flex items-center space-x-2">
-                              <Input
-                                type="time"
-                                value={config.hours[day.key].start}
-                                onChange={(e) => setConfig(prev => ({
-                                  ...prev,
-                                  hours: {
-                                    ...prev.hours,
-                                    [day.key]: {
-                                      ...prev.hours[day.key],
-                                      start: e.target.value
-                                    }
-                                  }
-                                }))}
-                                className="w-24"
-                              />
-                              <span>a</span>
-                              <Input
-                                type="time"
-                                value={config.hours[day.key].end}
-                                onChange={(e) => setConfig(prev => ({
-                                  ...prev,
-                                  hours: {
-                                    ...prev.hours,
-                                    [day.key]: {
-                                      ...prev.hours[day.key],
-                                      end: e.target.value
-                                    }
-                                  }
-                                }))}
-                                className="w-24"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </form>
             </TabsContent>
             <TabsContent value="embed" className="flex flex-col">
