@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import DocumentsTable from '../components/DocumentsTable';
 
 const Documents = () => {
   const { client } = useAuth();
@@ -68,58 +69,15 @@ const Documents = () => {
           </Button>
         </div>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
-          {/* Encabezados de tabla con estilo de pestañas */}
-          <div className="relative">
-            <div className="grid grid-cols-4 w-full h-12 min-h-[48px] items-center px-4">
-              <span className="text-base font-light text-black">Nombre</span>
-              <span className="text-base font-light text-black pl-1">Tipo</span>
-              <span className="text-base font-light text-black pl-3">Fecha</span>
-              <span className="text-base font-light text-black pl-6">Acciones</span>
-            </div>
-            <div className="absolute left-0 right-0 bottom-0 h-px w-full bg-border" />
-          </div>
-          {/* Contenido de la tabla con scroll interno */}
-          <div className="flex-1 min-h-0 h-full overflow-y-auto relative">
-            {/* Líneas divisorias verticales */}
-            <div className="absolute top-0 left-1/4 bottom-0 w-px z-20 bg-border" />
-            <div className="absolute top-0 left-1/2 bottom-0 w-px z-20 bg-border" />
-            <div className="absolute top-0 left-3/4 bottom-0 w-px z-20 bg-border" />
-            <div className="p-4">
-              {loading ? (
-                <div className="text-center py-8">Cargando...</div>
-              ) : documents.length === 0 ? (
-                null
-              ) : (
-                <div className="space-y-3">
-                  {documents.map(doc => (
-                    <div key={doc.id} className="flex items-center bg-white rounded-lg border px-6 py-4 shadow-sm group">
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-black truncate">{doc.name}</div>
-                        <div className="text-sm text-gray-500">{doc.file_type || 'Texto'}</div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm text-gray-500">{new Date(doc.created_at).toLocaleString()}</div>
-                      </div>
-                      <div className="flex gap-2 ml-4">
-                        <Button size="icon" variant="ghost" title="Ver" onClick={() => navigate(`/documents/${doc.id}`)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                          <Eye className="h-4 w-4 text-[#ff9c9c]" />
-                        </Button>
-                        <Button size="icon" variant="ghost" title="Editar" onClick={() => navigate(`/documents/${doc.id}`)} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                          <Edit className="h-4 w-4 text-[#ff9c9c]" />
-                        </Button>
-                        <Button size="icon" variant="ghost" title="Descargar" onClick={() => window.open(doc.file_url, '_blank')} disabled={!doc.file_url} className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                          <Download className="h-4 w-4 text-[#ff9c9c]" />
-                        </Button>
-                        <Button size="icon" variant="ghost" title="Eliminar" className="p-0 m-0 bg-transparent border-none shadow-none focus:outline-none active:outline-none">
-                          <Trash2 className="h-4 w-4 text-[#ff9c9c]" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          {/* Encabezados y contenido de la tabla ahora en DocumentsTable */}
+          <DocumentsTable 
+            documents={documents} 
+            loading={loading} 
+            onView={id => navigate(`/documents/${id}`)}
+            onEdit={id => navigate(`/documents/${id}`)}
+            onDownload={url => window.open(url, '_blank')}
+            // onDelete pendiente de implementar
+          />
         </Card>
       </div>
       <Dialog open={showNewDoc} onOpenChange={setShowNewDoc}>
