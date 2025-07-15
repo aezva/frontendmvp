@@ -270,18 +270,20 @@ const WidgetSettings = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
                 {/* Columna izquierda: Código HTML */}
                 <div className="flex flex-col">
-                  <Label className="mb-2">Código HTML</Label>
+                  <div className="flex items-center justify-between mb-2 w-full">
+                    <Label>Código HTML</Label>
+                    <button
+                      type="button"
+                      onClick={copyEmbedCode}
+                      className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
+                      style={{ background: '#ff9c9c' }}
+                    >
+                      Copiar código
+                    </button>
+                  </div>
                   <div className="flex flex-col items-start w-full">
                     <div className="w-full flex flex-row items-start justify-start gap-4">
-                      <pre className="flex-1 bg-gray-100 rounded-md p-4 text-xs overflow-x-auto select-all border border-gray-200" style={{ fontFamily: 'monospace', margin: 0 }}>{embedCode}</pre>
-                      <button
-                        type="button"
-                        onClick={copyEmbedCode}
-                        className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
-                        style={{ background: '#ff9c9c' }}
-                      >
-                        Copiar código
-                      </button>
+                      <pre className="flex-1 bg-gray-100 rounded-md p-4 text-xs overflow-x-auto select-all border border-gray-200 min-h-[160px] lg:min-h-[220px]" style={{ fontFamily: 'monospace', margin: 0 }}>{embedCode}</pre>
                     </div>
                   </div>
                 </div>
@@ -297,9 +299,9 @@ const WidgetSettings = () => {
                   </div>
                   
                   {/* Instrucciones rápidas */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h3 className="font-medium text-blue-900 mb-2">Instrucciones Rápidas</h3>
-                    <ol className="text-sm text-blue-800 space-y-1">
+                  <div className="bg-[#ff9c9c] border border-[#ff9c9c] rounded-lg p-4">
+                    <Label className="mb-2 text-black">Instrucciones Rápidas</Label>
+                    <ol className="text-sm text-black space-y-1">
                       <li>1. Copia el código HTML de la izquierda</li>
                       <li>2. Pega el código en tu sitio web antes del cierre de &lt;/body&gt;</li>
                       <li>3. El widget aparecerá automáticamente en tu página</li>
