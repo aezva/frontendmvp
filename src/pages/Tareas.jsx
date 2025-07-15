@@ -108,8 +108,8 @@ function Tareas() {
           />
           <button
             type="submit"
-            className="px-6 py-2 rounded-md bg-[#ff9c9c] text-[#ff9c9c] text-base font-semibold transition-none focus:outline-none border-none shadow-none"
-            style={{ fontSize: '1.1rem', color: '#fff', background: '#ff9c9c' }}
+            className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+            style={{ fontSize: '1.1rem', background: '#ff9c9c' }}
           >
             Crear tarea
           </button>
@@ -127,7 +127,7 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className="text-base font-light text-black mb-4">{label}</h2>
+                <h2 className="text-base font-medium text-black mb-4">{label}</h2>
                 <div className="flex flex-col gap-3 min-h-[200px] flex-1">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
