@@ -274,7 +274,7 @@ const MyBusiness = () => {
         </Helmet>
         <h1 className="text-xl font-semibold tracking-tight mb-6">Mi Negocio</h1>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full p-6">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0 h-full w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0 h-full w-full">
             <TabsList className="flex items-center gap-6 w-full h-12 min-h-[48px] justify-start px-0 bg-transparent" style={{ alignItems: 'center', background: 'transparent', padding: 0, boxShadow: 'none' }}>
               <TabsTrigger value="general" className="text-base font-light pb-2 flex items-center gap-1 bg-transparent border-none shadow-none px-0 py-0 m-0 data-[state=active]:text-[#ff9c9c] data-[state=inactive]:text-black" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, margin: 0 }}>
                 <Building className="h-5 w-5 inline mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />General
@@ -293,8 +293,8 @@ const MyBusiness = () => {
               </TabsTrigger>
             </TabsList>
             {/* General */}
-            <TabsContent value="general" className="pt-6 px-0 flex flex-col">
-              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
+            <TabsContent value="general" className="pt-6 px-0 flex-1 flex flex-col justify-between">
+              <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-start pt-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label className="text-black text-sm font-normal">Nombre del Negocio *</Label>
@@ -364,21 +364,22 @@ const MyBusiness = () => {
                     className="text-sm font-normal text-gray-500 placeholder-gray-500"
                   />
                 </div>
-                <div className="flex justify-end mt-8">
-                  <button
-                    type="submit"
-                    disabled={saving}
-                    className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-                    style={{ background: '#ff9c9c' }}
-                  >
-                    {saving ? 'Guardando...' : 'Guardar cambios'}
-                  </button>
-                </div>
               </form>
+              <div className="flex justify-end w-full pb-2 pt-6">
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={saving}
+                  className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                  style={{ background: '#ff9c9c' }}
+                >
+                  {saving ? 'Guardando...' : 'Guardar cambios'}
+                </button>
+              </div>
             </TabsContent>
             {/* Contacto */}
-            <TabsContent value="contact" className="pt-6 px-0 flex flex-col">
-              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
+            <TabsContent value="contact" className="pt-6 px-0 flex-1 flex flex-col justify-between">
+              <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-start pt-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="business_phone">Teléfono</Label>
@@ -449,10 +450,21 @@ const MyBusiness = () => {
                   />
                 </div>
               </form>
+              <div className="flex justify-end w-full pb-2 pt-6">
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={saving}
+                  className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                  style={{ background: '#ff9c9c' }}
+                >
+                  {saving ? 'Guardando...' : 'Guardar cambios'}
+                </button>
+              </div>
             </TabsContent>
             {/* Servicios */}
-            <TabsContent value="services" className="pt-6 px-0 flex flex-col">
-              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
+            <TabsContent value="services" className="pt-6 px-0 flex-1 flex flex-col justify-between">
+              <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-start pt-0">
                 <div className="space-y-2">
                   <Label htmlFor="business_services">Servicios Ofrecidos</Label>
                   <Textarea 
@@ -477,10 +489,21 @@ const MyBusiness = () => {
                   />
                 </div>
               </form>
+              <div className="flex justify-end w-full pb-2 pt-6">
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={saving}
+                  className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                  style={{ background: '#ff9c9c' }}
+                >
+                  {saving ? 'Guardando...' : 'Guardar cambios'}
+                </button>
+              </div>
             </TabsContent>
             {/* Contenido */}
-            <TabsContent value="content" className="pt-6 px-0 flex flex-col">
-              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
+            <TabsContent value="content" className="pt-6 px-0 flex-1 flex flex-col justify-between">
+              <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-start pt-0">
                 <div className="space-y-2">
                   <Label htmlFor="business_about">Sobre Nosotros</Label>
                   <Textarea 
@@ -566,10 +589,21 @@ const MyBusiness = () => {
                   />
                 </div>
               </form>
+              <div className="flex justify-end w-full pb-2 pt-6">
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={saving}
+                  className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                  style={{ background: '#ff9c9c' }}
+                >
+                  {saving ? 'Guardando...' : 'Guardar cambios'}
+                </button>
+              </div>
             </TabsContent>
             {/* Social */}
-            <TabsContent value="social" className="pt-6 px-0 flex flex-col">
-              <form onSubmit={handleSubmit} className="space-y-6 flex flex-col pt-0">
+            <TabsContent value="social" className="pt-6 px-0 flex-1 flex flex-col justify-between">
+              <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-start pt-0">
                 <div className="space-y-2">
                   <Label htmlFor="business_social_media">Redes Sociales</Label>
                   <Textarea 
@@ -623,6 +657,17 @@ const MyBusiness = () => {
                   </div>
                 </div>
               </form>
+              <div className="flex justify-end w-full pb-2 pt-6">
+                <button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={saving}
+                  className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+                  style={{ background: '#ff9c9c' }}
+                >
+                  {saving ? 'Guardando...' : 'Guardar cambios'}
+                </button>
+              </div>
             </TabsContent>
           </Tabs>
         </Card>
