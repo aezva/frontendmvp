@@ -108,7 +108,7 @@ export default function Citas() {
 
   return (
     <div className="flex flex-col flex-1 min-h-0 h-full w-full">
-      <h1 className="text-2xl font-semibold tracking-tight mb-6">Citas</h1>
+      <h1 className="text-xl font-semibold tracking-tight mb-6">Citas</h1>
       {loading && (
         <div className="flex items-center gap-2 text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin" />Cargando...</div>
       )}
@@ -119,7 +119,7 @@ export default function Citas() {
         {/* Columna izquierda: Preferencias/configuración */}
         <div className="w-full md:w-1/3 flex flex-col min-h-0 h-full">
           <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full">
-            <h2 className="text-lg font-medium text-black mb-4">Configura tu Disponibilidad</h2>
+            <h2 className="text-base font-medium text-black mb-4">Configura tu Disponibilidad</h2>
             <AppointmentPreferencesForm
               availability={availability}
               setAvailability={setAvailability}
@@ -131,7 +131,7 @@ export default function Citas() {
         {/* Columna derecha: Lista de citas */}
         <div className="w-full md:w-2/3 flex flex-col min-h-0 h-full">
           <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full min-h-0">
-            <h2 className="text-lg font-medium text-black mb-4">Citas Agendadas</h2>
+            <h2 className="text-base font-medium text-black mb-4">Citas Agendadas</h2>
             {appointments.length === 0 ? (
               null
             ) : (

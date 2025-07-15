@@ -63,10 +63,15 @@ const Documents = () => {
     <div className="flex flex-col flex-1 min-h-0 h-full w-full">
       <h1 className="text-xl font-semibold tracking-tight mb-6">Documentos</h1>
       <div className="flex-1 min-h-0 h-full flex flex-col">
-        <div className="flex items-center gap-2 mb-4">
-          <Button variant="default" className="flex items-center gap-2" onClick={() => setShowNewDoc(true)}>
+        <div className="flex items-center gap-2 mb-4 justify-end">
+          <button
+            type="button"
+            className="flex items-center gap-2 px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+            style={{ background: '#ff9c9c' }}
+            onClick={() => setShowNewDoc(true)}
+          >
             Nuevo Documento
-          </Button>
+          </button>
         </div>
         <Card className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow flex flex-col min-h-0 h-full">
           {/* Encabezados y contenido de la tabla ahora en DocumentsTable */}
@@ -99,14 +104,15 @@ const Documents = () => {
             />
           </div>
           <DialogFooter>
-            <Button 
-              variant="default" 
-              onClick={handleCreateNewDoc} 
+            <button
+              type="button"
+              onClick={handleCreateNewDoc}
               disabled={saving || !newDocName.trim() || !newDocContent.trim()}
-              className="hover:bg-primary hover:text-primary-foreground"
+              className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
+              style={{ background: '#ff9c9c' }}
             >
               Crear
-            </Button>
+            </button>
             <Button 
               variant="outline" 
               onClick={() => setShowNewDoc(false)} 
