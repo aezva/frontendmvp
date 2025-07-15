@@ -277,27 +277,46 @@ const WidgetSettings = () => {
             </TabsContent>
             <TabsContent value="embed" className="flex flex-col">
               <form className="flex flex-col space-y-6 mt-4">
-                <div className="flex flex-col items-center w-full">
-                  <div className="w-full max-w-2xl flex flex-row items-center justify-center gap-4">
-                    <pre className="flex-1 bg-gray-100 rounded-md p-4 text-xs overflow-x-auto select-all border border-gray-200" style={{ fontFamily: 'monospace', margin: 0 }}>{embedCode}</pre>
-                    <button
-                      type="button"
-                      onClick={copyEmbedCode}
-                      className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
-                      style={{ background: '#ff9c9c' }}
-                    >
-                      Copiar código
-                    </button>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Columna izquierda: Código HTML */}
+                  <div className="flex flex-col">
+                    <Label className="mb-2">Código HTML</Label>
+                    <div className="flex flex-col items-start w-full">
+                      <div className="w-full flex flex-row items-start justify-start gap-4">
+                        <pre className="flex-1 bg-gray-100 rounded-md p-4 text-xs overflow-x-auto select-all border border-gray-200" style={{ fontFamily: 'monospace', margin: 0 }}>{embedCode}</pre>
+                        <button
+                          type="button"
+                          onClick={copyEmbedCode}
+                          className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
+                          style={{ background: '#ff9c9c' }}
+                        >
+                          Copiar código
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-800 mb-2">Instrucciones:</h4>
-                  <ol className="text-blue-700 text-sm space-y-1">
-                    <li>1. Copia el código de arriba</li>
-                    <li>2. Pégalo justo antes del cierre de la etiqueta &lt;/body&gt; en tu HTML</li>
-                    <li>3. El widget aparecerá automáticamente en tu sitio web</li>
-                    <li>4. Los cambios en la configuración se reflejarán automáticamente</li>
-                  </ol>
+                  
+                  {/* Columna derecha: Video tutorial e instrucciones */}
+                  <div className="flex flex-col space-y-6">
+                    {/* Espacio para video tutorial */}
+                    <div className="space-y-2">
+                      <Label>Video Tutorial</Label>
+                      <div className="bg-gray-100 rounded-md p-8 border border-gray-200 flex items-center justify-center">
+                        <p className="text-gray-500 text-sm">Video tutorial próximamente</p>
+                      </div>
+                    </div>
+                    
+                    {/* Instrucciones rápidas */}
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <h3 className="font-medium text-blue-900 mb-2">Instrucciones Rápidas</h3>
+                      <ol className="text-sm text-blue-800 space-y-1">
+                        <li>1. Copia el código HTML de la izquierda</li>
+                        <li>2. Pega el código en tu sitio web antes del cierre de &lt;/body&gt;</li>
+                        <li>3. El widget aparecerá automáticamente en tu página</li>
+                        <li>4. Los visitantes podrán chatear con tu asistente NNIA</li>
+                      </ol>
+                    </div>
+                  </div>
                 </div>
               </form>
             </TabsContent>
