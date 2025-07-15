@@ -113,13 +113,13 @@ export default function Citas() {
         <div className="flex items-center gap-2 text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin" />Cargando...</div>
       )}
       {error && (
-        <div className="mb-4 p-2 bg-red-100 text-red-800 rounded">{error}</div>
+        null
       )}
       <div className="flex flex-1 gap-6 min-h-0">
         {/* Columna izquierda: Preferencias/configuración */}
         <div className="w-full md:w-1/3 flex flex-col min-h-0 h-full">
           <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full">
-            <h2 className="text-xl font-semibold mb-4">Configura tu Disponibilidad</h2>
+            <h2 className="text-base font-light text-black mb-4">Configura tu Disponibilidad</h2>
             <AppointmentPreferencesForm
               availability={availability}
               setAvailability={setAvailability}
@@ -131,12 +131,9 @@ export default function Citas() {
         {/* Columna derecha: Lista de citas */}
         <div className="w-full md:w-2/3 flex flex-col min-h-0 h-full">
           <section className="flex flex-col flex-1 bg-white/80 border rounded-xl p-6 h-full min-h-0">
-            <h2 className="text-xl font-semibold mb-4">Citas Agendadas</h2>
+            <h2 className="text-base font-light text-black mb-4">Citas Agendadas</h2>
             {appointments.length === 0 ? (
-              <div className="text-muted-foreground text-center p-4 bg-yellow-50 rounded border border-yellow-200">
-                <strong style={{ color: '#ff9c9c' }}>No hay citas agendadas aún.</strong><br />
-                Cuando NNIA o tus clientes agenden una cita, aparecerá aquí.
-              </div>
+              null
             ) : (
               <div className="flex-1 min-h-0 h-full overflow-y-auto space-y-6 pr-2">
                 {Object.entries(STATUS_LABELS).map(([status, { label, icon }]) => (

@@ -39,17 +39,17 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
     <div className="space-y-6">
       <div className="space-y-2">
         <Label>Días disponibles</Label>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3 mt-1">
           {WEEKDAYS.map(day => (
-            <Button
+            <button
               key={day}
               type="button"
-              variant="outline"
-              className={availability.days.includes(day) ? 'bg-muted text-foreground' : ''}
+              className={`text-base font-light select-none cursor-pointer bg-transparent border-none shadow-none outline-none focus:outline-none transition-colors p-0 m-0 ${availability.days.includes(day) ? 'text-[#ff9c9c]' : 'text-black'}`}
+              style={{ minWidth: 'unset' }}
               onClick={() => handleToggleDay(day)}
             >
               {day}
-            </Button>
+            </button>
           ))}
         </div>
       </div>
