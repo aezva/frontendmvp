@@ -104,9 +104,15 @@ function Tareas() {
             value={newTask}
             onChange={e => setNewTask(e.target.value)}
             placeholder="Nueva tarea..."
-            className="flex-1"
+            className="flex-1 min-w-0"
           />
-          <Button type="submit" variant="default">Crear</Button>
+          <button
+            type="submit"
+            className="px-6 py-2 rounded-md bg-[#ff9c9c] text-[#ff9c9c] text-base font-semibold transition-none focus:outline-none border-none shadow-none"
+            style={{ fontSize: '1.1rem', color: '#fff', background: '#ff9c9c' }}
+          >
+            Crear tarea
+          </button>
         </form>
         {loading ? (
           <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
