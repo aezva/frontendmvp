@@ -119,7 +119,7 @@ const Settings = () => {
           </div>
 
           <div className="flex justify-end w-full gap-4">
-            <Button type="submit" className="bg-white text-black border border-[#ff9c9c] transition-colors hover:bg-[#ff9c9c] hover:text-black">
+            <Button type="submit" className="bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black">
               Guardar Cambios
             </Button>
           </div>

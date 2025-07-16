@@ -578,7 +578,7 @@ const MyBusiness = () => {
               type="button"
               onClick={handleSubmit}
               disabled={saving}
-              className="bg-white text-black border border-[#ff9c9c] transition-colors hover:bg-[#ff9c9c] hover:text-black"
+              className="bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black"
             >
               {saving ? 'Guardando...' : 'Guardar cambios'}
             </Button>
