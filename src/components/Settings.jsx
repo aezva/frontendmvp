@@ -87,64 +87,57 @@ const Settings = () => {
         <title>Ajustes - Asistente IA</title>
       </Helmet>
       <div className="flex flex-col flex-1 min-h-0 h-full w-full">
-        <h1 className="text-xl font-semibold tracking-tight mb-2" style={{ color: '#ff9c9c' }}>Ajustes de Usuario</h1>
+        <h1 className="text-xl font-semibold tracking-tight mb-1">Ajustes de Usuario</h1>
         <p className="text-muted-foreground mb-6">Gestiona tu perfil y la seguridad de tu cuenta.</p>
 
-        <form onSubmit={handleSubmit}>
-          <Card className="bg-card/50">
-            <CardHeader>
-              <CardTitle className="flex items-center"><User className="mr-3 h-6 w-6 text-primary" />Perfil de Usuario</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center space-x-6">
-                <Avatar className="h-20 w-20">
-                  <AvatarImage src={client?.profile_image_url} />
-                  <AvatarFallback>{getInitials(client?.name)}</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="profile-image-upload">
-                    <Button type="button" variant="outline" asChild disabled={uploading}>
-                      <span>{uploading ? 'Subiendo...' : 'Cambiar Foto'}</span>
-                    </Button>
-                  </label>
-                  <input id="profile-image-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
-                  <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
-                </div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+          <div className="bg-white/80 border rounded-xl p-6 w-full">
+            <h2 className="text-base font-medium text-black mb-4 flex items-center"><User className="mr-3 h-6 w-6 text-[#ff9c9c]" />Perfil de Usuario</h2>
+            <div className="flex items-center gap-6 mb-6">
+              <Avatar className="h-20 w-20">
+                <AvatarImage src={client?.profile_image_url} />
+                <AvatarFallback>{getInitials(client?.name)}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="profile-image-upload">
+                  <Button type="button" variant="outline" asChild disabled={uploading} className="px-6 py-2 rounded-md">
+                    <span>{uploading ? 'Subiendo...' : 'Cambiar Foto'}</span>
+                  </Button>
+                </label>
+                <input id="profile-image-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
+                <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="name">Nombre</Label>
-                <Input id="name" defaultValue={client?.name || ''} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" defaultValue={user?.email || ''} disabled />
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="space-y-2 mb-4">
+              <Label htmlFor="name" className="text-black text-sm font-normal">Nombre</Label>
+              <Input id="name" defaultValue={client?.name || ''} className="text-sm font-normal text-gray-500 placeholder-gray-500" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-black text-sm font-normal">Email</Label>
+              <Input id="email" type="email" defaultValue={user?.email || ''} disabled className="text-sm font-normal text-gray-500 placeholder-gray-500" />
+            </div>
+          </div>
 
-          <Card className="mt-8 bg-card/50">
-            <CardHeader>
-              <CardTitle className="flex items-center"><Lock className="mr-3 h-6 w-6 text-primary" />Seguridad</CardTitle>
-              <CardDescription>Cambia tu contraseña.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <div className="bg-white/80 border rounded-xl p-6 w-full">
+            <h2 className="text-base font-medium text-black mb-4 flex items-center"><Lock className="mr-3 h-6 w-6 text-[#ff9c9c]" />Seguridad</h2>
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="currentPassword">Contraseña Actual</Label>
-                <Input id="currentPassword" type="password" />
+                <Label htmlFor="currentPassword" className="text-black text-sm font-normal">Contraseña Actual</Label>
+                <Input id="currentPassword" type="password" className="text-sm font-normal text-gray-500 placeholder-gray-500" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="newPassword">Nueva Contraseña</Label>
-                <Input id="newPassword" type="password" />
+                <Label htmlFor="newPassword" className="text-black text-sm font-normal">Nueva Contraseña</Label>
+                <Input id="newPassword" type="password" className="text-sm font-normal text-gray-500 placeholder-gray-500" />
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <div className="mt-8 flex justify-between items-center">
-            <Button type="button" variant="destructive" onClick={handleLogout} disabled={loading}>
+          <div className="flex justify-between items-center w-full gap-4">
+            <Button type="button" variant="destructive" onClick={handleLogout} disabled={loading} className="px-6 py-2 rounded-md">
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogOut className="mr-2 h-4 w-4" />}
               Cerrar Sesión
             </Button>
-            <Button type="submit">
+            <Button type="submit" className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal border-none shadow-none" style={{ background: '#ff9c9c' }}>
               <Save className="mr-2 h-4 w-4" />
               Guardar Cambios
             </Button>
