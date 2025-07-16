@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Search, Send, Loader2 } from 'lucide-react';
+import { Search, Send, Loader2, MessageSquare, Ticket, Users, Archive } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Helmet } from 'react-helmet';
@@ -12,10 +12,10 @@ import { fetchTickets, fetchLeads } from '@/services/notificationsService';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 
 const TABS = [
-  { key: 'messages', label: 'Mensajes' },
-  { key: 'tickets', label: 'Tickets' },
-  { key: 'leads', label: 'Leads' },
-  { key: 'archived', label: 'Archivados' },
+  { key: 'messages', label: 'Mensajes', icon: MessageSquare },
+  { key: 'tickets', label: 'Tickets', icon: Ticket },
+  { key: 'leads', label: 'Leads', icon: Users },
+  { key: 'archived', label: 'Archivados', icon: Archive },
 ];
 
 // Nuevo: Componente de tarjeta para Lead/Ticket
@@ -301,10 +301,11 @@ const Messages = () => {
               {TABS.map(tab => (
                 <span
                   key={tab.key}
-                  className={`text-base font-light cursor-pointer pb-2 transition-colors select-none ${activeTab === tab.key ? 'text-[#ff9c9c]' : 'text-black hover:text-[#ff9c9c]'}`}
+                  className={`text-base font-medium text-black flex items-center gap-1 pb-2 cursor-pointer transition-colors select-none ${activeTab === tab.key ? 'text-[#ff9c9c]' : 'text-black'}`}
                   onClick={() => setActiveTab(tab.key)}
                   style={{padding: 0, margin: 0}}
                 >
+                  <tab.icon className="h-5 w-5 mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
                   {tab.label}
                 </span>
               ))}
