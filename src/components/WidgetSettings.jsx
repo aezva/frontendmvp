@@ -299,7 +299,7 @@ const WidgetSettings = () => {
                   </div>
                   
                   {/* Instrucciones rápidas */}
-                  <div className="bg-white border border-[#ff9c9c] rounded-lg p-4">
+                  <div className="bg-white border border-border rounded-lg p-4">
                     <Label className="mb-2 text-black">Instrucciones Rápidas</Label>
                     <ol className="text-sm text-black space-y-1">
                       <li>1. Copia el código HTML de la izquierda</li>
