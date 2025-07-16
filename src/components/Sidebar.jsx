@@ -67,11 +67,15 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
     >
       <div className="flex flex-col h-full">
         {/* Elimino el botón para expandir/colapsar sidebar y el divisor superior */}
-        <nav className="flex-1 pl-6 pr-6 py-6 space-y-2">
+        <nav className="flex-1 pl-6 pr-6 py-6 space-y-1">
           {navItems.map(item => (
-            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2.5 text-sm font-normal rounded-lg transition-colors', isActive ? 'bg-primary/5 text-[#ff9c9c]' : 'text-gray-500')}>
-              <item.icon className="mr-3 h-5 w-5" color={location.pathname === item.href ? '#ff9c9c' : '#6b7280'} strokeWidth={1.5} />
-              <span className={location.pathname === item.href ? 'text-[#ff9c9c] font-normal' : 'text-gray-500 font-normal'}>{item.label}</span>
+            <NavLink key={item.href} to={item.href} className={({ isActive }) => cn('flex items-center py-2 text-sm font-normal rounded-lg transition-colors', isActive ? 'bg-primary/5 text-[#ff9c9c]' : 'text-black')}>
+              <item.icon 
+                className="mr-3 h-5 w-5"
+                style={{ color: location.pathname === item.href ? '#ff9c9c' : '#6b7280' }}
+                strokeWidth={1.5}
+              />
+              <span className={location.pathname === item.href ? 'text-[#ff9c9c] font-normal' : 'text-black font-normal'}>{item.label}</span>
               {location.pathname === item.href && (
                 <motion.div layoutId="active-indicator" className="ml-auto">
                   <ChevronRight className="h-4 w-4" color="#ff9c9c" strokeWidth={1.5} />
@@ -81,9 +85,13 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
           ))}
         </nav>
         <div className="pl-6 pr-6 border-t border-border mt-auto">
-          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-normal rounded-lg text-gray-500 transition-colors pl-0 pr-0">
-            <LogOut className="mr-3 h-5 w-5" color="#ff9c9c" strokeWidth={1.5} />
-            <span className="text-gray-500 font-normal">Cerrar Sesión</span>
+          <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-normal rounded-lg text-black transition-colors pl-0 pr-0">
+            <LogOut 
+              className="mr-3 h-5 w-5"
+              style={{ color: '#ff9c9c' }}
+              strokeWidth={1.5}
+            />
+            <span className="text-black font-normal">Cerrar Sesión</span>
           </button>
         </div>
       </div>

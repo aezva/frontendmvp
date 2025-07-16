@@ -301,9 +301,10 @@ const Messages = () => {
               {TABS.map(tab => (
                 <span
                   key={tab.key}
-                  className={`text-base font-medium text-black flex items-center gap-1 pb-2 cursor-pointer transition-colors select-none ${activeTab === tab.key ? 'text-[#ff9c9c]' : 'text-black'}`}
+                  className={`text-base font-medium flex items-center gap-1 pb-2 cursor-pointer transition-colors select-none text-black ${activeTab === tab.key ? 'text-[#ff9c9c]' : 'text-black'}`}
                   onClick={() => setActiveTab(tab.key)}
                   style={{padding: 0, margin: 0}}
+                  data-active={activeTab === tab.key}
                 >
                   <tab.icon className="h-5 w-5 mr-1" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
                   {tab.label}
