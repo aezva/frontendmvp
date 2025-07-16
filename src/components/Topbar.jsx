@@ -12,8 +12,8 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/messages', label: 'Mensajes', icon: MessageSquare },
   { href: '/documents', label: 'Documentos', icon: FileText },
-  { href: '/citas', label: 'Citas', icon: Calendar },
-  { href: '/reservas', label: 'Reservas', icon: Calendar },
+  { href: '/appointments', label: 'Citas', icon: Calendar },
+  { href: '/reservations', label: 'Reservas', icon: Calendar },
 ];
 const profileMenuItems = [
   { href: '/my-business', label: 'Mi Negocio', icon: Building2 },

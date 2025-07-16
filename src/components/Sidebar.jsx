@@ -12,10 +12,10 @@ import { useState, useRef, useEffect } from 'react';
 const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/messages', label: 'Mensajes', icon: MessageSquare },
-  { href: '/tareas', label: 'Tareas', icon: ListChecks },
+  { href: '/tasks', label: 'Tareas', icon: ListChecks },
   { href: '/documents', label: 'Documentos', icon: FileText },
-  { href: '/citas', label: 'Citas', icon: Calendar },
-  // { href: '/reservas', label: 'Reservas', icon: Calendar }, // Oculto temporalmente
+  { href: '/appointments', label: 'Citas', icon: Calendar },
+  // { href: '/reservations', label: 'Reservas', icon: Calendar }, // Oculto temporalmente
   { href: '/my-business', label: 'Mi Negocio', icon: Building2 },
   { href: '/widget', label: 'Widget', icon: MessageCircle },
   { href: '/subscription', label: 'Suscripción', icon: CreditCard },

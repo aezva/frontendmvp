@@ -13,7 +13,7 @@ import { useSidebar } from '@/contexts/SidebarContext';
 import { useToast } from '@/components/ui/use-toast';
 import AppTutorial from '@/components/AppTutorial';
 import WelcomeMessage from '@/components/WelcomeMessage';
-import CitasPage from '@/pages/Citas';
+import AppointmentsPage from '@/pages/Appointments';
 import Topbar from './Topbar';
 import WidgetSettings from '@/components/WidgetSettings';
 import Reservations from '@/components/Reservations';
