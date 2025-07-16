@@ -120,7 +120,7 @@ function Tareas() {
           <div className="text-center text-red-500 py-8">{error}</div>
         ) : (
           <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6 min-h-0">
-            {Array.isArray(estados) && estados.map(({ key, label, color }) => (
+            {Array.isArray(estados) && estados.map(({ key, label, color, icon: Icon }) => (
               <Card
                 key={key}
                 className="bg-card/50 backdrop-blur-sm hover:shadow-sm transition-shadow p-4 flex flex-col min-h-0 h-full"
@@ -128,7 +128,7 @@ function Tareas() {
                 onDragOver={onDragOver}
               >
                 <h2 className="text-base font-medium text-black mb-4 flex items-center">
-                  <estado.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
+                  <Icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
                   {label}
                 </h2>
                 <div className="flex flex-col gap-3 min-h-[200px] flex-1">
