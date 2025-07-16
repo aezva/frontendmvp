@@ -92,7 +92,7 @@ const Settings = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="bg-white/80 border rounded-xl p-6 w-full">
-            <h2 className="text-base font-medium text-black mb-4 flex items-center"><User className="mr-3 h-6 w-6 text-[#ff9c9c]" />Perfil de Usuario</h2>
+            <h2 className="text-base font-medium text-black mb-4 flex items-center"><User className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Perfil de Usuario</h2>
             <div className="flex items-center gap-6 mb-6">
               <Avatar className="h-20 w-20">
                 <AvatarImage src={client?.profile_image_url} />
@@ -119,7 +119,7 @@ const Settings = () => {
           </div>
 
           <div className="bg-white/80 border rounded-xl p-6 w-full">
-            <h2 className="text-base font-medium text-black mb-4 flex items-center"><Lock className="mr-3 h-6 w-6 text-[#ff9c9c]" />Seguridad</h2>
+            <h2 className="text-base font-medium text-black mb-4 flex items-center"><Lock className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Seguridad</h2>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="currentPassword" className="text-black text-sm font-normal">Contraseña Actual</Label>
@@ -132,13 +132,8 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center w-full gap-4">
-            <Button type="button" variant="destructive" onClick={handleLogout} disabled={loading} className="px-6 py-2 rounded-md">
-              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogOut className="mr-2 h-4 w-4" />}
-              Cerrar Sesión
-            </Button>
+          <div className="flex justify-end w-full gap-4">
             <Button type="submit" className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal border-none shadow-none" style={{ background: '#ff9c9c' }}>
-              <Save className="mr-2 h-4 w-4" />
               Guardar Cambios
             </Button>
           </div>
