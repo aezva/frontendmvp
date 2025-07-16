@@ -93,24 +93,7 @@ const Settings = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="bg-white/80 border rounded-xl p-6 w-full">
             <h2 className="text-base font-medium text-black mb-4 flex items-center"><User className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Perfil de Usuario</h2>
-            {/* Se oculta la sección de foto de perfil y botón de cambiar foto */}
-            {/*
-            <div className="flex items-center gap-6 mb-6">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src={client?.profile_image_url} />
-                <AvatarFallback>{getInitials(client?.name)}</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-2">
-                <label htmlFor="profile-image-upload">
-                  <Button type="button" variant="outline" asChild disabled={uploading} className="px-6 py-2 rounded-md">
-                    <span>{uploading ? 'Subiendo...' : 'Cambiar Foto'}</span>
-                  </Button>
-                </label>
-                <input id="profile-image-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
-                <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
-              </div>
-            </div>
-            */}
+            {/* Se elimina la sección de foto de perfil y botón de cambiar foto */}
             <div className="space-y-2 mb-4">
               <Label htmlFor="name" className="text-black text-sm font-normal">Nombre</Label>
               <Input id="name" defaultValue={client?.name || ''} className="text-sm font-normal text-gray-500 placeholder-gray-500" />
