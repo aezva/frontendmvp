@@ -85,6 +85,28 @@ const Sidebar = ({ isSidebarOpen, handleLogout, onToggleSidebar }) => {
           ))}
         </nav>
         <div className="pl-6 pr-6 border-t border-border mt-auto">
+          <div className="mb-4">
+            {/* Contador de tokens usados en el panel */}
+            <div className="mb-3">
+              <div className="text-sm font-normal text-black mb-1">Tokens usados en el panel</div>
+              <div className="flex items-center gap-2">
+                <div className="w-full h-1.5 rounded-full bg-gray-200 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 h-1.5 rounded-full" style={{ width: '40%', background: '#ff9c9c' }} />
+                </div>
+                <div className="text-xs text-black min-w-[60px] text-right">400 / 1000</div>
+              </div>
+            </div>
+            {/* Contador de tokens usados en la web */}
+            <div>
+              <div className="text-sm font-normal text-black mb-1">Tokens usados en la web</div>
+              <div className="flex items-center gap-2">
+                <div className="w-full h-1.5 rounded-full bg-gray-200 relative overflow-hidden">
+                  <div className="absolute top-0 left-0 h-1.5 rounded-full" style={{ width: '20%', background: '#ff9c9c' }} />
+                </div>
+                <div className="text-xs text-black min-w-[60px] text-right">200 / 1000</div>
+              </div>
+            </div>
+          </div>
           <button onClick={handleLogout} className="w-full flex items-center py-2.5 text-sm font-normal rounded-lg text-black transition-colors pl-0 pr-0">
             <LogOut 
               className="mr-3 h-5 w-5"
