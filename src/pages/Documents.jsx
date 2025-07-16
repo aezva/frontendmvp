@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Folder, FileText, ArrowLeft, Edit, Trash2 } from 'lucide-react';
+import { Plus, Folder, FileText, ArrowLeft, Edit, Trash2, Users } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -184,7 +184,9 @@ const Documents = () => {
       {/* Sección de carpetas */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold">Carpetas</h2>
+          <h2 className="text-base font-medium text-black mb-4 flex items-center">
+            <Users className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />Carpetas
+          </h2>
           <Button onClick={() => setShowNewFolder(true)} variant="default" className="gap-2 bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black"><Plus className="w-4 h-4" /> Nueva carpeta</Button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -214,7 +216,9 @@ const Documents = () => {
             {currentFolder && (
               <Button size="icon" variant="ghost" onClick={() => setCurrentFolder(null)}><ArrowLeft className="w-5 h-5" /></Button>
             )}
-            <h2 className="text-lg font-semibold">{currentFolder ? 'Documentos en carpeta' : 'Documentos recientes'}</h2>
+            <h2 className="text-base font-medium text-black mb-4 flex items-center">
+              <Users className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />{currentFolder ? 'Documentos en carpeta' : 'Documentos recientes'}
+            </h2>
           </div>
           <Button onClick={() => setShowNewDoc(true)} variant="default" className="gap-2 bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black"><Plus className="w-4 h-4" /> Nuevo documento</Button>
         </div>
