@@ -5,13 +5,13 @@ import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { fetchTasks, createTask, updateTask, deleteTask } from '@/services/tasksService';
 import { Helmet } from 'react-helmet';
-import { Loader2, Edit, Trash2, Check, X, GripVertical } from 'lucide-react';
+import { Loader2, Edit, Trash2, Check, X, GripVertical, Clock, CheckCircle2, Loader } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const estados = [
-  { key: 'pending', label: 'Pendientes', color: 'text-[#ff9c9c]' },
-  { key: 'in_progress', label: 'En Progreso', color: 'text-blue-500' },
-  { key: 'completed', label: 'Completadas', color: 'text-green-500' },
+  { key: 'pending', label: 'Pendientes', color: 'text-[#ff9c9c]', icon: Clock },
+  { key: 'in_progress', label: 'En Progreso', color: 'text-blue-500', icon: Loader2 },
+  { key: 'completed', label: 'Completadas', color: 'text-green-500', icon: CheckCircle2 },
 ];
 
 const estadoColor = {
@@ -127,7 +127,10 @@ function Tareas() {
                 onDrop={e => onDrop(e, key)}
                 onDragOver={onDragOver}
               >
-                <h2 className="text-base font-medium text-black mb-4">{label}</h2>
+                <h2 className="text-base font-medium text-black mb-4 flex items-center">
+                  <estado.icon className="mr-3 h-5 w-5" style={{ color: '#ff9c9c' }} strokeWidth={1.5} />
+                  {label}
+                </h2>
                 <div className="flex flex-col gap-3 min-h-[200px] flex-1">
                   <AnimatePresence>
                     {Array.isArray(tasks) && tasks.filter(t => t.status === key).map(task => (
