@@ -307,7 +307,7 @@ const ChatAssistant = ({ userName, client: clientProp }) => {
             placeholder="Escríbele a NNIA"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className="flex-1 text-[#ff9c9c] placeholder-[#ff9c9c] focus:placeholder-[#ff9c9c] focus:text-[#ff9c9c] focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="flex-1 text-muted-foreground placeholder:text-muted-foreground focus:text-muted-foreground focus:placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 [&:focus]:text-muted-foreground [&:focus]:placeholder:text-muted-foreground"
             style={{ minWidth: 0 }}
             autoComplete="off"
             disabled={analyzing || loading}
