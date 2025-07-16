@@ -275,8 +275,8 @@ const WidgetSettings = () => {
                     <button
                       type="button"
                       onClick={copyEmbedCode}
-                      className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none ml-2"
-                      style={{ background: '#ff9c9c' }}
+                      className="text-[#ff9c9c] text-base font-normal transition-none focus:outline-none border-none shadow-none bg-transparent p-0 m-0"
+                      style={{ background: 'transparent', border: 'none', padding: 0, margin: 0 }}
                     >
                       Copiar código
                     </button>
@@ -299,7 +299,7 @@ const WidgetSettings = () => {
                   </div>
                   
                   {/* Instrucciones rápidas */}
-                  <div className="bg-[#ff9c9c] border border-[#ff9c9c] rounded-lg p-4">
+                  <div className="bg-white border border-[#ff9c9c] rounded-lg p-4">
                     <Label className="mb-2 text-black">Instrucciones Rápidas</Label>
                     <ol className="text-sm text-black space-y-1">
                       <li>1. Copia el código HTML de la izquierda</li>
