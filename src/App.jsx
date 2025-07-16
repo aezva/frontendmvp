@@ -8,14 +8,14 @@ import Messages from '@/components/Messages';
 import MyBusiness from '@/components/MyBusiness';
 import Subscription from '@/components/Subscription';
 import Settings from '@/components/Settings';
-import AppointmentsPage from '@/pages/Appointments';
+import CitasPage from '@/pages/Citas';
 import WidgetSettings from '@/components/WidgetSettings';
 import Reservations from '@/components/Reservations';
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
 import Documents from './pages/Documents.jsx';
 import DocumentView from './pages/DocumentView.jsx';
-import Tasks from './pages/Tasks.jsx';
+import Tareas from './pages/Tareas.jsx';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/contexts/AuthContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
@@ -82,12 +82,12 @@ function AppContent() {
                             <Route path="my-business" element={<MyBusiness />} />
                             <Route path="subscription" element={<Subscription />} />
                             <Route path="settings" element={<Settings />} />
-                            <Route path="appointments" element={<AppointmentsPage />} />
+                            <Route path="citas" element={<CitasPage />} />
                             <Route path="widget" element={<WidgetSettings />} />
                             <Route path="reservas" element={<Reservations />} />
                             <Route path="documents" element={<Documents />} />
                             <Route path="documents/:id" element={<DocumentView />} />
-                            <Route path="tasks" element={<Tasks />} />
+                            <Route path="tareas" element={<Tareas />} />
                         </Route>
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />

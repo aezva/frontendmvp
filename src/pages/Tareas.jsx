@@ -20,7 +20,7 @@ const estadoColor = {
   completed: 'text-green-500',
 };
 
-function Tasks() {
+function Tareas() {
   const { client } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -184,4 +184,4 @@ function Tasks() {
   }
 }
 
-export default Tasks; 
+export default Tareas; 
