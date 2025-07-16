@@ -82,12 +82,12 @@ function AppContent() {
                             <Route path="my-business" element={<MyBusiness />} />
                             <Route path="subscription" element={<Subscription />} />
                             <Route path="settings" element={<Settings />} />
-                            <Route path="citas" element={<CitasPage />} />
+                            <Route path="appointments" element={<CitasPage />} />
                             <Route path="widget" element={<WidgetSettings />} />
                             <Route path="reservas" element={<Reservations />} />
                             <Route path="documents" element={<Documents />} />
                             <Route path="documents/:id" element={<DocumentView />} />
-                            <Route path="tareas" element={<Tareas />} />
+                            <Route path="tasks" element={<Tareas />} />
                         </Route>
                         <Route path="/login" element={<Navigate to="/" replace />} />
                         <Route path="/signup" element={<Navigate to="/" replace />} />

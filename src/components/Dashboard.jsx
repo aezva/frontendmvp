@@ -271,7 +271,7 @@ const Dashboard = () => {
                     </ul>
                   )}
                 </div>
-                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105 pt-[3px]" onClick={() => navigate('/tareas')}>
+                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105 pt-[3px]" onClick={() => navigate('/tasks')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
@@ -328,7 +328,7 @@ const Dashboard = () => {
                     </ul>
                   )}
                 </div>
-                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105 pt-[3px]" onClick={() => navigate('/citas')}>
+                <button className="flex items-center gap-2 text-[#ff9c9c] text-xs font-light transition hover:underline hover:scale-105 pt-[3px]" onClick={() => navigate('/appointments')}>
                   Ver todas
                   <svg width="16" height="16" fill="none" stroke="#ff9c9c" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M13 18l6-6-6-6"/></svg>
                 </button>
