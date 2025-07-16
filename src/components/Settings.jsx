@@ -119,7 +119,7 @@ const Settings = () => {
           </div>
 
           <div className="flex justify-end w-full gap-4">
-            <Button type="submit" className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal border-none shadow-none" style={{ background: '#ff9c9c' }}>
+            <Button type="submit" className="bg-[#ff9c9c] text-black">
               Guardar Cambios
             </Button>
           </div>

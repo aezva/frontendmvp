@@ -247,12 +247,17 @@ const WidgetSettings = () => {
                   <Label>Logo del Widget</Label>
                   <div className="flex flex-col gap-2">
                     <label htmlFor="widget-logo-upload">
-                      <Button type="button" variant="outline" asChild disabled={uploadingWidgetLogo}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        asChild
+                        disabled={uploadingWidgetLogo}
+                        className="transition-colors hover:bg-[#ff9c9c] hover:text-black"
+                      >
                         <span>{uploadingWidgetLogo ? 'Subiendo...' : 'Subir Imagen'}</span>
                       </Button>
                     </label>
                     <input id="widget-logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleWidgetLogoChange} />
-                    <span className="text-xs text-muted-foreground">Máx: 720x720px, 500KB</span>
                     {config.widgetLogoUrl && (
                       <div className="mt-2">
                         <img 
@@ -315,15 +320,14 @@ const WidgetSettings = () => {
         </Tabs>
         {activeTab === 'appearance' && (
           <div className="flex justify-end w-full mt-auto pt-6 pr-6">
-            <button
+            <Button
               type="button"
               onClick={saveWidgetConfig}
-              className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-              style={{ background: '#ff9c9c' }}
+              className="bg-[#ff9c9c] text-black"
               disabled={isLoading}
             >
               Guardar
-            </button>
+            </Button>
           </div>
         )}
       </Card>

@@ -574,15 +574,14 @@ const MyBusiness = () => {
             </div>
           </Tabs>
           <div className="flex justify-end w-full mt-auto pt-6 pr-6">
-            <button
+            <Button
               type="button"
               onClick={handleSubmit}
               disabled={saving}
-              className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-              style={{ background: '#ff9c9c' }}
+              className="bg-[#ff9c9c] text-black"
             >
               {saving ? 'Guardando...' : 'Guardar cambios'}
-            </button>
+            </Button>
           </div>
         </Card>
       </div>

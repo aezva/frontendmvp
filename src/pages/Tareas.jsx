@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { fetchTasks, createTask, updateTask, deleteTask } from '@/services/tasksService';
 import { Helmet } from 'react-helmet';
-import { Loader2, Edit, Trash2, Check, X, GripVertical, Clock, CheckCircle2, Loader } from 'lucide-react';
+import { Loader2, Edit, Trash2, Check, X, GripVertical, Clock, CheckCircle2, Loader, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const estados = [
@@ -106,13 +106,7 @@ function Tareas() {
             placeholder="Nueva tarea..."
             className="flex-1 min-w-0"
           />
-          <button
-            type="submit"
-            className="px-6 py-2 rounded-md bg-[#ff9c9c] text-black text-base font-normal transition-none focus:outline-none border-none shadow-none"
-            style={{ background: '#ff9c9c' }}
-          >
-            Crear tarea
-          </button>
+          <Button type="submit" variant="default" className="gap-2"><Plus className="w-4 h-4" /> Nueva tarea</Button>
         </form>
         {loading ? (
           <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
