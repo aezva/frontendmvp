@@ -323,7 +323,7 @@ const WidgetSettings = () => {
             <Button
               type="button"
               onClick={saveWidgetConfig}
-              className="bg-[#ff9c9c] text-black"
+              className="bg-white text-black border border-[#ff9c9c] transition-colors hover:bg-[#ff9c9c] hover:text-black"
               disabled={isLoading}
             >
               Guardar

@@ -84,7 +84,7 @@ export default function AppointmentPreferencesForm({ availability, setAvailabili
           type="button"
           onClick={onSave}
           disabled={saving}
-          className="w-full mt-4 bg-[#ff9c9c] text-black"
+          className="w-full mt-4 bg-white text-black border border-[#ff9c9c] transition-colors hover:bg-[#ff9c9c] hover:text-black"
         >
           {saving ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Guardar'}
         </Button>

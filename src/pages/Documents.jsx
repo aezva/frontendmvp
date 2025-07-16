@@ -185,7 +185,7 @@ const Documents = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold">Carpetas</h2>
-          <Button onClick={() => setShowNewFolder(true)} variant="default" className="gap-2"><Plus className="w-4 h-4" /> Nueva carpeta</Button>
+          <Button onClick={() => setShowNewFolder(true)} variant="default" className="gap-2 bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black"><Plus className="w-4 h-4" /> Nueva carpeta</Button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {folders.length === 0 && <div className="text-gray-400 col-span-full">No hay carpetas.</div>}
@@ -216,7 +216,7 @@ const Documents = () => {
             )}
             <h2 className="text-lg font-semibold">{currentFolder ? 'Documentos en carpeta' : 'Documentos recientes'}</h2>
           </div>
-          <Button onClick={() => setShowNewDoc(true)} variant="default" className="gap-2"><Plus className="w-4 h-4" /> Nuevo documento</Button>
+          <Button onClick={() => setShowNewDoc(true)} variant="default" className="gap-2 bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black"><Plus className="w-4 h-4" /> Nuevo documento</Button>
         </div>
         <div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
@@ -258,7 +258,7 @@ const Documents = () => {
             />
           </div>
           <DialogFooter>
-            <Button onClick={handleCreateFolder} disabled={saving || !newFolderName.trim()} className="bg-[#ff9c9c] text-black">Crear</Button>
+            <Button onClick={handleCreateFolder} disabled={saving || !newFolderName.trim()} className="bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black">Crear</Button>
             <Button variant="outline" onClick={() => setShowNewFolder(false)} disabled={saving}>Cancelar</Button>
           </DialogFooter>
         </DialogContent>
@@ -283,7 +283,7 @@ const Documents = () => {
             />
           </div>
           <DialogFooter>
-            <Button onClick={handleCreateNewDoc} disabled={saving || !newDocName.trim() || !newDocContent.trim()} className="bg-[#ff9c9c] text-black">Crear</Button>
+            <Button onClick={handleCreateNewDoc} disabled={saving || !newDocName.trim() || !newDocContent.trim()} className="bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black">Crear</Button>
             <Button variant="outline" onClick={() => setShowNewDoc(false)} disabled={saving}>Cancelar</Button>
           </DialogFooter>
         </DialogContent>

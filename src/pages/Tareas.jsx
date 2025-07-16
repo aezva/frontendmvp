@@ -106,7 +106,7 @@ function Tareas() {
             placeholder="Nueva tarea..."
             className="flex-1 min-w-0"
           />
-          <Button type="submit" variant="default" className="gap-2"><Plus className="w-4 h-4" /> Nueva tarea</Button>
+          <Button type="submit" variant="default" className="gap-2 bg-white text-black transition-colors hover:bg-[#ff9c9c] hover:text-black"><Plus className="w-4 h-4" /> Nueva tarea</Button>
         </form>
         {loading ? (
           <div className="flex justify-center items-center h-64"><Loader2 className="h-8 w-8 animate-spin" /></div>
