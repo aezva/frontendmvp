@@ -10,10 +10,10 @@ export function NotificationsProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   const loadNotifications = useCallback(async () => {
-    if (!client || !client.businessInfoId) return;
+    if (!client) return;
     setLoading(true);
     try {
-      const notifs = await fetchNotifications(client.businessInfoId);
+      const notifs = await fetchNotifications(client.id); // Usar client.id directamente
       setNotifications(Array.isArray(notifs) ? notifs : []);
     } catch {
       setNotifications([]);

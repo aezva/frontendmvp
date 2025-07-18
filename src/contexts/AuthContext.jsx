@@ -13,26 +13,6 @@ export const AuthProvider = ({ children }) => {
   const [client, setClient] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Nueva función para obtener el id de business_info
-  const fetchBusinessInfoId = useCallback(async (clientId) => {
-    if (!clientId) return null;
-    try {
-      const { data, error } = await supabase
-        .from('business_info')
-        .select('id')
-        .eq('client_id', clientId)
-        .single();
-      if (error) {
-        console.error('Error fetching business_info:', error);
-        return null;
-      }
-      return data?.id || null;
-    } catch (error) {
-      console.error('Error in fetchBusinessInfoId:', error);
-      return null;
-    }
-  }, []);
-
   // Función para obtener los datos del cliente desde Supabase
   const fetchClientData = useCallback(async (userId) => {
     if (!userId) return null;
@@ -69,14 +49,12 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      // Buscar el id de business_info y añadirlo al objeto client
-      const businessInfoId = await fetchBusinessInfoId(clientData.id);
-      return { ...clientData, businessInfoId };
+      return clientData;
     } catch (error) {
       console.error('Error in fetchClientData:', error);
       return null;
     }
-  }, [user?.email, fetchBusinessInfoId]);
+  }, [user?.email]);
 
   // Función para refrescar los datos del cliente
   const refreshClient = useCallback(async () => {
@@ -174,7 +152,6 @@ export const AuthProvider = ({ children }) => {
     client?.id,
     client?.email,
     client?.onboarding_completed,
-    client?.businessInfoId,
     // Agrega aquí cualquier otro campo relevante de client
   ]);
 
