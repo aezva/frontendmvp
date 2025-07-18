@@ -13,6 +13,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { useToast } from "@/components/ui/use-toast";
 import AppointmentPreferencesForm from './AppointmentPreferencesForm';
 import imageCompression from 'browser-image-compression';
+import { useNavigate } from 'react-router-dom';
 
 const steps = [
   { id: 1, name: 'Perfil de Usuario', fields: ['name', 'businessName'] },
@@ -25,6 +26,7 @@ const steps = [
 const Onboarding = () => {
   const { client, refreshClient } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
@@ -138,6 +140,25 @@ const Onboarding = () => {
     }
   }, [currentStep]);
 
+  React.useEffect(() => {
+    // Si el usuario no tiene suscripción activa, redirigir a /choose-plan
+    if (client && client.id) {
+      fetchSubscriptionStatus();
+    }
+    // eslint-disable-next-line
+  }, [client?.id]);
+
+  const fetchSubscriptionStatus = async () => {
+    const { data, error } = await supabase
+      .from('subscriptions')
+      .select('status')
+      .eq('client_id', client.id)
+      .single();
+    if (error || !data || data.status !== 'active') {
+      navigate('/choose-plan', { replace: true });
+    }
+  };
+
   const handleComplete = async () => {
     try {
       // 1. Update client table
@@ -167,10 +188,6 @@ const Onboarding = () => {
       if (assistantError) throw assistantError;
       
       // 4. Create default subscription
-      const { error: subError } = await supabase
-        .from('subscriptions')
-        .insert({ client_id: client.id, plan: 'free', status: 'active' });
-       if (subError) throw subError;
 
       // 5. Save widget configuration
       const { error: widgetError } = await supabase

@@ -1,49 +1,49 @@
 import { supabase } from '@/lib/supabaseClient';
+import axios from 'axios';
 
-// Configuración de planes y precios
+// Configuración de planes y precios (actualizado a modo LIVE)
 export const PLANS = {
-  free: {
-    name: 'Free',
-    price: 0,
-    tokens: 10000,
-    priceId: null,
-    features: ['10K tokens/mes', 'Soporte básico', 'Widget básico']
-  },
   starter: {
     name: 'Starter',
     price: 19,
-    tokens: 150000,
-    priceId: 'price_1RdfNTP1x2coidHcaMps3STo',
-    features: ['150K tokens/mes', 'Soporte por email', 'Widget personalizable']
+    tokens: 20000,
+    priceId: 'price_1Rlr8LGmx15fN3tsakY4AVjH',
+    features: ['20K tokens/mes', 'Soporte básico', 'Widget básico']
   },
   pro: {
     name: 'Pro',
     price: 49,
-    tokens: 500000,
-    priceId: 'price_1RdfO7P1x2coidHcPT71SJlt',
-    features: ['500K tokens/mes', 'Soporte prioritario', 'Analytics avanzados', 'Integraciones']
+    tokens: 50000,
+    priceId: 'price_1Rlr97Gmx15fN3tsINg8pjBW',
+    features: ['50K tokens/mes', 'Soporte prioritario', 'Analytics avanzados', 'Integraciones']
   },
-  ultra: {
-    name: 'Ultra',
+  business: {
+    name: 'Business',
     price: 99,
-    tokens: 1200000,
-    priceId: 'price_1RdfOfP1x2coidHcln5m4KEi',
-    features: ['1.2M tokens/mes', 'Soporte 24/7', 'API personalizada', 'Onboarding dedicado']
+    tokens: 150000,
+    priceId: 'price_1Rlr9iGmx15fN3tsXAwk7jPS',
+    features: ['150K tokens/mes', 'Soporte 24/7', 'API personalizada', 'Onboarding dedicado']
   }
 };
 
 export const TOKEN_PACKS = {
-  pack1: {
-    name: '150K Tokens',
+  pack_20k: {
+    name: '20,000 tokens',
     price: 5,
-    tokens: 150000,
-    priceId: 'price_1RdfS0P1x2coidHcafwMvRba'
+    tokens: 20000,
+    priceId: 'price_1RlrFDGmx15fN3tsGT1dKoI0'
   },
-  pack2: {
-    name: '400K Tokens',
+  pack_50k: {
+    name: '50,000 tokens',
     price: 10,
-    tokens: 400000,
-    priceId: 'price_1RdfT4P1x2coidHcbpqY6Wjh'
+    tokens: 50000,
+    priceId: 'price_1RlrFjGmx15fN3tsRiGEGlfd'
+  },
+  pack_150k: {
+    name: '150,000 tokens',
+    price: 25,
+    tokens: 150000,
+    priceId: 'price_1RlrHmGmx15fN3tsT4S0pKse'
   }
 };
 
@@ -126,13 +126,24 @@ export const consumeTokens = async (clientId, messageLength) => {
   }
 };
 
-// Funciones placeholder para Stripe (deshabilitadas temporalmente)
+// Iniciar checkout de suscripción
 export const createSubscriptionCheckout = async (priceId, clientId) => {
-  throw new Error('Stripe integration temporarily disabled');
+  const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/create-checkout-session`, {
+    priceId,
+    clientId,
+    mode: 'subscription'
+  });
+  return data.sessionId;
 };
 
+// Iniciar checkout de compra de tokens
 export const createTokenCheckout = async (priceId, clientId) => {
-  throw new Error('Stripe integration temporarily disabled');
+  const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/create-checkout-session`, {
+    priceId,
+    clientId,
+    mode: 'payment'
+  });
+  return data.sessionId;
 };
 
 export const cancelSubscription = async (subscriptionId) => {

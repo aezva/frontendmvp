@@ -21,6 +21,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { Bot } from 'lucide-react';
+import ChoosePlan from '@/components/ChoosePlan';
 
 function App() {
   return (
@@ -42,6 +43,22 @@ function App() {
 function AppContent() {
     const { session, client, loading } = useAuth();
     const location = useLocation();
+    const [subscriptionStatus, setSubscriptionStatus] = React.useState(null);
+
+    React.useEffect(() => {
+      // Consultar el estado de la suscripción si hay cliente
+      const fetchStatus = async () => {
+        if (client && client.id) {
+          const { data, error } = await import('@/lib/supabaseClient').supabase
+            .from('subscriptions')
+            .select('status')
+            .eq('client_id', client.id)
+            .single();
+          setSubscriptionStatus(data?.status || null);
+        }
+      };
+      fetchStatus();
+    }, [client?.id]);
 
     if (loading) {
         return (
@@ -62,6 +79,11 @@ function AppContent() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="*" element={<Navigate to="/login" replace />} />
+                    </>
+                ) : (client && subscriptionStatus !== 'active') ? (
+                    <>
+                        <Route path="/choose-plan" element={<ChoosePlan />} />
+                        <Route path="*" element={<Navigate to="/choose-plan" replace />} />
                     </>
                 ) : (client && !client.onboarding_completed) ? (
                     <>

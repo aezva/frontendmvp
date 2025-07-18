@@ -30,7 +30,7 @@ const SignUp = () => {
         description: 'Revisa tu email y confirma tu cuenta para continuar. Verifica también tu carpeta de spam.',
         duration: 5000,
       });
-      navigate('/onboarding');
+      navigate('/choose-plan');
     } catch (error) {
       toast({
         title: 'Error en el registro',
