@@ -57,24 +57,9 @@ export const getCurrentSubscription = async (clientId) => {
       .single();
 
     if (error) {
-      // Si no hay suscripción, crear una gratuita por defecto
+      // Si no hay suscripción, retornar null en vez de crear una gratuita
       if (error.code === 'PGRST116') {
-        const { data: newSubscription, error: insertError } = await supabase
-          .from('subscriptions')
-          .insert({
-            client_id: clientId,
-            plan: 'Free',
-            status: 'active',
-            tokens_remaining: 10000
-          })
-          .select()
-          .single();
-
-        if (insertError) {
-          throw insertError;
-        }
-
-        return newSubscription;
+        return null;
       }
       throw error;
     }
